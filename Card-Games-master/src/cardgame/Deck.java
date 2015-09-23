@@ -1,4 +1,4 @@
-package redditgroup.cardgame;
+package cardgame;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A

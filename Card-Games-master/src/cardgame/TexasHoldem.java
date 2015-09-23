@@ -1,4 +1,4 @@
-package redditgroup.cardgame;
+package cardgame;
 /*
  * Texas Holdem Program
  * 
@@ -116,7 +116,7 @@ class TH extends JFrame {
 		
 		playerPanel.setBounds(205, 217, 161, 107);
 		
-		System.out.println("Player Panel Bounds: " + playerPanel.getBounds());
+//		System.out.println("Player Panel Bounds: " + playerPanel.getBounds());
 		
 	}
 	
@@ -177,7 +177,7 @@ class TH extends JFrame {
 		communityPanel.setBorder(sunkIn);
 		
 		communityPanel.setBounds(181, 30, 395, 107);
-		System.out.println("Community Panel Bounds :" + communityPanel.getBounds());
+//		System.out.println("Community Panel Bounds :" + communityPanel.getBounds());
 	}
 	
 	private void CreateDealerComposite() { 
@@ -190,7 +190,7 @@ class TH extends JFrame {
 		
 		dealerPanel.setBounds(5, 30, 161, 107); //Set size of dealer panel to fit cards perfectly
 		
-		System.out.println("Dealer Panel Bounds: " + dealerPanel.getBounds());
+//		System.out.println("Dealer Panel Bounds: " + dealerPanel.getBounds());
 		
 	}
 	
@@ -301,7 +301,7 @@ class TH extends JFrame {
 				betAmount.setText("");
 			} catch (NumberFormatException e) { 
 				hasBet = false;
-				consoleSetText("Please enter a valid number");
+				consoleSetText("Please enter a valid number");  
 			}
 		} else { 
 			hasBet = true;
