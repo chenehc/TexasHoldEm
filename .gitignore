@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings
+
+*.aux
+*.lof
+*.log
+*.lot
+*.gz
+*.bak
+*.toc
