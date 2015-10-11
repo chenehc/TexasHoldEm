@@ -31,11 +31,12 @@
 	\newpage
 	\section{Project Drivers}
 	\subsection{The purpose of the Project}
-	The purpose of the project is to design and develop a Texas Hold-Em game that a person 		can play for enjoyment and improvement of their skills by getting the user acquainted 		with the rules of the game through gameplay, and by facing a challenging computer 			opponent. There are too many people who do not know the basics of the game and the goal 	is to help those who need a way to learn the game before entering their first 				professional Texas Hold'em game, for example at a casino.
+	The purpose of the project is to design and develop a Texas Hold-Em game that a person 		can play for enjoyment and improvement of their skills by getting the user acquainted 		with the rules of the game through gameplay, and by facing a challenging computer 			opponent. There are too many people who do not know the basics of the game and the goal 	is to help those who need a way to learn the game before entering their first 				professional Texas Hold-Em game, for example at a casino.
 	\subsection{The Client, the Customer, and Other Stakeholders}
 	\textbf{Client}
-	Spencer Smith
-	
+	\begin{itemize}
+	\item Spencer Smith
+	\end{itemize}
 	\textbf{The Customer}
 	\begin{itemize}
 	\item Windows, Macintosh OS X, and/or Linux users
@@ -50,16 +51,29 @@
 	\end{itemize}
 
 	\subsection{Users of the Product}
-	The users are beginner Texas Hold-em players who wish to learn how to play the game. It 	is assumed they have no prior knowledge of the game.  Users of any operating systems 		are accepted whether it is Windows, Macintosh OS X, or Linux users. 
+	The users are beginner Texas Hold-Em players who wish to learn how to play the game. It 	is assumed they have no prior knowledge of the game.  Users of any operating systems 		are accepted whether it is Windows, Macintosh OS X, or Linux users. 
 	
 	\section{Project Constraints}
 	\subsection{Mandated Constraints}
 	The current project constraint states that the product must be completed within the 		span of three months. The product shall be implemented in a GUI for simple navigation. 		The final product shall be self contained and be able to run on any major operating 		system (Windows, Macintosh, Linux). The product shall be marketed toward gamers, and/or 	poker players. The source code shall be written entirely in Java, and uses the awt and 		swing libraries from Java.
 	\subsection{Naming Conventions and Definitions}
-	
+	\begin{itemize}
+	\item 	Texas Hold-Em -  (also known as Texas holdem, hold 'em, or holdem) is a 					variation of the standard card game of poker.
+	\item 	No limit - Game in which there is no maximum amount of money or chips that a 				player is permitted to wager.
+	\item	GUI - Graphical User Interface
+	\item	Heads up - A game of poker between just two players.
+	\item 	Call - To accept the opponent's bet
+	\item 	Raise - To make an additional bet of chips on top of the existing bet
+	\item 	Check - To pass on betting
+	\item	Fold - If you fold your hand in poker, you lay down your cards and stop playing 			the hand. You forfeit the round.
+	\item	All in - Having all of one's chips at stake in a particular hand. Having one 				player all-in does not prevent future action by other players. Any future wager 			or portion of a previous wager that the player is not able to call goes into a 				side pot that the non-contributing player is not eligible to win.
+	\end{itemize}
 	\subsection{Relevant Facts and Assumptions}
 	\textbf{Relevant Facts}
-	
+	\begin{itemize}
+	\item	Performance will vary according to the user's computer specifications
+	\item 	Gameplay experience will vary due to the random shuffle algorithm
+	\end{itemize}
 	\textbf{Assumptions}
 	\begin{itemize}
 	\item 	The users are assumed to be beginners, as our version of the game will not 					cater to professional players 
@@ -69,23 +83,47 @@
 
 	\section{Functional Requirements}
 	\subsection{The Scope of the Work}
-	\textbf{Current Situation}
+	\subsubsection{Current Situation}
+	There are many aspiring poker players in the world today who just wants to play a game 		of Texas Hold-Em, so in pursuit of this goal, they will need practice and experience. 	There are too many people who do not know the basics of the game and our product is meant for beginners and experienced players alike, providing experience 		without the need of monetary sacrifice. The game is built to enhance skills or to 			discover something new. The game is aimed to simplify the game as much as possible so 
+	a beginner will have no problem getting into the game and they can play for enjoyment and improve their skills by getting them acquainted with the rules through gameplay and by facing a challenging computer opponent. The goal is to help the players learn the game before entering their first professional Texas Hold-Em game, for example, at a casino. 
+	\subsubsection{Context of Work}
 		\begin{figure}[h]
-		\includegraphics[scale=0.5]{test.png}
-		\caption{UML Diagram}
-		\label{fig1: UML}
+		\includegraphics[scale=0.7]{ContexOfWork.jpg}
+		\caption{Work Context Diagram}
+		\label{fig1: Figure1}
 		\end{figure}
 	\subsection{Business Data Model \& Data Dictionary}
+	N/A
 	\subsection{The Scope of the Product}
+	\subsubsection{Product Use Case}
+		\begin{figure}[h]				
+			\includegraphics[scale=0.5]{UseCase.jpg}		
+			\caption{Use Case Diagram}		
+			\label{fig2: Figure2}		
+			\end{figure}
 	\subsection{Functional Requirements}
 	The system shall:
 	\begin{itemize}
-	\item 	have a help page that explains the rules of the game
-	\item 	have a graphical user interface
-	\item 	have a computer program that can play Texas Hold-Em against the user
-	\item 	start a game, distribute cards, and monitor chip counts
+	\item 	have a help page that the user can click on to explains the rules of the game. The page should be accessible at anytime during the game, should have all the basic rules of the game, all the card hands ranked in order of strength, and extra tips and tricks.
+	\item 	Have a GUI that the user will use to start the game and play which includes:
+	\begin{itemize}
+	\item a start menu with the option to view the help page, start a new game or resume a saved game
+	\item a game view which shows the user their hand with, and the board cards with graphical images of the cards. It will also show the amount of chips the player and computer have, allow the user to save after each round, and have a way to access the help page at any time via button or other means. 
+	\end{itemize}
+	\item 	have a computer program that can play Texas Hold-Em against the user, this computer program shall be able to:
+	\begin{itemize}
+	\item	bet, raise, call, check and fold
+	\item 	keep a count of the number of chips it has and the player has
+	\item 	evaluate and measure hand strength
+	\item	calculate the probability of winning a round based on the hand it’s given
+	\item 	make actions based on the probability of winning/losing
+	\end{itemize}
+	\item 	be able to start a game, distribute cards, and monitor chip counts
 	\item	pit the player against a computer opponent in a match of heads up no limit 					Texas Hold-Em
-	\item 	allow users to set the amount of chips to play with
+	\item 	be able to distribute cards to the player, computer and board. The distribution of these cards should appear random and not follow any discernible pattern
+	\item	be able to save the game, and end a game once either the player or the computer 			run out of chips
+	\item 	allow users to set the amount of chips to play with at the start of the game
+	\item 	monitor and adjust chip count after each round
 	\item 	end the game when either player or computer loses all their chips
 	\end{itemize}
 	
@@ -181,8 +219,19 @@
 	\end{itemize}
 	\section{Project Issues}
 	\subsection{Open Issue}
+	\begin{itemize}
+	\item	Should the program include an AI that does more than read probabilities for the 			user to play against, if so how well should it play
+	\item	It is difficult to test a GUI element
+	\item	Is a pseudo random deck shuffler sufficient for the game or is a truly random 				method needed for shuffling the deck
+	\end{itemize}
 	\subsection{Off-the-Shelf Solutions}
+	\begin{itemize}
+	\item	There are a multitude of applications on computers and phones that allow people 			to play Texas Hold-Em against other or against a computer. 
+	\item	A no limits heads up Texas Hold-Em computer algorithm has already been developed 			by the University of Alberta
+	\item	Texas Hold-Em manuals already exist to help beginners learn the game quicker
+	\end{itemize}
 	\subsection{New Problems}
+	N/A
 	\subsection{Tasks}
 	\begin{itemize}	
 	\item 	Revise requirements document
@@ -195,9 +244,34 @@
 	\item 	Demonstration of final product
 	\item 	Revise the documentation
 	\end{itemize}
-	
 	\subsection{Migration to the New Product}
+	N/A
 	\subsection{Risks}
+	\textbf{Product Related Risks:}
+	\begin{itemize}
+	\item 	Computer crashes while the user is playing the game
+	\item 	pseudo random deck shuffler seems to generate discernible patterns the user can 			spot
+	\item 	games take too long for the user to win/lose 
+	\end{itemize}
+	\textbf{Contingency plans:}
+	\begin{itemize}
+	\item	The program will save the game after every round of hands played so that if any 			crashes happen the user can return to play from the previous hand dealt
+	\item	Find a randomization algorithm with a sufficiently high complexity so that a 				human can't spot patterns
+	\item	After a set duration of time, the user will be forcefully asked to fold, and if 			the game proceeds even further, the user will be asked to go all in.
+	\end{itemize}
+	\textbf{Production related risks:}
+	\begin{itemize}
+	\item	Scope of project is too large for complete development of the program in the 				time period given
+	\item	proving correctness of the program will be difficult if not impossible
+	\item 	Testing of Look and Feel Requirements plus Usability and Humanity requirements 				may not be viable due to lack of resources and time
+	\end{itemize}
+	\textbf{Contingency plans:}
+	\begin{itemize}
+	\item	Develop a Prototype of the program for proof of concept, if development of the 				prototype is deemed too difficult, re-evaluate the scope and requirements of 				the project 
+	\item	If proof of correctness is deemed too difficult or impossible, run various 					testing methods until all developers believe the program is error free
+	\item	If Testing of Look and Feel Requirements and Usability/Humanity requirements is 			not possible in the time frame given the subjective properties will be judged 				by either the developers themselves and/or by any acquaintances of said 					developers 
+	\end{itemize}
+
 	\subsection{Costs}
 	There are no monetary costs involved with this projects, but about 12 weeks of 				development time be required.
 	\subsection{User Documentation and Training}
@@ -207,4 +281,35 @@
 	\subsection{Ideas for Solutions}
 	Development of the game and GUI will be done in Eclipse.
 	\section{Revision History}
+	\begin{table}[h]
+	\begin{center}
+	\caption{Revision History Table}
+	\begin{tabular}{|| c c c c || }\\
+	\hline
+	Developer & Date & Change & Revision \\
+	\hline
+	Hui Chen & Oct 10 2015 & Final Edit & 10\\
+	\hline
+	Nareshkumar Maheshkumar & Oct 9 2015 & Final Revision & 9 \\
+	\hline
+	Hui Chen & Oct 9 2015 & & 8 \\
+	\hline
+	Sam Hamel & Oct 9 2015 & & 7 \\
+	\hline
+	Hui Chen & Oct 7 2015 & & 6 \\
+	\hline
+	Sam Hamel & Oct 7 2015 & & 5 \\
+	\hline
+	Nareshkumar Maheshkumar & Oct 7 2015 &	& 4	\\
+	\hline
+	Sam Hamel & Oct 5\&9 & & 3 \\
+	\hline
+	Nareshkumar Maheshkumar & Oct 3\&9 2015 & &2 \\
+	\hline
+	Hui Chen & Sept 29 2015& Created requirements document	& 1 \\
+
+	\end{tabular}
+	\end{center}
+	\end{table}
+	
 \end{document}
