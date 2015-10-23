@@ -1,0 +1,316 @@
+\documentclass[12pt]{article}
+
+\usepackage{array}
+
+\iffalse
+
+\fi
+\newcolumntype{L}{>{\centering\arraybackslash}m{4.5cm}}
+\begin{document}
+	\begin{titlepage}
+	\title {Test Plan}
+	\maketitle
+		\begin{center}
+		SE 2XA3\\
+		\author{
+		Hui Chen\hspace{128pt}chenh43	
+		\\*Nareshkumar Maheshkumar\hspace{35pt}maheshn 
+		\\*Sam Hamel\hspace{118pt}hamels2 \\
+		}
+
+		Group E
+		\end{center}
+	\end{titlepage}
+	
+	\newpage
+	\tableofcontents
+	\listoftables
+	
+	\newpage
+	\begin{table}[h]
+	\caption{Revision History Table}
+	\begin{tabular}{|l|c|r|p{6cm}|}
+  	\hline
+  	Revision \# & Date & Team Member & Description of Change\\
+  	\hline
+  	0 & October 20 & Hui Chen & Started Test Plan document\\
+  	\hline
+  	0 & October 21 & Sam Hamel Hui Chen & Test Plan Revision 0 finished\\
+  	\hline
+  	0 & October 22 & Nareshkumar Maheshkumar & Proofread\\
+  	\hline
+	\end{tabular}
+	\end{table}
+	\newpage
+	
+	\section{General Information}
+	\subsection{Purpose}    
+	The purpose of this testing plan is to build developer confidence for the correctness of the program and to receive qualitative feedback on the user interface. The plan will address the elements and items related to the production of the TexasHoldEm game. The objective is to detail the tests responsible for each task required of the game, to define the tools and methods needed to conduct the tests and to outline all tasks and its schedule. 
+
+	\subsection{Scope}
+	The scope of the testing plan is to test functional and nonfunctional requirements of the program, and the testing of the GUI for the program. The test plan will not verify correctness and will not be exhaustive in nature, rather it will rely on testing normal and boundary cases of the program for a multitude of different situations in order to build confidence that all errors have been accounted for and dealt with appropriately. 
+	
+	\subsection{Constraints}
+	The program cannot be verified through exhaustive testing due to this being infeasible in the timeframe of completing the project. Verification of correctness through mathimatical forumalas or other means is also infeasible due to lack of experience of verification methods by the developers. Therefore there is no guaranteeing that the program will be error free. 
+	
+	\subsection{Acronyms, Abbrebiations, and Symbols}
+	\begin{table}[h]
+	\caption{Acronym/Abbreviation Table}
+	\begin{tabular}{|c|c|L|}
+  	\hline
+  	Acronym/Abbreviation & Meaning & Description\\
+  	\hline
+  	GUI & Graphical User Interface & \multicolumn{1}{m{4.5cm}|} {The GUI allows users to interact with the application through graphical icons}\\
+  	\hline
+  	SRS & Software Requirements Specification & \multicolumn{1}{m{4.5cm}|} {Document reporting objectives, intended 
+features, risks and constraints of the product}\\
+	\hline
+	Junit & N/A & \multicolumn{1}{m{4.5cm}|} {A unit testing framework for Java applications}\\
+	\hline
+	PoC & Proof of Concept & \multicolumn{1}{m{4.5cm}|} {Presentation with a purpose to demonstrate 
+that the project is feasible}\\
+	\hline
+	\end{tabular}
+	\end{table}
+	
+	
+	\section{Plan}
+	\subsection{Structural System}
+    \textbf{Recovery: } Recovery testing will be manually and dynamically tested; the game will be run and will be manually crashed at random times, and when re-opened, the system will be manually checked by developers to see if it behaved as the requirements documents specified for recovery scenarios. 
+
+	\textbf{Test case 1: }save file doesn’t exist, program process is closed through system OS
+Expected results: When program is re-opened the program is in its initial state.
+
+	\textbf{Test case 2: }save file exists, program process is closed through system OS
+Expected results: When program is re-opened the program is in its saved state.
+
+	\textbf{Test case 3: }save file doesn’t exist, Computer is shut down while program is running
+Expected results: When program is re-opened the program is in its initial state.
+
+	\textbf{Test case 4: } save file exists, Computer is shut down while program is running
+Expected results: When program is re-opened the program is in its saved state.
+
+	\subsection{Functional}
+	\subsubsection{Features not to be Tested}
+	\begin{itemize}
+	\item no tests will be done for the cultural and political requirements stated in the SRS
+	\item no tests will be done for the legal requirements in the SRS
+	\item no tests will be done for the help page	
+	\end{itemize}
+	
+	\subsubsection{Features to be Tested in PoC}
+	All tests will be conducted through automatic testing, more specifically, unit testing with the use of Junit. These tests will be necessary to ensure the overall functionality of the product.\\
+
+	\noindent \textbf{Management Of Player Bets, Chips And Pot}\\
+	\\
+	\textbf{Test case 1:} Starting a game and assigning chips to players \\
+    \textbf{Input:} player chooses bet option and chooses a bet amount\\
+    \textbf{Initial State:} Game started, player’s turn\\
+	\textbf{Expected Output:} player starts with 2000 chips and the amount entered for bet is added to the pot\\
+    
+    \noindent \textbf{Test case 2:} Players have made their bet and one player folds\\
+    \textbf{Input:} N/A\\
+    \textbf{Initial State:} both player chose their move, one player folds\\
+    \textbf{Expected Output:} the player that didn’t fold gets the pot added to his chips\\
+
+    \noindent \textbf{Test case 3:} Both players' hands are evaluated to be equal\\
+    \textbf{Input:} N/A\\
+    \textbf{Initial State:} both players have made their moves and the hands are evaluated\\
+	\textbf{Expected Output:} each player gets half of the pot if the pot amount is even, (pot-1)/2 if the amount is odd, and 1 is added to the next pot\\
+
+    \noindent \textbf{Test case 4:} player loses round\\
+    \textbf{Input:} Player1 hand, Player2 hand, pot where Player2 hand strength > Player1 hand 
+    strength\\
+    \textbf{Initial State:} round over, players put down cards\\
+    \textbf{Expected Output:} Player2 chips increase by amount of pot, pot empties\\
+
+    \noindent \textbf{Test case 5:} player wins round\\
+    \textbf{Input:} Player1 hand, Player2 hand, pot where Player2 hand strength < Player1 hand 
+    strength\\
+    \textbf{Initial State:} round over, players put down cards\\
+    \textbf{Expected Output:} Player1 chips increase by amount of pot, pot empties\\
+
+    \noindent \textbf{Test case 6:} Player1 bets more chips than Player2 has, Player2 wins\\
+    \textbf{Input:} Player1 bet, Player2 bet\\
+    \textbf{Initial state:} Player1 bet, Player2 calls\\
+    \textbf{Expected Output:} Player2 gains twice the amount of chips they bet, Player1 gains the
+    rest of the chips\\
+
+    \noindent \textbf{Test case 7:} Game end\\
+	\textbf{Input:} a player chooses any option and uses up all their chips\\
+	\textbf{Initial State:} game in progress\\
+	\textbf{Expected Output:} At the end of the turn, the game should end and display the winner. At this point, the user can choose to play again. \\
+
+    \noindent \textbf{Distribution and Handling of Cards}\\
+    \\
+    \textbf{Test case 1:} Distribute community and hand cards\\
+    \textbf{Input:} N/A\\
+	\textbf{Initial State:} Game start, shuffle deck\\
+	\textbf{Expected Output:} cards are shuffled, 2 cards are dealt to the player and 3 cards on community\\
+
+   	\noindent \textbf{ Test case 2:} Deal cards after both players choose an action\\
+    \textbf{Input:} N/A\\
+    \textbf{Initial State:} game in progress, players made their moves\\
+    \textbf{Expected Output:} The game should distribute one more card to the community hand\\
+
+    \noindent \textbf{Test case 3:} One player chooses to go all in \\
+    \textbf{Input:} one player choose all in\\
+    \textbf{Initial State:} game in progress\\
+    \textbf{Expected Output:} The other player will only have 2 options, call or fold. If the action is  
+call, all community cards are dealt and both player’s hands are evaluated.  \\
+
+    \noindent \textbf{Player Choices }\\
+    \\
+    \textbf{Test case 1:} check/call\\ 
+    \textbf{Input:} player chooses check/call on their turn\\
+    \textbf{Initial State:} game in progress\\
+	\textbf{Expected Output: }The game should automatically deduct the same number of chips from the player as the other player’s bet and add the amount to the pot, and the game continues. The system should be able to keep track of the other player’s bet in order for the automatic deduction to work. \\
+
+	 \noindent \textbf{Test case 2:} fold\\
+	\textbf{Input:} a player chooses to fold\\
+	\textbf{Initial State:} game in progress\\
+	\textbf{Expected Output:} the other player adds the pot to their chips and a new round should start.\\
+ 
+    \noindent \textbf{Test case 3:} raise \\
+    \textbf{Input:} Player raises by a certain amount that’s less than the player’s chips\\
+    \textbf{Initial State: }game in progress\\
+	\textbf{Expected Output:} The number of chips raised will be added to the pot and deducted from
+the player\\
+    
+    \noindent \textbf {Test case 4:} raise error \\
+    \textbf{Input:} Player raises by an amount that’s greater than the player’s chips\\
+	\textbf{Initial State:} game in progress\\
+	\textbf{Expected Output:} The game should prompt the user with an error message and return to
+	a state before the message appeared.\\
+	
+	\noindent \textbf{Save and Load System} \\
+	\\
+	\noindent \textbf{Test case 1:} Saving a game\\
+	\textbf{Input:} user requests save\\
+	\textbf{Initial State:} Game in progress\\
+	\textbf{Expected Output:} The game is saved onto a local file with the relevant information regarding chips, pot, game state, turn, etc. 
+	
+	\noindent \textbf{Test case 1:} Loading a game\\
+	\textbf{Input:} user requests load\\
+	\textbf{Initial State:} any state\\
+	\textbf{Expected Output:} The game is loaded with all relevant information required for the game to resume
+	
+	\noindent \textbf{Test case 1:} Loading error\\
+	\textbf{Input:} user requests load but no file is found\\
+	\textbf{Initial State:} any state \\
+	\textbf{Expected Output:} The game should display an error \\
+
+The GUI will be tested through manual testing. Individual elements such as buttons and images are tested for correctness, reliability and speed. Making sure that the GUI elements update promptly and accurately will help satisfy the speed and appearance requirements. The appearance requirement will be tested through a survey of players where they are asked to play the game and have a series of questions for the user regarding their experience with the interface recorded. The speed requirement can be tested through automatic unit testing, where the amount of time to execute commands is recorded. 
+
+	
+	\subsubsection{Functional Unit Testing} 
+    All unit testing will be done automatically using Junit\\
+    \\
+    \textbf{Player: } \\
+    \indent \indent Each one of Player’s methods will be tested for correct outputs
+using various inputs including boundary conditions
+        Each one of Player’s fields will be tested for correct outputs\\
+    \\
+    \textbf{Deck:} \\
+	\indent \indent Each one of Deck’s methods will be tested for correct outputs
+using various inputs including boundary conditions
+        Each one of Deck’s fields will be tested for correct outputs\\
+    \\
+    \textbf{Game:} \\
+	\indent \indent Each one of Game’s methods will be tested for correct outputs
+using various inputs including boundary conditions
+        Each one of Game’s fields will be tested for correct outputs\\
+	\\
+    \textbf{Card:}\\
+	\indent \indent Each one of Card’s methods will be tested correct outputs 
+using various inputs including boundary conditions
+        Each one of Card’s fields will be tested for correct outputs
+
+	\subsection{Functional System}
+	\subsubsection{Performance Requirements:}
+	\textbf{Speed requirements:}\\
+	\\
+    Speed requirements will be automatically tested using using Junit and Java stopwatch utility.
+	\\
+	\textbf{Test case 1:}Start program\\
+	\textbf{Initial State:} N/A\\
+	\textbf{Input:} N/A\\
+	\textbf{Expected Output:} stopwatch returns that program window starts up in less than 3 seconds\\
+
+	\noindent \textbf{Test case 2:} Computer’s play method is called\\
+	\textbf{Initial state(s):} game started, player has made move, computer's turn\\
+	\textbf{Input:} Card hand, chips, pot\\
+	\textbf{Expected results:} stopwatch returns that play method returns results in less than 2 seconds\\
+
+	\noindent \textbf{Test case 2.1: Empty hand error}\\
+	\textbf{input:} Card hand (empty), chips, pot\\
+	\textbf{expected results:} null pointer exception is returned\\
+
+	\noindent \textbf{Test case 2.2: Zero chip error}\\
+	\textbf{input:} Card hand, zero chips, pot\\
+	\textbf{expected results:} an error should be called\\
+
+	\noindent \textbf{Test case 2.3: Zero pot error}\\
+	\textbf{input:} Card hand, chips, zero pot\\
+	\textbf{expected results:} division by zero error\\
+
+	\noindent \textbf{Precision requirements:}\\
+    Precision requirements will be automatically tested using Junit and a Texas HoldEm hand 
+            probability database.\\
+
+    \noindent \textbf{Test case 1:} Hand strength method is called\\
+    \textbf{initial state(s):} game has started, player has made move, computer’s turn\\
+    \textbf{inputs:} Card hand ( all possible card hand combinations are used as inputs)\\
+    \textbf{expected results:} Hand Strength returns a double value, rounded to 4 decimals, equal
+    to corresponding double (rounded to 4 decimals) in Texas HoldEm hand probability
+    database.\\
+    
+    \noindent \textbf{Test case 2:} Card accuracy \\
+    \textbf{Initial state:} game begins\\
+    \textbf{Input:} N/A\\
+    \textbf{Expected Output:} The two players’ hands are dealt along with the community cards. There should not be any duplicate cards in the deck. \\
+
+	\noindent \textbf{Availability requirements:}\\
+    Availability requirements testing will consist of all testing specified in this document,
+using machines running OSX, Windows, and Linux.\\
+    \textbf{Expected results:} All results are consistent across all the platforms that were tested on
+
+
+\subsubsection*{Regression Tests:}
+Regression will be tested using automatic testing. With the use of Junit, any change to the system that invalidate the previous positive test results will appear as a fail and therefore shows that the change needs to be revised.
+
+\subsubsection*{Error Handling Tests:}
+Error handling will be tested using manual and automatic tests. When an error occurs, the system should display some form of error prompt to alert the user, and have the error logged. The logged error will be tested automatically for accuracy and the prompt will be manually tested for accuracy and the follow up action should resolve the error. 
+
+\subsubsection*{Usability Tests:}
+Usability requirements will be tested through manual testing. A small sample (1-5 people) of non beginners ( people who are familiar with the rules of Texas Hold'em, and have played before), will play a round of the game to completion. They will then be asked to rate the usability on a scale of 1-10.
+
+\subsubsection*{Learnability Tests:}
+Learnability will be tested through manual testing. A small sample (1-5 people), of beginners will be selected and they will be required to perform tasks such as going through the help page and then playing a game based on what they’ve learned from the help page. They will then rate its usefulness on a scale of 1-10.
+
+\subsubsection*{Playability Tests:}
+Playability will be tested through dynamic, unit system testing. If the system tests prove to be adequate and conclusive, then the game will be playable. 
+
+	\section{Schedule}
+	
+	\begin{table}[h]
+	\caption{Schedule Table}
+	\begin{tabular}{|c|c|L|}
+  	\hline
+  	Date & Team Member & Task\\
+  	\hline
+  	October 30 & Nareshkumar Maheshkumar & \multicolumn{1}{m{4.5cm}|}{Write unit test cases relating to PoC}\\
+  	\hline
+  	November 2 & All member & \multicolumn{1}{m{4.5cm}|}{Execute Functional Testing Plan} \\
+  	\hline
+	November 8 & All member & \multicolumn{1}{m{4.5cm}|}{Create unit test for final product features}\\
+  	\hline
+  	November 14 & All member & \multicolumn{1}{m{4.5cm}|}{Conduct manual testing on the game}\\
+  	\hline
+  	Ongoing & All members & \multicolumn{1}{m{4.5cm}|}{Update and/or revise test cases when new methods or classes are added}\\
+  	\hline
+  	Ongoing & All members & \multicolumn{1}{m{4.5cm}|} {Static testing for every method and class}\\
+  	\hline
+	\end{tabular}
+	\end{table}
+\end{document}
