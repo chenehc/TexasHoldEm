@@ -26,14 +26,30 @@
     \section{Revision History}
     \section{Module Guide For No Limit Texas HoldEm Program(NLTP)}
     \subsection{Introduction}
+    No Limit Texas HoldEm program follows model decomposition based on the principle of information hiding laid out by Parnas. The system is designed to be adaptable because possilbe future changes have been accounted for in the form of secrets. This flexibility will allow for easy revision control and will allow developers to quickly modify the program as needed. This design document includes in it a module guide (MG) of the system which gives a brief overview of the modules and allows both designers and maintainers to easily identify the parts of the software. The MG directly relates to the SRS with each requirement being fulfilled by either one module or the conjuction of several modules. For greater detail of the modules and what is needed to implement them there is the Module Interface Specifications (MIS), while the shedule of when these modules will be implemented is included in the Gantt and Pert charts.
     \subsection{Anticipated and Unlikely Changes}
     \subsubsection{Anticipated Changes}
-    \textbf{AC1}
+    \textbf{AC1:} The specific hardware on which the software is running\\
+    \textbf{AC2:} The algorithm used for hand ranking\\
+    \textbf{AC3:} The deck shuffling algorithm\\
+    \textbf{AC4:} The card distribution methods\\
+    \textbf{AC5:} The pot/chip distribution methods\\
+    \textbf{AC6:} AIOpponent chip betting methods\\
+    
      
     \subsubsection{Unlikely Changes}
-    \textbf{UC1}
+    \textbf{UC1:} 
     
     \section{Module Hierarchy}
+    This section provides an overview of the module design. Modules are summarized in a hierarchy decomposed by secrets in Table 1. The modules listed below, which are leaves in the hierarchy tree, are the modules that will actually be implemented.\\
+    \textbf{M1: TexasHoldEm}\\
+    \textbf{M2: Pot}\\
+    \textbf{M3: Game}\\
+    \textbf{M4: Hand}\\
+    \textbf{M5: Deck}\\
+    \textbf{M6: Player}\\
+    \textbf{M7: AIOpponen}\\
+    \textbf{M8: Card}\\
     \begin{table}[h]
     \caption{Module Hierarchy}
     \begin{tabular}{p{4cm}p{5cm}}
@@ -55,9 +71,69 @@
     \end{table}
 	
 	\section{Connection Between Requirements and Design}
+    The design of the system is intended to satisfy the requirements specified in the SRS. The system is decomposed into modules, and the connection between requirements and modules is listed in Table 3.
 	\section{Module Decomposition}    
     \subsection{Hardware Hiding Module}
+    Services: Includes programs that provide externally visible behavior of the system as specified in the software requirements specification (SRS) documents. This module serves as a communication layer between the hardware-hiding module and the software decision module. The programs in this module will need to change if there are changes in the SRS. \\
+    Secrets: The contents of the required behaviors. \\
+    Implemented By: –\\
+    \subsubsection{Texas Holdem Module}
+    Services: Displays GUI\\
+
+    Secrets: GUI implementation\\
+
+    Implemented by: NLTP\\
+
+    \subsubsection{Pot Module}
+    Services: Keeps track of chips in pot, and distributes chips to players\\
+
+    Secrets: Method of distributing chips\\ 
+
+    Implemented by: NLTP\\
+
+    \subsubsection{Game module}
+    Services: Manages the state of the game\\
+    Secrets: How the game transitions between states \\
+    Implemented by: NLTP\\
+
     \subsection{Behaviour-Hiding Module}
+    Services: Includes data structure and algorithms used in the system that do not provide direct interaction with the user. \\
+    Secrets: The design decision based on mathematical theorems, physical facts, or programming considerations. The secrets of this module are not described in the SRS. \\
+    Implemented By: –\\
+
+    \subsubsection{Hand Module}
+    Services: Keeps track players’ cards, and calculates hand ranking\\
+
+    Secrets: Algorithm for calculating ranking of cards \\
+
+    Implemented by: NLTP\\
+
+    \subsubsection{Deck Module}
+    Services: stores, shuffles and distributes cards\\
+    Secrets: Method of card distribution\\
+    Implemented by: NLTP\\
+
+    \subsubsection{Player Module}
+    Services: let’s user fold/bet\\
+
+    Secrets: Method of betting/folding\\
+
+    Implemented by: NLTP\\
+
+    \subsubsection{AIOpponnent Module}
+    Services: Let’s AI fold/bet\\
+
+    Secrets: Algorithm for calculating whether to bet/fold\\
+
+    Implemented by: NLTP\\
+
+    \subsubsection{Card Module}
+    Services: object that represents playing cards\\
+
+    Secrets: Card Contructor\\
+
+    Implemented by: NLTP\\
+
     \subsection{Software Decision Module}
     
     \section{MIS of TexasHoldEm Module}
