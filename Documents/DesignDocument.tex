@@ -141,8 +141,7 @@
     \subsection{Software Decision Module}
     
     \section{MIS of TexasHoldEm Module}
-    \subsection{Secret}
-    \subsection{Service}
+    
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for TexasHoldEm Module}
@@ -178,8 +177,7 @@
     \textbf{transition} - Displays an error corresponding to the input  
     \newline
      \section{MIS of Pot Module}
-     \subsection{Secret}
-    \subsection{Service}
+     
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for Pot Module}
@@ -220,8 +218,7 @@
     \textbf{Output} - Returns the value corresponding to the parameter bet
     \newline
      \section{MIS of Game Module}
-     \subsection{Secret}
-    \subsection{Service}
+     
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for Game Module}
@@ -275,8 +272,7 @@
  	\newline 
  	
  	\section{MIS of Deck Module}
-     \subsection{Secret}
-    \subsection{Service}
+     
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for Deck Module}
@@ -304,8 +300,7 @@
     \textbf{Transition} - Modifies the Deck so that it is randomized\\
  	\newline
  	\section{MIS of Card Module}
-     \subsection{Secret}
-    \subsection{Service}
+    
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for Card Module}
@@ -330,8 +325,7 @@
     \textbf{Output} - return value of corresponding parameter\\
  	\newline
  	\section{MIS of Player Module}
-     \subsection{Secret}
-    \subsection{Service}
+     
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for Player Module}
@@ -369,8 +363,7 @@
    	\textbf{Transition} - Modifies the state of chips
  	\newline
  	\section{MIS of AIOpponent Module}
-     \subsection{Secret}
-    \subsection{Service}
+     
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for AIOpponent Module}
@@ -390,8 +383,6 @@
     getAction will determine the move the AI will take by evaluating the current state of the board and its current Hand, and will call upon the Game module for its action. 
     \newline
     \section{MIS of Hand Module}
-     \subsection{Secret}
-    \subsection{Service}
     \subsection{Exported Access Programs}
     \begin{table}[h]
     \caption{Exported Access Programs for Hand Module}
@@ -429,6 +420,54 @@
 		\label{fig1: Figure1}
 		\end{figure}
     \section{Traceability Matrix}
+    \begin{table}[h]
+    \caption{Traceability Matrix Between the Module And Requirements}
+    \begin{tabular}{p{4cm}p{2cm}p{2cm}p{4cm}}
+    Requirements & Modules\\
+    \hline
+    R1 & N/A\\
+    \hline
+    R2 & M1\\
+    \hline
+    R3 & M2,M6,M7\\
+    \hline
+    R4 & M2,M3\\
+    \hline
+    R5 & M6,M7\\
+    \hline
+    R6 & M4,M8\\
+    \hline
+    R7 & M3\\
+    \hline
+    R8 & M2\\
+    \hline
+    R9 & M2\\
+    \hline
+    R10 & M2,M3\\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \begin{table}[h]
+    \caption{Traceability Matrix Between Anticipated Changes And Requirements}
+    \begin{tabular}{p{4cm}p{2cm}p{2cm}p{4cm}}
+    Anticipated Changes(AC) & Modules\\
+    \hline
+    AC1 & N/A\\
+    \hline
+    AC2 & M4\\
+    \hline
+    AC3 & M5\\
+    \hline
+    AC4 & M8\\
+    \hline
+    AC5 & M2\\
+    \hline
+    AC6 & M7\\
+    \hline
+    \end{tabular}
+    \end{table}
+    \newpage
     \section{Schedule}
         
     \end{document}
