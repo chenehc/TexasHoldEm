@@ -1,4 +1,4 @@
-package proofOfConcept;
+package texasholdem;
 
 public class AIOpponent extends Player{
 	
