@@ -30,13 +30,7 @@ public class AIOpponent{
 			}
 			return (int)d;
 		}
-		if(hand.getStrength()>=10000){
-			double d = ai.getChips()*0.35;
-			if((int)d == 0){
-				return ai.getChips();
-			}
-			return (int)d;
-		}
+		
 		if(hand.getStrength()>=10000){
 			double d = ai.getChips()*0.3;
 			if((int)d == 0){
