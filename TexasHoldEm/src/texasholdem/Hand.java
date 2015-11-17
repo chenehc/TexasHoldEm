@@ -3,14 +3,15 @@ package texasholdem;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
-public class Hand extends ArrayList<Card> {
+public class Hand extends ArrayList<Card>{
     int strength;
     
     public void setStrength(int x){
     	this.strength = x;
     }
-    
     
     public int getStrength(){
     	boolean flush = false;
@@ -217,13 +218,6 @@ public class Hand extends ArrayList<Card> {
         }
         //HIGH CARD
         return clone.get(0).getRank();
-        
-        
-        
-        
-        
-        
-       
     }
     
     public String toString(){
@@ -240,7 +234,6 @@ public class Hand extends ArrayList<Card> {
     		hand = hand+ this.get(i).toString() + " ";
     	}
     	return hand;
-    }
-    
+    }    
     
 }

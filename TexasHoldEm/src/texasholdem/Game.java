@@ -30,6 +30,14 @@ public class Game{
 	}
 	
 	/**
+	 * Method that returns the value of parameter pot
+	 * @return Pot
+	 */
+	public Pot getPot(){
+		return pot;
+	}
+	
+	/**
 	 * Method that returns the value of parameter currentPlayer
 	 * @return int
 	 */

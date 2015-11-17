@@ -52,7 +52,7 @@ public class Pot {
 	public void raise(int amt){
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips())
-				TexasHoldem.raiseError();
+				TexasHoldEm.raiseError(0);
 			else {
 				this.pot += amt;
 				player1.loseChips(amt);
@@ -63,7 +63,7 @@ public class Pot {
 		}
 		else {
 			if (amt > player2.getChips())
-				TexasHoldem.raiseError();
+				TexasHoldEm.raiseError(0);
 			else {
 				this.pot += amt;
 				hasBet = true;
