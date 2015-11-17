@@ -1,24 +1,43 @@
 package texasholdem;
 
-public class Card implements Comparable<Card>{
+/**
+ * The class that contains objects that represent playing cards
+ * @author Naresh
+ */
+public class Card {
     private int rank;
     private char suit;
     
-    
+/**
+ * Constructor
+ *    
+ * @param rank The rank of the card(can range from 1 tp 13)
+ * @param suit The suit of the card(can be one of: C,S,D,H)
+ */
     public Card (int rank, char suit){
         this.rank = rank;
-        this.suit = suit;
-        
+        this.suit = suit;        
     }
     
+/**
+ * Getter for rank
+ * @return Return rank of card passed to the constructor(can range from 1 tp 13)
+ */
     public int getRank() {
         return rank;
     }
 
+/**
+ * Getter for suit
+ * @return Return suit of card passed to the constructor(can be one of: C,S,D,H)
+ */
     public char getSuit() {
         return suit;
     }
-    
+  
+/**
+ * The textual representation of the card rank and suit
+ */
     public String toString(){
         return rank+""+suit;
     }
@@ -42,6 +61,8 @@ public class Card implements Comparable<Card>{
 		return null;
     }
 
+<<<<<<< HEAD
+=======
     public String suitToString(){
     	switch (this.suit){
     	case 'C': return "Clubs";
@@ -65,4 +86,5 @@ public class Card implements Comparable<Card>{
 		
 	}
 
+>>>>>>> b62563a38df1d1f39815e052f714a24a2041e0fa
 }
