@@ -75,14 +75,21 @@ public class AIOpponent{
 	}
 	
 	public void bet(int bet){
-		if(bet > this.choose()){
-			pot.fold();
-		}
-		else if(bet < this.choose()){
-			pot.raise(this.choose()-bet);
+			if(ai.getHand().size()>2){
+			if(bet > this.choose()){
+				pot.fold();
+			}
+			else if(bet < this.choose()){
+				pot.raise(this.choose()-bet);
+			}
+			else{
+				pot.call();
+			}
+			
 		}
 		else{
 			pot.call();
 		}
+	
 	}
 }
