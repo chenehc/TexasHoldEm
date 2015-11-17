@@ -8,10 +8,11 @@ public class Game{
     private Hand p2hand;
     private int cardCount;
     private boolean gameEnd;
+    private TexasHoldEm view;
     private Pot pot;
     
 	//constructor
-	public Game(Player player1, Player player2){
+	public Game(Player player1, Player player2, TexasHoldEm view){
 		this.player1 = player1;
 		this.player2 = player2;
 		this.currentPlayer = 0;
@@ -20,6 +21,7 @@ public class Game{
 		deck.Shuffle();
 		this.gameEnd = false;
 		pot = new Pot(player1, player2, this);
+		this.view = view;
 	}
 	
 	/**
@@ -29,6 +31,9 @@ public class Game{
 		this.currentPlayer = (this.currentPlayer + 1) % 2 ;
 	}
 	
+	public TexasHoldEm getView(){
+		return view;
+	}
 	/**
 	 * Method that returns the value of parameter pot
 	 * @return Pot
@@ -105,6 +110,7 @@ public class Game{
 	 * Method that ends the round and starts a new round
 	 */
 	public void newRound(){
+		view.reset();
 		deal();
 		gameEnd = false;
 	}

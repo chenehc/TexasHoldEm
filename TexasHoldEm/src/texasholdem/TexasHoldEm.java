@@ -21,6 +21,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 import com.sun.glass.events.KeyEvent;
+import javax.swing.JTextArea;
+import java.awt.BorderLayout;
 
 
 public class TexasHoldEm extends JFrame implements ActionListener  {
@@ -38,7 +40,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 
 	private JPanel dealerPanel, communityPanel, btnPanel, playerPanel;
 	private JButton betBtn, callBtn, dealBtn, foldBtn;
-	private JLabel playerChipLabel, dealerChipLabel, potLabel, dealerLabel, communityLabel, playerLabel;
+	private JLabel playerChipLabel, dealerChipLabel, potLabel, dealerLabel, communityLabel;
 	private JLabel[] playerCards, dealerCards, communityCards;
 	private JTextField betField;
 	private Border sunkIn = BorderFactory.createBevelBorder(BevelBorder.LOWERED); 
@@ -46,35 +48,48 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	private boolean dealt = false;
 	private int communityCardCount = 0;
 	private int communityWidth = 5;
+	private JTextArea console;
+	private JLabel lblConsole;
 	
 	//constructor
 	public TexasHoldEm(){
 		super("Texas Hold Em");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(600,450);
+		setSize(590,430);
 		setLocationRelativeTo(null);
 		setBackground(Color.GRAY);
+		setResizable(false);
 		
 		background = new ImageIcon("Cards/b.gif");
 		
 		player1 = new Player();
 		player2 = new Player();
 
-		Game game = new Game(player1, player2);
+		game = new Game(player1, player2, this);
 		pot = game.getPot();
 		
 		addMenu();
 		addPanel();
 		
 		//add the components onto the frame
-		add(menuBar);
-		add(dealerPanel);
-		add(dealerLabel);
-		add(communityPanel);
-		add(communityLabel);
-		add(btnPanel);
-		add(playerPanel);
-		add(playerLabel);
+		setJMenuBar(menuBar);
+		getContentPane().setLayout(null);
+		getContentPane().add(dealerLabel);
+		getContentPane().add(dealerPanel);
+		getContentPane().add(communityLabel);
+		getContentPane().add(communityPanel);
+		getContentPane().add(btnPanel);
+		getContentPane().add(playerPanel);
+		getContentPane().add(console);
+		
+		JLabel lblPlayerCards = new JLabel("Player Cards");
+		lblPlayerCards.setBounds(386, 193, 79, 14);
+		getContentPane().add(lblPlayerCards);
+		
+		lblConsole = new JLabel("Console");
+		lblConsole.setBounds(103, 193, 46, 14);
+		getContentPane().add(lblConsole);
+		log("");
 	}
 	
 	private void addMenu(){
@@ -118,7 +133,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	
 	private void addPanel(){
 		dealerLabel = new JLabel();
-		playerLabel = new JLabel();
 		communityLabel = new JLabel();
 		
 		playerChipLabel = new JLabel("Chips: ");
@@ -150,29 +164,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		betField = new JTextField("Enter bet amount: ");
 		btnPanel.add(betField);
 		
-		//create community panel that shows the community cards
-		communityPanel = new JPanel();
-		communityLabel.setText("Community Cards");
-		communityLabel.setHorizontalAlignment(JLabel.CENTER);
-		communityLabel.setBounds(dealerLabel.getWidth() + 5, 5, communityPanel.getWidth(), 20);
-		
-		communityPanel.setBorder(sunkIn);
-		communityPanel.setBounds(181, 30, 395, 107);
-		
-		communityCards = new JLabel[5];
-		
-		//create a player panel that shows the player's cards
-		playerPanel = new JPanel();
-		playerLabel.setText("Player Cards");
-		playerLabel.setHorizontalAlignment(JLabel.CENTER);
-		playerLabel.setBounds(5, btnPanel.getBounds().y + btnPanel.getHeight() + 5, btnPanel.getWidth(), 25);
-		playerPanel.setLayout(null);
-		playerPanel.setBorder(sunkIn);
-		
-		playerPanel.setBounds(205, 217, 161, 107);
-		
-		playerCards = new JLabel[2];
-		
 		//create a dealer panel to show dealer's card back
 		dealerPanel = new JPanel();
 		dealerPanel.setLayout(null);
@@ -182,11 +173,38 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 		dealerLabel.setText("Dealer Cards");
 		dealerLabel.setHorizontalAlignment(JLabel.CENTER);
-		dealerLabel.setBounds(5, 5, dealerPanel.getWidth(), 20);
+		dealerLabel.setBounds(5, 5, 161, 20);
 		
 		dealerCards = new JLabel[2];
-		btnPanel.setBounds(5, dealerPanel.getHeight() + 10 + 30 + 5, dealerPanel.getWidth() + 15 + communityPanel.getWidth(), 30);
 		
+		//create community panel that shows the community cards
+		communityPanel = new JPanel();
+		communityPanel.setBorder(sunkIn);
+		communityPanel.setBounds(181, 30, 395, 107);
+		
+		communityLabel.setText("Community Cards");
+		communityLabel.setHorizontalAlignment(JLabel.CENTER);
+		communityLabel.setBounds(166, 5, 395, 20);
+
+		btnPanel.setBounds(5, 152, 571, 30);
+
+		//create a player panel that shows the player's cards
+		playerPanel = new JPanel();
+		playerPanel.setLayout(null);
+		playerPanel.setBorder(sunkIn);
+		playerPanel.setBounds(340, 217, 161, 107);
+		
+//		playerLabel.setText("Player Cards");
+//		playerLabel.setHorizontalAlignment(JLabel.CENTER);
+//		playerLabel.setBounds(5, btnPanel.getBounds().y + btnPanel.getHeight() + 5, btnPanel.getWidth(), 25);
+	
+		playerCards = new JLabel[2];
+
+		communityCards = new JLabel[5];
+		
+		console = new JTextArea();
+		console.setEditable(false);
+		console.setBounds(10, 217, 234, 107);
 	}
 
 	private void createPlayerCards(){
@@ -217,7 +235,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		dealerPanel.updateUI();
 	}
 	
-	private void createCommunityCard(){
+	public void createCommunityCard(){
+		communityCards[communityCardCount] = new JLabel();
 		ImageIcon communityCardIcon = new ImageIcon(player1.getHand().get(communityCardCount + 2).getFileName());
 		communityCards[communityCardCount].setIcon(communityCardIcon);
 		communityCards[communityCardCount].setBounds(communityWidth, 5, communityCardIcon.getIconWidth(), communityCardIcon.getIconHeight());
@@ -239,22 +258,77 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		case 1: JOptionPane.showMessageDialog(board, "Deal First", "Error", JOptionPane.ERROR_MESSAGE); break;	
 		}
 	}
-
+	
+	public void log(String s){
+		Thread th = new Thread(){
+			@Override
+			public void run(){
+				console.setText(s);
+				try{
+					Thread.sleep(2000);
+				}catch(InterruptedException e){
+					e.printStackTrace();
+				}
+				console.setText("Player 1 Chips: " + player1.getChips()
+								+"\nPlayer 2 Chips: " + player2.getChips()
+								+"\nPot: " + pot.getPot());
+			}
+		};
+		th.start();
+	}
+	
+	private void updateCommunity(){
+		int count = pot.getCount();
+		if (count == 2) 
+			game.next_card();
+			createCommunityCard();
+			pot.resetCount();
+	}
+	
+	public void reset(){
+		for (int i=0; i < 2; i++){
+			dealerCards[i] = null;
+			playerCards[i] = null;
+		}
+		
+		for (int i=5; i < 5; i++){
+			communityCards[i] = null;
+		}
+		
+		communityPanel.updateUI();
+		dealerPanel.updateUI();
+		playerPanel.updateUI();
+		
+		dealt = false;
+		dealBtn.setEnabled(true);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (!dealt) TexasHoldEm.raiseError(1);
+		if (e.getSource() == dealBtn){
+			game.deal();
+			communityCardCount = 0;
+			createPlayerCards();
+			createDealerCards();
+			createCommunityCard();
+			createCommunityCard();
+			dealt = true;
+			dealBtn.setEnabled(false);
+			
+		}
+		else if (!dealt) {
+			TexasHoldEm.raiseError(1);
+		}
 		else{
 			if (e.getSource() == callBtn){
 				pot.call();
+				updateCommunity();
 			}else if (e.getSource() == betBtn){
 				pot.raise(Integer.parseInt(betField.getText()));
+				updateCommunity();
 			}else if (e.getSource() == foldBtn){
 				pot.fold();
+				reset();
 			}
-		}
-		if (e.getSource() == dealBtn){
-			dealt = true;
-			game.deal();
 		}
 	}
 	

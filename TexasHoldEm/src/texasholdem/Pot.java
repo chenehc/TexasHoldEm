@@ -7,6 +7,7 @@ public class Pot {
 	private boolean hasBet = false;
 	private Player player1,player2;
 	Game game;
+	private int actionCount = 0;
 	
 	//constructor
 	public Pot (Player player1, Player player2, Game game){
@@ -32,6 +33,7 @@ public class Pot {
 	 * Method collects chips from the player if the other player made a raise previously
 	 */
 	public void call(){
+		actionCount++;
 		if (hasBet) {
 			if (game.getCurrentPlayer() == 0){
 				player1.loseChips(getBet());
@@ -50,6 +52,7 @@ public class Pot {
 	 * @param amt int - the amount of chips the player is raising
 	 */
 	public void raise(int amt){
+		actionCount++;
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips())
 				TexasHoldEm.raiseError(0);
@@ -82,6 +85,13 @@ public class Pot {
 		return this.bet;
 	}
 	
+	public int getCount(){
+		return this.actionCount;
+	}
+	
+	public void resetCount(){
+		this.actionCount = 0;
+	}
 	/**
 	 * Method gets the value of parameter player1Folded()
 	 * @return Player1Folded boolean
