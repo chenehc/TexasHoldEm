@@ -4,7 +4,7 @@ package texasholdem;
  * The class that contains objects that represent playing cards
  * @author Naresh
  */
-public class Card {
+public class Card implements Comparable<Card>{
     private int rank;
     private char suit;
     
