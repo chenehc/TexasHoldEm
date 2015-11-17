@@ -1,4 +1,4 @@
-package proofOfConcept;
+package texasholdem;
 
 /**
  * The class that contains objects that represent playing cards

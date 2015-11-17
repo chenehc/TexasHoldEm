@@ -31,7 +31,7 @@ public class Pot {
 	/**
 	 * Method collects chips from the player if the other player made a raise previously
 	 */
-	private void call(){
+	public void call(){
 		if (hasBet) {
 			if (game.getCurrentPlayer() == 0){
 				player1.loseChips(getBet());
@@ -42,14 +42,14 @@ public class Pot {
 				this.pot += getBet();
 			}
 		}
-		game.playerSwitch();
+		game.switchPlayer();
 	}
 
 	/**
 	 * Method that collects chips from the current player 
 	 * @param amt int - the amount of chips the player is raising
 	 */
-	private void raise(int amt){
+	public void raise(int amt){
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips())
 				TexasHoldem.raiseError();
@@ -58,7 +58,7 @@ public class Pot {
 				player1.loseChips(amt);
 				hasBet = true;
 				bet = amt;
-				game.playerSwitch();
+				game.switchPlayer();
 			}
 		}
 		else {
@@ -69,7 +69,7 @@ public class Pot {
 				hasBet = true;
 				bet = amt;
 				player2.loseChips(amt);
-				game.playerSwitch();
+				game.switchPlayer();
 			}
 		}
 	}
@@ -101,10 +101,10 @@ public class Pot {
 	/**
 	 * Method that distributes pot to the player that did not fold
 	 */
-	private void fold(){
+	public void fold(){
 		if (game.getCurrentPlayer() == 0) player2.gainChips(pot);
 			else player1.gainChips(pot);
-		game.roundEnd();
+		game.newRound();
 	}
 	
 	/**
