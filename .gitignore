@@ -9,3 +9,4 @@
 *.gz
 *.bak
 *.toc
+/bin/
