@@ -13,7 +13,7 @@ public class Player {
  * Initializes Player with a new hand of cards and 2000 poker chips
  */
 	public Player(){
-		this.chips = 2000;
+		this.chips = 1000;
 		this.hand = new Hand();
 	}
 

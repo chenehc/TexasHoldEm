@@ -25,15 +25,40 @@ public class Game{
 	/**
 	 * Method that switches the current player, used for turn switch
 	 */
-	public void playerSwitch(){ //0 is player 1, 1 is player 2
+	public void switchPlayer(){ //0 is player 1, 1 is player 2
 		this.currentPlayer = (this.currentPlayer + 1) % 2 ;
 	}
 	
 	/**
+	 * Method that returns the value of parameter pot
+	 * @return Pot
+	 */
+	public Pot getPot(){
+		return pot;
+	}
+	
+	/**
 	 * Method that returns the value of parameter currentPlayer
+	 * @return int
 	 */
 	public int getCurrentPlayer(){
 		return currentPlayer;
+	}
+	
+	/**
+	 * Method that returns the value of parameter chips for player 1
+	 * @return chips int
+	 */
+	public int getChipsP1(){
+		return player1.getChips();
+	}
+	
+	/**
+	 * Method that returns the value of parameter chips for player 2
+	 * @return chips int
+	 */
+	public int getChipsP2(){
+		return player2.getChips();
 	}
 	
 	/**
@@ -79,7 +104,7 @@ public class Game{
 	/**
 	 * Method that ends the round and starts a new round
 	 */
-	public void roundEnd(){
+	public void newRound(){
 		deal();
 		gameEnd = false;
 	}
@@ -94,6 +119,9 @@ public class Game{
 			pot.distributePot(2);
 		else
 			pot.distributePot(3);
+		newRound();
 	}
+	
+	
 
 }
