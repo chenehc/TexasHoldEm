@@ -10,8 +10,9 @@ public class Game{
     private boolean gameEnd;
     private TexasHoldEm view;
     private Pot pot;
-    
-	//constructor
+    private int playerCount = 0;
+	
+    //constructor
 	public Game(Player player1, Player player2, TexasHoldEm view){
 		this.player1 = player1;
 		this.player2 = player2;
@@ -22,6 +23,8 @@ public class Game{
 		this.gameEnd = false;
 		pot = new Pot(player1, player2, this);
 		this.view = view;
+//		trackPlayerMove();
+		
 	}
 	
 	/**
@@ -29,6 +32,33 @@ public class Game{
 	 */
 	public void switchPlayer(){ //0 is player 1, 1 is player 2
 		this.currentPlayer = (this.currentPlayer + 1) % 2 ;
+		playerCount++;
+	}
+	
+//	public void trackPlayerMove(){
+//		Thread th = new Thread(){
+//			@Override
+//			public void run(){
+//				if (playerCount == 2){
+//					next_card();
+//					view.createCommunityCard();
+////					view.showCommunity();
+//				}
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		};
+//		th.start();
+//	}
+//	
+	public void turnEnd(){
+		next_card();
+		view.createCommunityCard();
+		view.showCommunity();
 	}
 	
 	public TexasHoldEm getView(){
@@ -87,6 +117,7 @@ public class Game{
 		for(int i =0; i<3; i++){
 			next_card();
 		}
+		view.log("cards are dealt");
 	}
 
 	/**
@@ -96,6 +127,7 @@ public class Game{
 		p1hand.add(deck.get(cardCount));
 		p2hand.add(deck.get(cardCount));
 		cardCount++;
+		view.log("Next community card shown");
 	}
 
 	/**
@@ -110,9 +142,10 @@ public class Game{
 	 * Method that ends the round and starts a new round
 	 */
 	public void newRound(){
+		deck.Shuffle();
 		view.reset();
-		deal();
 		gameEnd = false;
+		view.log("new round");
 	}
 	
 	/**
@@ -125,9 +158,20 @@ public class Game{
 			pot.distributePot(2);
 		else
 			pot.distributePot(3);
+		view.log("round evaluated");
 		newRound();
 	}
 	
+	public static void main(String args[]){
+		Player p1 = new Player();
+		Player p2 = new Player();
+		TexasHoldEm t= new TexasHoldEm();
+		Game game = new Game(p1, p2, t);
+		game.deal();
+		System.out.println(p1.getHand().toString());
+		game.deal();
+		System.out.println(p1.getHand().toString());
+	}
 	
 
 }

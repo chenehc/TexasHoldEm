@@ -7,7 +7,7 @@ public class Pot {
 	private boolean hasBet = false;
 	private Player player1,player2;
 	Game game;
-	private int actionCount = 0;
+	private int checkCount = 0;
 	
 	//constructor
 	public Pot (Player player1, Player player2, Game game){
@@ -33,26 +33,36 @@ public class Pot {
 	 * Method collects chips from the player if the other player made a raise previously
 	 */
 	public void call(){
-		actionCount++;
 		if (hasBet) {
 			if (game.getCurrentPlayer() == 0){
 				player1.loseChips(getBet());
 				this.pot += getBet();
+				game.turnEnd();
 			}
 			else {
 				player2.loseChips(getBet());
 				this.pot += getBet();
+				game.turnEnd();
 			}
 		}
-		game.switchPlayer();
+		else if (!hasBet && checkCount == 1){
+			game.turnEnd();
+			checkCount = 0;
+			game.switchPlayer();
+		}else {
+			checkCount++;
+			game.switchPlayer();
+		}
+		game.getView().log("Player " + game.getCurrentPlayer() +  " call/checks");
+		
 	}
-
+	
 	/**
 	 * Method that collects chips from the current player 
 	 * @param amt int - the amount of chips the player is raising
 	 */
 	public void raise(int amt){
-		actionCount++;
+		checkCount = 0;
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips())
 				TexasHoldEm.raiseError(0);
@@ -61,6 +71,7 @@ public class Pot {
 				player1.loseChips(amt);
 				hasBet = true;
 				bet = amt;
+				game.getView().log("Player " + game.getCurrentPlayer() + " bets: " + amt + " chips.");
 				game.switchPlayer();
 			}
 		}
@@ -72,6 +83,7 @@ public class Pot {
 				hasBet = true;
 				bet = amt;
 				player2.loseChips(amt);
+				game.getView().log("Player " + game.getCurrentPlayer() + " bets: " + amt + " chips.");
 				game.switchPlayer();
 			}
 		}
@@ -85,13 +97,6 @@ public class Pot {
 		return this.bet;
 	}
 	
-	public int getCount(){
-		return this.actionCount;
-	}
-	
-	public void resetCount(){
-		this.actionCount = 0;
-	}
 	/**
 	 * Method gets the value of parameter player1Folded()
 	 * @return Player1Folded boolean
@@ -112,8 +117,12 @@ public class Pot {
 	 * Method that distributes pot to the player that did not fold
 	 */
 	public void fold(){
-		if (game.getCurrentPlayer() == 0) player2.gainChips(pot);
-			else player1.gainChips(pot);
+		checkCount = 0;
+		if (game.getCurrentPlayer() == 0) 
+			distributePot(2);
+		else 
+			distributePot(1);
+		game.getView().log("Player " + game.getCurrentPlayer() + " folds.");
 		game.newRound();
 	}
 	
@@ -149,5 +158,9 @@ public class Pot {
 				else
 					pot = 1;
 		}
+	}
+	
+	public static void main(String args[]){
+		
 	}
 }
