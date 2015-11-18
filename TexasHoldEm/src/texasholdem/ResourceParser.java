@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ResourceParser {
-	 //Scanner in = new Scanner(System.in);
 
 	static String readFile(String fileName) throws IOException {
     BufferedReader br = new BufferedReader(new FileReader(fileName));

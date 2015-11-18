@@ -61,8 +61,6 @@ public class Card implements Comparable<Card>{
 		return null;
     }
 
-/*<<<<<<< HEAD
-=======*/
     public String suitToString(){
     	switch (this.suit){
     	case 'C': return "Clubs";
@@ -78,7 +76,7 @@ public class Card implements Comparable<Card>{
 		
 	}
 
-//	@Override
+	@Override
 	public int compareTo(Card x) {
 		if(this.rank>x.rank){ return 1;}
 		if(this.rank<x.rank){return -1;}
@@ -86,5 +84,4 @@ public class Card implements Comparable<Card>{
 		
 	}
 
-//>>>>>>> b62563a38df1d1f39815e052f714a24a2041e0fa
 }
