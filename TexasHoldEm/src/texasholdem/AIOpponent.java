@@ -2,8 +2,16 @@ package texasholdem;
 
 public class AIOpponent{
 	
-	public static int bet(Player ai){
-		Hand hand = new Hand();
+	Player ai;
+	Pot pot;
+	
+	public AIOpponent(Player ai, Pot pot){
+		this.ai = ai;
+		this.pot = pot;
+	}
+	
+	public int choose(){
+		Hand hand = ai.getHand();
 		
 		if(hand.getStrength() >=100000000){
 			return ai.getChips();
@@ -64,5 +72,24 @@ public class AIOpponent{
 		}
 		return hand.getStrength();
 		
+	}
+	
+	public void bet(int bet){
+			if(ai.getHand().size()>2){
+			if(bet > this.choose()){
+				pot.fold();
+			}
+			else if(bet < this.choose()){
+				pot.raise(this.choose()-bet);
+			}
+			else{
+				pot.call();
+			}
+			
+		}
+		else{
+			pot.call();
+		}
+	
 	}
 }
