@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -46,7 +45,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 
 	private JPanel dealerPanel, communityPanel, btnPanel, playerPanel;
 	private JButton betBtn, callBtn, dealBtn, foldBtn;
-	private JLabel playerChipLabel, dealerChipLabel, potLabel, dealerLabel, communityLabel;
+	private JLabel dealerLabel, communityLabel;
 	private JLabel[] playerCards, dealerCards, communityCards;
 	private JTextField betField;
 	private JScrollPane scroll;
@@ -150,10 +149,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		dealerLabel = new JLabel();
 		communityLabel = new JLabel();
 		
-		playerChipLabel = new JLabel("Chips: ");
-		dealerChipLabel = new JLabel("Chips: ");
-		potLabel = new JLabel("Pot: ");
-		
 		//create panel to hold hold buttons
 		btnPanel = new JPanel(); 
 		btnPanel.setLayout(new GridLayout(1, 5));
@@ -240,7 +235,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		playerCards[1] = new JLabel();
 		playerCards[1].setIcon(playerSecondCardIcon);
 		playerCards[0].setBounds(5, 5, playerFirstCardIcon.getIconWidth(), playerFirstCardIcon.getIconHeight());
-		playerCards[1].setBounds(playerFirstCardIcon.getIconWidth() + 5, 5, playerSecondCardIcon.getIconWidth(), playerSecondCardIcon.getIconHeight());
+		playerCards[1].setBounds(playerFirstCardIcon.getIconWidth() + 10, 5, playerSecondCardIcon.getIconWidth(), playerSecondCardIcon.getIconHeight());
 		playerPanel.add(playerCards[0]);
 		playerPanel.add(playerCards[1]);
 		playerPanel.updateUI();
@@ -251,14 +246,14 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 */
 	private void createDealerCards(){
 		dealerPanel.removeAll();
-		ImageIcon dealerFirstCardIcon = new ImageIcon(player2.getHand().get(0).getFileName());
-		ImageIcon dealerSecondCardIcon = new ImageIcon(player2.getHand().get(1).getFileName());
+		ImageIcon dealerFirstCardIcon = new ImageIcon("Cards/back.gif");
+		ImageIcon dealerSecondCardIcon = new ImageIcon("Cards/back.gif");
 		dealerCards[0] = new JLabel();
 		dealerCards[0].setIcon(dealerFirstCardIcon);
 		dealerCards[1] = new JLabel();
 		dealerCards[1].setIcon(dealerSecondCardIcon);
 		dealerCards[0].setBounds(5, 5, dealerFirstCardIcon.getIconWidth(), dealerFirstCardIcon.getIconHeight());
-		dealerCards[1].setBounds(dealerFirstCardIcon.getIconWidth() + 5, 5, dealerSecondCardIcon.getIconWidth(), dealerSecondCardIcon.getIconHeight());
+		dealerCards[1].setBounds(dealerFirstCardIcon.getIconWidth() + 10, 5, dealerSecondCardIcon.getIconWidth(), dealerSecondCardIcon.getIconHeight());
 		dealerPanel.add(dealerCards[0]);
 		dealerPanel.add(dealerCards[1]);
 		dealerPanel.updateUI();
@@ -300,6 +295,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		Thread th = new Thread(){
 			@Override
 			public void run(){
+				//TODO change after debugging
 //				console.append(s + "\n");
 				System.out.println(s + "\n");
 				try{
@@ -325,7 +321,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 //	}
 	
 	/**
-	 * Method resets the graphics to be null
+	 * Method resets the graphic components
 	 */
 	public void reset(){
 		for (int i=0; i < 2; i++){
@@ -355,6 +351,10 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 	}
 	
+	/**
+	 * Method that keeps track of how many community cards are currently on the board
+	 * When the card count reaches 5, end the round and evaluate both player's hands
+	 */
 	public void trackCommunity(){
 		Thread th = new Thread(){
 			@Override
@@ -381,7 +381,19 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		}else if (e.getSource() == ruleItem){
 			AboutFrame abtFrm = new AboutFrame('r');
 			abtFrm.setVisible(true);
-		}else{
+		}else if (e.getSource() == saveItem){
+			//TODO
+		}else if (e.getSource() == loadItem){
+			//TODO
+		}else if (e.getSource() == newGameItem){
+			player1 = new Player();
+			player2 = new Player();
+			game = new Game(player1, player2, this);
+			revalidate();
+			repaint();
+			//not tested yet
+		}
+		else{
 			if (e.getSource() == dealBtn){
 				game.deal();
 				System.out.println(player1.getHand().toString());

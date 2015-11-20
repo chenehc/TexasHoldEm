@@ -1,5 +1,6 @@
 package controller;
 
+import helper.ResourceParser;
 import model.Deck;
 import model.Hand;
 import model.Player;
@@ -166,6 +167,22 @@ public class Game{
 			pot.distributePot(3);
 		view.log("round evaluated");
 		newRound();
+	}
+	
+	/**
+	 * Method that saves the current game state to a save file
+	 */
+	public void save(){
+		//TODO
+		
+	}
+	
+	/**
+	 * Method that loads from an existing save file
+	 */
+	public void load(){
+		//TODO
+//		String saveInfo = ResourceParser.parseSave();
 	}
 	
 	public static void main(String args[]){

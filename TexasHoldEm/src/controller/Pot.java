@@ -5,8 +5,6 @@ import userInterface.TexasHoldEm;
 
 public class Pot {
 	private int pot, bet;
-	private boolean Player1Folded = false;
-	private boolean Player2Folded = false;
 	private boolean hasBet = false;
 	private Player player1,player2;
 	Game game;
@@ -98,22 +96,6 @@ public class Pot {
 	 */
 	private int getBet(){
 		return this.bet;
-	}
-	
-	/**
-	 * Method gets the value of parameter player1Folded()
-	 * @return Player1Folded boolean
-	 */
-	private boolean player1Folded(){
-		return Player1Folded;
-	}
-	
-	/**
-	 * Method gets the value of parameter player2Folded()
-	 * @return Player2Folded boolean
-	 */
-	private boolean player2Folded(){
-		return Player2Folded;
 	}
 	
 	/**
