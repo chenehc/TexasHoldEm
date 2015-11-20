@@ -1,4 +1,4 @@
-package texasholdem;
+package helper;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -33,13 +33,13 @@ public class ResourceParser {
 	
 	public static String parseHelp() throws IOException{
 		String help = new String();
-		help = readFile("TexasHoldEm/res/Help.txt");
+		help = readFile("res/Help.txt");
 		return help;
 	}
 	
 	public static String parseRule() throws IOException{
 		String rule = new String();
-		rule = readFile("TexasHoldEm/res/Rules.txt");
+		rule = readFile("res/Rules.txt");
 		return rule;
 	}
 	

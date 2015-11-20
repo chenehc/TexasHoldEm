@@ -1,4 +1,4 @@
-package texasholdem;
+package model;
 
 /**
  * Initializes a new player, and allows a player to fold/bet

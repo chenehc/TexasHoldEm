@@ -1,5 +1,5 @@
 
-package texasholdem;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;

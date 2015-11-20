@@ -1,4 +1,7 @@
-package texasholdem;
+package controller;
+
+import model.Player;
+import userInterface.TexasHoldEm;
 
 public class Pot {
 	private int pot, bet;
@@ -47,7 +50,7 @@ public class Pot {
 		}
 		else if (!hasBet && checkCount == 1){
 			game.turnEnd();
-			checkCount = 0;
+			resetCheckCount();
 			game.switchPlayer();
 		}else {
 			checkCount++;
@@ -62,7 +65,7 @@ public class Pot {
 	 * @param amt int - the amount of chips the player is raising
 	 */
 	public void raise(int amt){
-		checkCount = 0;
+		resetCheckCount();
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips())
 				TexasHoldEm.raiseError(0);
@@ -117,13 +120,17 @@ public class Pot {
 	 * Method that distributes pot to the player that did not fold
 	 */
 	public void fold(){
-		checkCount = 0;
+		resetCheckCount();
 		if (game.getCurrentPlayer() == 0) 
 			distributePot(2);
 		else 
 			distributePot(1);
 		game.getView().log("Player " + game.getCurrentPlayer() + " folds.");
 		game.newRound();
+	}
+	
+	public void resetCheckCount(){
+		checkCount = 0;
 	}
 	
 	/**

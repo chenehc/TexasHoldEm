@@ -1,4 +1,9 @@
-package texasholdem;
+package controller;
+
+import model.Deck;
+import model.Hand;
+import model.Player;
+import userInterface.TexasHoldEm;
 
 public class Game{
 	private int currentPlayer;
@@ -145,6 +150,7 @@ public class Game{
 		deck.Shuffle();
 		view.reset();
 		gameEnd = false;
+		pot.resetCheckCount();
 		view.log("new round");
 	}
 	

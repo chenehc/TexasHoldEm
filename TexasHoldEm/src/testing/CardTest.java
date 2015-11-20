@@ -1,4 +1,4 @@
-package texasholdem;
+package testing;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import model.Card;
 
 public class CardTest {
 	Card a = new Card(4,'C');

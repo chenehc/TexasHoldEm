@@ -1,4 +1,7 @@
-package texasholdem;
+package controller;
+
+import model.Hand;
+import model.Player;
 
 public class AIOpponent{
 	

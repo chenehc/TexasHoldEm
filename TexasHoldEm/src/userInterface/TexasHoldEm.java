@@ -1,4 +1,4 @@
-package texasholdem;
+package userInterface;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -24,6 +24,11 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 import com.sun.glass.events.KeyEvent;
+
+import controller.AIOpponent;
+import controller.Game;
+import controller.Pot;
+import model.Player;
 
 
 public class TexasHoldEm extends JFrame implements ActionListener  {
@@ -92,8 +97,13 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		lblConsole.setBounds(103, 193, 46, 14);
 		getContentPane().add(lblConsole);
 		log("");
+		trackCommunity();
+		
 	}
 	
+	/**
+	 * Method to initialize and setup the menu bar along with the menu items within
+	 */
 	private void addMenu(){
 		menuBar = new JMenuBar();
 		
@@ -133,6 +143,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		aboutMenu.add(ruleItem);
 	}
 	
+	/**
+	 * Method that adds the components for player, community and dealer
+	 */
 	private void addPanel(){
 		dealerLabel = new JLabel();
 		communityLabel = new JLabel();
@@ -163,7 +176,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		betBtn.addActionListener(this);
 		btnPanel.add(betBtn);
 		
-		betField = new JTextField("Enter bet amount: ");
+		betField = new JTextField("0");
 		btnPanel.add(betField);
 		
 		//create a dealer panel to show dealer's card back
@@ -213,7 +226,10 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 		
 	}
-
+	
+	/**
+	 * Method to set icons for the player's cards
+	 */
 	private void createPlayerCards(){
 		playerPanel.removeAll();
 		ImageIcon playerFirstCardIcon = new ImageIcon(player1.getHand().get(0).getFileName());
@@ -230,6 +246,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		playerPanel.updateUI();
 	}
 	
+	/**
+	 * Method that sets the dealer's cards' icons
+	 */
 	private void createDealerCards(){
 		dealerPanel.removeAll();
 		ImageIcon dealerFirstCardIcon = new ImageIcon(player2.getHand().get(0).getFileName());
@@ -245,6 +264,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		dealerPanel.updateUI();
 	}
 	
+	/** 
+	 * Method to set the community cards' icons
+	 */
 	public void createCommunityCard(){
 		communityCards[communityCardCount] = new JLabel();
 		communityCards[communityCardCount].setVisible(false);
@@ -270,6 +292,10 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		}
 	}
 	
+	/**
+	 * Method for outputting messages to the console
+	 * @param s String - Text to be shown on console
+	 */
 	public void log(String s){
 		Thread th = new Thread(){
 			@Override
@@ -298,6 +324,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 //		communit
 //	}
 	
+	/**
+	 * Method resets the graphics to be null
+	 */
 	public void reset(){
 		for (int i=0; i < 2; i++){
 			dealerCards[i] = null;
@@ -314,6 +343,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		dealBtn.setEnabled(true);
 	}
 	
+	/**
+	 * This method reveals the community cards
+	 */
 	public void showCommunity(){
 		int i = 0;
 		while (communityCards[i] != null && i < 5){
@@ -323,37 +355,60 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 	}
 	
+	public void trackCommunity(){
+		Thread th = new Thread(){
+			@Override
+			public void run(){
+				while(true){
+					if (communityCardCount == 5) game.evaluateRound();
+					try {
+						Thread.sleep(1500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		th.start();
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == dealBtn){
-			game.deal();
-			System.out.println(player1.getHand().toString());
-			communityCardCount = 0;
-			createPlayerCards();
-			createDealerCards();
-			createCommunityCard();
-			createCommunityCard();
-			createCommunityCard();
-//			showCommunity();
-			dealt = true;
-			dealBtn.setEnabled(false);
-			revalidate();
-		}
-		else if (!dealt) {
-			TexasHoldEm.raiseError(1);
-		}
-		else{
-			if (e.getSource() == callBtn){
-				pot.call();
-				communityPanel.updateUI();
-//				updateCommunity();
-			}else if (e.getSource() == betBtn){
-				pot.raise(Integer.parseInt(betField.getText()));
-				communityPanel.updateUI();
-//				updateCommunity();
-			}else if (e.getSource() == foldBtn){
-				pot.fold();
-				reset();
+		if (e.getSource() == infoItem){
+			AboutFrame abtFrm= new AboutFrame('h');
+			abtFrm.setVisible(true);
+		}else if (e.getSource() == ruleItem){
+			AboutFrame abtFrm = new AboutFrame('r');
+			abtFrm.setVisible(true);
+		}else{
+			if (e.getSource() == dealBtn){
+				game.deal();
+				System.out.println(player1.getHand().toString());
+				communityCardCount = 0;
+				createPlayerCards();
+				createDealerCards();
+				createCommunityCard();
+				createCommunityCard();
+				dealt = true;
+				dealBtn.setEnabled(false);
+			}
+			else if (!dealt) {
+				TexasHoldEm.raiseError(1);
+			}
+			else{
+				if (e.getSource() == callBtn){
+					pot.call();
+					communityPanel.updateUI();
+					//				updateCommunity();
+				}else if (e.getSource() == betBtn){
+					pot.raise(Integer.parseInt(betField.getText()));
+					communityPanel.updateUI();
+					//				updateCommunity();
+				}else if (e.getSource() == foldBtn){
+					pot.fold();
+					reset();
+				}
 			}
 		}
 	}

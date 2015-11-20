@@ -1,4 +1,4 @@
-package texasholdem;
+package model;
 
 /**
  * The class that contains objects that represent playing cards
