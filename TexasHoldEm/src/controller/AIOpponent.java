@@ -3,82 +3,81 @@ package controller;
 import model.Hand;
 import model.Player;
 
-public class AIOpponent{
+public class AIOpponent extends Player{
+//	Pot pot;
+	Game game;
 	
-	Player ai;
-	Pot pot;
-	
-	public AIOpponent(Player ai, Pot pot){
-		this.ai = ai;
-		this.pot = pot;
+	public AIOpponent(Game game){
+		super();
+		this.game = game;
+//		this.pot = game.getPot();
 	}
 	
 	public int choose(){
-		Hand hand = ai.getHand();
-		
-		if(hand.getStrength() >=100000000){
-			return ai.getChips();
+		if(getHand().getStrength() >=100000000){
+			return getChips();
 			
 		}
-		if(hand.getStrength() >= 10000000){
-			double d = ai.getChips()*0.5;
+		if(getHand().getStrength() >= 10000000){
+			double d = getChips()*0.5;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
-		if(hand.getStrength()>=1000000){
-			double d = ai.getChips()*0.45;
+		if(getHand().getStrength()>=1000000){
+			double d = getChips()*0.45;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
-		if(hand.getStrength()>=100000){
-			double d = ai.getChips()*0.4;
+		if(getHand().getStrength()>=100000){
+			double d = getChips()*0.4;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
 		
-		if(hand.getStrength()>=10000){
-			double d = ai.getChips()*0.3;
+		if(getHand().getStrength()>=10000){
+			double d = getChips()*0.3;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
-		if(hand.getStrength()>=1000){
-			double d = ai.getChips()*0.2;
+		if(getHand().getStrength()>=1000){
+			double d = getChips()*0.2;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
-		if(hand.getStrength()>=100){
-			double d = ai.getChips()*0.1;
+		if(getHand().getStrength()>=100){
+			double d = getChips()*0.1;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
-		if(hand.getStrength()>=10){
-			double d = ai.getChips()*0.05;
+		if(getHand().getStrength()>=10){
+			double d = getChips()*0.05;
 			if((int)d == 0){
-				return ai.getChips();
+				return getChips();
 			}
 			return (int)d;
 		}
-		if(hand.size()>5&&hand.getStrength()<15){
+		if(getHand().size()>5&&getHand().getStrength()<15){
 			return 0;
 		}
-		return hand.getStrength();
+		return getHand().getStrength();
 		
 	}
 	
-	public void bet(int bet){
-			if(ai.getHand().size()>2){
+	public void getAction(Pot pot){
+		int bet = pot.getBet();
+		if(this.getHand().size()>2){
 			if(bet > this.choose()){
 				pot.fold();
 			}
@@ -88,11 +87,10 @@ public class AIOpponent{
 			else{
 				pot.call();
 			}
-			
 		}
 		else{
 			pot.call();
 		}
-	
+
 	}
 }

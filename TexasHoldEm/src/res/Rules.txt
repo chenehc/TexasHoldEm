@@ -37,23 +37,3 @@ Triple: Three cards of the same rank, and two unrelated side cards.
 Two pair: Two cards of a matching rank, another two cards of a different matching rank, and one side card.
 One pair: Two cards of a matching rank, and three unrelated side cards.
 High Card: Any hand that does not qualify under a category listed above.
-
-
-
-
-HELP/TERMINOLOGY:
-Check(Call): Match the previous bet
-Bet/Raise: Money wagered during the play of a hand
-Fold: Throw away your hand and show disinterest in current pot
-Blind: Forced bet (small blind is smaller of the two forced bets)
-Community cards: Shared cards placed faced up at the center of the table
-
-
-
-
-OBJECTIVE: Put pressure on your opponent and build pots
-
-STRATEGY: 
-Judge your opponent.
-Play aggressively aggainst weaker opponents.
-Play defensively against stronger and more aggressive opponents.

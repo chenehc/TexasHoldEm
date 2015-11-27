@@ -1,6 +1,10 @@
 package controller;
 
-import helper.ResourceParser;
+import java.io.File;
+import java.io.PrintWriter;
+
+import javax.swing.JOptionPane;
+
 import model.Deck;
 import model.Hand;
 import model.Player;
@@ -9,6 +13,7 @@ import userInterface.TexasHoldEm;
 public class Game{
 	private int currentPlayer;
 	private Player player1, player2;
+	private AIOpponent AIplayer;
 	private Deck deck;
 	private Hand p1hand;
     private Hand p2hand;
@@ -16,7 +21,6 @@ public class Game{
     private boolean gameEnd;
     private TexasHoldEm view;
     private Pot pot;
-    private int playerCount = 0;
 	
     //constructor
 	public Game(Player player1, Player player2, TexasHoldEm view){
@@ -29,8 +33,21 @@ public class Game{
 		this.gameEnd = false;
 		pot = new Pot(player1, player2, this);
 		this.view = view;
-//		trackPlayerMove();
-		
+	}
+	
+	//constructor
+	public Game(Player player1, TexasHoldEm view){
+		this.player1 = player1;
+		this.AIplayer = new AIOpponent(this);
+		this.player2 = this.AIplayer;
+		this.currentPlayer = 0;
+		deck = new Deck();
+		deck.Set();
+		deck.Shuffle();
+		this.gameEnd = false;
+		pot = new Pot(this.player1, player2, this);
+		this.view = view;
+		trackAI();
 	}
 	
 	/**
@@ -38,29 +55,28 @@ public class Game{
 	 */
 	public void switchPlayer(){ //0 is player 1, 1 is player 2
 		this.currentPlayer = (this.currentPlayer + 1) % 2 ;
-		playerCount++;
 	}
 	
-//	public void trackPlayerMove(){
-//		Thread th = new Thread(){
-//			@Override
-//			public void run(){
-//				if (playerCount == 2){
-//					next_card();
-//					view.createCommunityCard();
-////					view.showCommunity();
-//				}
-//				try {
-//					Thread.sleep(1000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		};
-//		th.start();
-//	}
-//	
+	public void trackAI(){
+		Thread th = new Thread(){
+			@Override
+			public void run(){
+				while(true){
+					if (currentPlayer == 1){
+						AIplayer.getAction(pot);
+						switchPlayer();
+					}
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		th.start();
+	}
+	
 	public void turnEnd(){
 		next_card();
 		view.createCommunityCard();
@@ -124,6 +140,7 @@ public class Game{
 			next_card();
 		}
 		view.log("cards are dealt");
+		view.updateChipLabels();
 	}
 
 	/**
@@ -153,6 +170,7 @@ public class Game{
 		gameEnd = false;
 		pot.resetCheckCount();
 		view.log("new round");
+		view.updateChipLabels();
 	}
 	
 	/**
@@ -169,32 +187,16 @@ public class Game{
 		newRound();
 	}
 	
-	/**
-	 * Method that saves the current game state to a save file
-	 */
-	public void save(){
-		//TODO
-		
-	}
-	
-	/**
-	 * Method that loads from an existing save file
-	 */
-	public void load(){
-		//TODO
-//		String saveInfo = ResourceParser.parseSave();
-	}
-	
-	public static void main(String args[]){
-		Player p1 = new Player();
-		Player p2 = new Player();
-		TexasHoldEm t= new TexasHoldEm();
-		Game game = new Game(p1, p2, t);
-		game.deal();
-		System.out.println(p1.getHand().toString());
-		game.deal();
-		System.out.println(p1.getHand().toString());
-	}
+//	public static void main(String args[]){
+//		Player p1 = new Player();
+//		Player p2 = new Player();
+//		TexasHoldEm t= new TexasHoldEm();
+//		Game game = new Game(p1, p2, t);
+//		game.deal();
+//		System.out.println(p1.getHand().toString());
+//		game.deal();
+//		System.out.println(p1.getHand().toString());
+//	}
 	
 
 }

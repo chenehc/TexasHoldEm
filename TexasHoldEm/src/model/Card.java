@@ -72,7 +72,7 @@ public class Card implements Comparable<Card>{
     }
     
 	public String getFileName(){
-		return "Cards/" + rankToString() + " of " + suitToString() + ".gif";
+		return "src/Cards/" + rankToString() + " of " + suitToString() + ".gif";
 		
 	}
 

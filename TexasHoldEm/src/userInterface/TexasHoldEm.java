@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -45,17 +47,17 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 
 	private JPanel dealerPanel, communityPanel, btnPanel, playerPanel;
 	private JButton betBtn, callBtn, dealBtn, foldBtn;
-	private JLabel dealerLabel, communityLabel;
+	private JLabel lblDealer, lblCommunity, lblPlayerCards, lblPlayer1Chips, lblPlayer2Chips, lblPot, lblConsole;
 	private JLabel[] playerCards, dealerCards, communityCards;
 	private JTextField betField;
+	private JTextArea console;
 	private JScrollPane scroll;
 	private Border sunkIn = BorderFactory.createBevelBorder(BevelBorder.LOWERED); 
 	
 	private boolean dealt = false;
 	private int communityCardCount = 0;
 	private int communityWidth = 5;
-	private JTextArea console;
-	private JLabel lblConsole;
+	
 	
 	//constructor
 	public TexasHoldEm(){
@@ -66,12 +68,12 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		setBackground(Color.GRAY);
 		setResizable(false);
 		
-		background = new ImageIcon("Cards/b.gif");
+		background = new ImageIcon("src/Cards/b.gif");
 		
 		player1 = new Player();
 		player2 = new Player();
-
-		game = new Game(player1, player2, this);
+		
+		game = new Game(player1, this);
 		pot = game.getPot();
 		
 		addMenu();
@@ -80,21 +82,19 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		//add the components onto the frame
 		setJMenuBar(menuBar);
 		getContentPane().setLayout(null);
-		getContentPane().add(dealerLabel);
+		getContentPane().add(lblDealer);
 		getContentPane().add(dealerPanel);
-		getContentPane().add(communityLabel);
+		getContentPane().add(lblCommunity);
 		getContentPane().add(communityPanel);
 		getContentPane().add(btnPanel);
 		getContentPane().add(playerPanel);
 		getContentPane().add(scroll);
-		
-		JLabel lblPlayerCards = new JLabel("Player Cards");
-		lblPlayerCards.setBounds(386, 193, 79, 14);
-		getContentPane().add(lblPlayerCards);
-		
-		lblConsole = new JLabel("Console");
-		lblConsole.setBounds(103, 193, 46, 14);
 		getContentPane().add(lblConsole);
+		getContentPane().add(lblPlayerCards);
+		getContentPane().add(lblPlayer2Chips);
+		getContentPane().add(lblPlayer1Chips);
+		getContentPane().add(lblPot);
+		
 		log("");
 		trackCommunity();
 		
@@ -146,8 +146,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 * Method that adds the components for player, community and dealer
 	 */
 	private void addPanel(){
-		dealerLabel = new JLabel();
-		communityLabel = new JLabel();
+		lblDealer = new JLabel();
+		lblCommunity = new JLabel();
 		
 		//create panel to hold hold buttons
 		btnPanel = new JPanel(); 
@@ -181,9 +181,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 		dealerPanel.setBounds(5, 30, 161, 107);
 		
-		dealerLabel.setText("Dealer Cards");
-		dealerLabel.setHorizontalAlignment(JLabel.CENTER);
-		dealerLabel.setBounds(5, 5, 161, 20);
+		lblDealer.setText("Dealer Cards");
+		lblDealer.setHorizontalAlignment(JLabel.CENTER);
+		lblDealer.setBounds(5, 5, 161, 20);
 		
 		dealerCards = new JLabel[2];
 		
@@ -192,34 +192,43 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		communityPanel.setBorder(sunkIn);
 		communityPanel.setBounds(181, 30, 395, 107);
 		
-		communityLabel.setText("Community Cards");
-		communityLabel.setHorizontalAlignment(JLabel.CENTER);
-		communityLabel.setBounds(166, 5, 395, 20);
+		lblCommunity.setText("Community Cards");
+		lblCommunity.setHorizontalAlignment(JLabel.CENTER);
+		lblCommunity.setBounds(166, 5, 395, 20);
 
-		btnPanel.setBounds(5, 152, 571, 30);
+		btnPanel.setBounds(5, 164, 571, 30);
 
 		//create a player panel that shows the player's cards
 		playerPanel = new JPanel();
 		playerPanel.setLayout(null);
 		playerPanel.setBorder(sunkIn);
-		playerPanel.setBounds(340, 217, 161, 107);
+		playerPanel.setBounds(339, 228, 161, 107);
 		
-//		playerLabel.setText("Player Cards");
-//		playerLabel.setHorizontalAlignment(JLabel.CENTER);
-//		playerLabel.setBounds(5, btnPanel.getBounds().y + btnPanel.getHeight() + 5, btnPanel.getWidth(), 25);
-	
+		lblPlayerCards = new JLabel("Player Cards");
+		lblPlayerCards.setBounds(386, 205, 79, 14);
+
 		playerCards = new JLabel[2];
 
 		communityCards = new JLabel[5];
 		
 		console = new JTextArea();
 		console.setEditable(false);
+		
+		lblConsole = new JLabel("Console");
+		lblConsole.setBounds(103, 203, 46, 14);
+		
 		scroll = new JScrollPane(console);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(10, 228, 234, 107);
 		
-		scroll.setBounds(10, 217, 234, 107);
+		lblPlayer2Chips = new JLabel("Chips: ");
+		lblPlayer2Chips.setBounds(15, 139, 116, 14);
 		
+		lblPlayer1Chips = new JLabel("Chips: ");
+		lblPlayer1Chips.setBounds(377, 341, 88, 14);
 		
+		lblPot = new JLabel("Pot: ");
+		lblPot.setBounds(300, 139, 155, 14);
 	}
 	
 	/**
@@ -228,7 +237,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	private void createPlayerCards(){
 		playerPanel.removeAll();
 		ImageIcon playerFirstCardIcon = new ImageIcon(player1.getHand().get(0).getFileName());
-		System.out.println(player1.getHand().get(0).getFileName());
 		ImageIcon playerSecondCardIcon = new ImageIcon(player1.getHand().get(1).getFileName());
 		playerCards[0] = new JLabel();
 		playerCards[0].setIcon(playerFirstCardIcon);
@@ -244,10 +252,11 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	/**
 	 * Method that sets the dealer's cards' icons
 	 */
-	private void createDealerCards(){
+	private void createDealerCards() {
 		dealerPanel.removeAll();
-		ImageIcon dealerFirstCardIcon = new ImageIcon("Cards/back.gif");
-		ImageIcon dealerSecondCardIcon = new ImageIcon("Cards/back.gif");
+		String imagePath = "src/Cards/back.gif";
+		ImageIcon dealerFirstCardIcon = new ImageIcon(imagePath);
+		ImageIcon dealerSecondCardIcon = new ImageIcon(imagePath);
 		dealerCards[0] = new JLabel();
 		dealerCards[0].setIcon(dealerFirstCardIcon);
 		dealerCards[1] = new JLabel();
@@ -292,33 +301,14 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 * @param s String - Text to be shown on console
 	 */
 	public void log(String s){
-		Thread th = new Thread(){
-			@Override
-			public void run(){
-				//TODO change after debugging
-//				console.append(s + "\n");
-				System.out.println(s + "\n");
-				try{
-					Thread.sleep(2000);
-				}catch(InterruptedException e){
-					e.printStackTrace();
-				}
-				System.out.println("Player 1 Chips: " + player1.getChips()
-								+"\nPlayer 2 Chips: " + player2.getChips()
-								+"\nPot: " + pot.getPot()
-								+"\n");
-//				console.append("Player 1 Chips: " + player1.getChips()
-//								+"\nPlayer 2 Chips: " + player2.getChips()
-//								+"\nPot: " + pot.getPot()
-//								+"\n");
-			}
-		};
-		th.start();
+		//TODO change after debugging
+		console.append(s + "\n");
+		//		System.out.println(s + "\n");
+		//		System.out.println("Player 1 Chips: " + player1.getChips()
+		//		+"\nPlayer 2 Chips: " + player2.getChips()
+		//		+"\nPot: " + pot.getPot()
+		//		+"\n");
 	}
-	
-//	private void updateCommunity(){
-//		communit
-//	}
 	
 	/**
 	 * Method resets the graphic components
@@ -351,6 +341,12 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 	}
 	
+	public void updateChipLabels(){
+		lblPlayer2Chips.setText("Chips: " + game.getChipsP2());
+		lblPot.setText("Pot: " + pot.getPot());
+		lblPlayer1Chips.setText("Chips " + game.getChipsP1());
+	}
+	
 	/**
 	 * Method that keeps track of how many community cards are currently on the board
 	 * When the card count reaches 5, end the round and evaluate both player's hands
@@ -364,7 +360,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 					try {
 						Thread.sleep(1500);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -381,10 +376,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		}else if (e.getSource() == ruleItem){
 			AboutFrame abtFrm = new AboutFrame('r');
 			abtFrm.setVisible(true);
-		}else if (e.getSource() == saveItem){
-			//TODO
-		}else if (e.getSource() == loadItem){
-			//TODO
 		}else if (e.getSource() == newGameItem){
 			player1 = new Player();
 			player2 = new Player();
@@ -396,7 +387,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		else{
 			if (e.getSource() == dealBtn){
 				game.deal();
-				System.out.println(player1.getHand().toString());
 				communityCardCount = 0;
 				createPlayerCards();
 				createDealerCards();
@@ -412,11 +402,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 				if (e.getSource() == callBtn){
 					pot.call();
 					communityPanel.updateUI();
-					//				updateCommunity();
 				}else if (e.getSource() == betBtn){
 					pot.raise(Integer.parseInt(betField.getText()));
 					communityPanel.updateUI();
-					//				updateCommunity();
 				}else if (e.getSource() == foldBtn){
 					pot.fold();
 					reset();

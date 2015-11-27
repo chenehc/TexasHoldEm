@@ -38,11 +38,13 @@ public class Pot {
 			if (game.getCurrentPlayer() == 0){
 				player1.loseChips(getBet());
 				this.pot += getBet();
+				game.switchPlayer();
 				game.turnEnd();
 			}
 			else {
 				player2.loseChips(getBet());
 				this.pot += getBet();
+				game.switchPlayer();
 				game.turnEnd();
 			}
 		}
@@ -50,12 +52,14 @@ public class Pot {
 			game.turnEnd();
 			resetCheckCount();
 			game.switchPlayer();
+			game.getView().log("turn end");
 		}else {
 			checkCount++;
 			game.switchPlayer();
+			game.getView().log("next player");
 		}
 		game.getView().log("Player " + game.getCurrentPlayer() +  " call/checks");
-		
+		game.getView().updateChipLabels();
 	}
 	
 	/**
@@ -88,13 +92,14 @@ public class Pot {
 				game.switchPlayer();
 			}
 		}
+		game.getView().updateChipLabels();
 	}
 	
 	/**
 	 * Method gets the value of parameter bet
 	 * @return bet int
 	 */
-	private int getBet(){
+	public int getBet(){
 		return this.bet;
 	}
 	
@@ -108,6 +113,7 @@ public class Pot {
 		else 
 			distributePot(1);
 		game.getView().log("Player " + game.getCurrentPlayer() + " folds.");
+		game.getView().updateChipLabels();
 		game.newRound();
 	}
 	
@@ -147,6 +153,7 @@ public class Pot {
 				else
 					pot = 1;
 		}
+		game.getView().updateChipLabels();
 	}
 	
 	public static void main(String args[]){

@@ -4,12 +4,15 @@ import java.awt.GridLayout;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 import helper.ResourceParser;
 
 public class AboutFrame extends JFrame{
 	JTextArea textArea = new JTextArea();
+	JScrollPane scroll;
 	
 	public AboutFrame(char c){
 		getContentPane().setLayout(new GridLayout(1,2));
@@ -19,8 +22,12 @@ public class AboutFrame extends JFrame{
 		setResizable(false);
 		
 		textArea.setEditable(false);
-		textArea.setBounds(0, 0, 434, 261);
-		getContentPane().add(textArea);
+		
+		scroll = new JScrollPane(textArea);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(0, 0, 434, 261);
+		
+		getContentPane().add(scroll);
 		
 		if (c == 'h') startOnHelp();
 		else if (c == 'r') startOnRule();
@@ -36,7 +43,7 @@ public class AboutFrame extends JFrame{
 	
 	private void startOnRule(){
 		try {
-			textArea.setText(ResourceParser.parseHelp());
+			textArea.setText(ResourceParser.parseRule());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
