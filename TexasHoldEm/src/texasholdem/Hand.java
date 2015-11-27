@@ -108,13 +108,15 @@ public class Hand extends ArrayList<Card>{
                 if(trips){
                     for(int i =0; i<this.size(); i++){
                         count = 0;
+                        int pos = 0;
                         for(int j=0; j<this.size(); j++){
                             if(clone.get(i).getRank() == clone.get(j).getRank() && clone.get(i).getRank() != played.get(0).getRank()){
+                                pos = j;
                                 count ++;   
                             }
                             if(count ==2){
                                 FullH = true;
-                                return played.get(0).getRank()*1000000;
+                                return played.get(0).getRank()*1000000 clone.get(pos).getRank();;
                             }
                         }
                     }
