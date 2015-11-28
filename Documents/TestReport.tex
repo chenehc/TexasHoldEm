@@ -1,8 +1,11 @@
 \documentclass[11pt]{article}
 
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{6.5cm}}
+
 \begin{document}
 	\begin{titlepage}
-	\title {Test Plan}
+	\title {Test Report}
 	\maketitle
 		\begin{center}
 		SE 2XA3\\
@@ -20,13 +23,101 @@
 	\tableofcontents
 	\listoftables
 	\newpage
+	
 	\section{Revision History}
-	\section{Usability Tests}
-	\section{Performance Tests}
-	\section{Stress Tests}
-	\section{Robustness Tests}
+	\section{Introductions}
+	\subsection{Testing Methods}
+	\subsection{Table of Acronyms and Definitions}
+	\subsection{Coverage Matrix}
+
+	\section{Nonfunctional Quality Tests}	
+	\subsection{Usability Tests}
+	Usability Tests are performed by recruiting 3 complete beginners with no knowledge of the game as well as 3 people who are already familiar with the game. The participants were given a series of tasks to perform. The amount of time required for them to complete the task as well as comments to the task are recorded. Participants will not be named to protect their identity. Further discussion of the results can be found in section 8.1.
+	\begin{table} [h]
+	\caption{Usability Test Results Table}
+	\begin{tabular}{|c|c|L|}
+	\hline
+	\multicolumn{3}{|l|}{Task 1 - Play through the game until either the player or AI wins without help.}  \\
+	\hline
+	Participant & Task Completion (sec) & Comments \\
+	\hline
+	Beginner 1 & 79 & None \\
+	\hline
+	Beginner 2 & 20 & I won without even knowing how to play \\
+	\hline
+	Beginner 3 & 53 & I don't understand it. \\
+	\hline
+	Veteran 1 & 278 & works \\
+	\hline
+	Veteran 2 & 38 & None \\
+	\hline
+	Verteran 3 & 102 & None \\
+	\hline
+	\multicolumn{3}{|l|}{Task 2 - Help Page} \\
+	\hline
+	Beginner 1 & 28 & None \\
+	\hline
+	Beginner 2 & 22 & looks too plain \\
+	\hline
+	Beginner 3 & 30 & None \\
+	\hline
+	Veteran 1 & 15 & Needs more in depth explanations \\
+	\hline
+	Veteran 2 & 19 & Simple and concise \\
+	\hline
+	Verteran 3 & 25 & None \\
+	\hline
+	\multicolumn{3}{|l|}{Task 3 - Rule Page} \\
+	\hline
+	Beginner 1 & 62 & Decent explanation, wish it had some strategy guide as well. \\
+	\hline
+	Beginner 2 & 55 & looks simple enough \\
+	\hline
+	Beginner 3 & 94 & None \\
+	\hline
+	Veteran 1 & 13 & It's missing something \\
+	\hline
+	Veteran 2 & 29 & pretty basic \\
+	\hline
+	Verteran 3 & 10 & None \\
+	\hline
+	\multicolumn{3}{|l|}{Task 4 - Play through the game until either the player or AI wins after }\\
+	\multicolumn{3}{|l|}{reading help and rules.}  \\
+	\hline
+	Beginner 1 & 148 & Makes a little more sense now \\
+	\hline
+	Beginner 2 & 54 & I think it's a little easier now that I know what each button does and what the win conditions are, but that still doesn't change the fact that I don't know how to play this game\\
+	\hline
+	Beginner 3 & 495 &  None\\
+	\hline
+	Veteran 1 & 18 & None \\
+	\hline
+	Veteran 2 & 91 & None \\
+	\hline
+	Verteran 3 & 58 & None \\
+	\hline
+	\end{tabular}
+	\end{table}
+	\subsection{Performance Tests}
+	Performance tests are to be performed using JUnit and a StopWatch library to measure the time required to execute certain actions. Each JUnit test will run 10 times and if the average is within acceptable range, then the test passes.
+	
+	
+	\subsection{Robustness Tests}
 	\section{Regression Tests}
+	\section{System Tests}
 	\section{Automated Unit Tests}	
-	\section{Test Results}
+	\section{Changes Due to Testing}
+	\section{Test Summary}
+	\subsection{Usability Tests}
+	Six participants were timed and observed while they perform tasks given by us within the program. We found that the results were well received, with minor complaints about the user interface. \\
+	\newline
+	For the game playing portion, the participants felt that the program was easy to navigate and the elements of the game were not hard to find on the user interface. The gameplay was smooth with minor issues that we have later resolved. \\
+	\newline
+	The help and rule page was met with little difficulty, the participants were easily able to pull up either pages and find the basic rules they needed to play the game. Some of the participants have found that the game or the pages are too simple. While we agree that it may be simple, but the idea is to not overwhelm the player with an absurd amount of information to digest, especially not with the beginners. It is true that Texas HoldEm is a complex game, we feel that if a player is armed with the basic knowledge and continuously practice by playing the game, they can understand the game and slowly but eventually come up with strategies on their own. Of course, for more advanced tactics, they would have to do their research but this game is not about having the best and smartest opponent to face but more of something that can be used to ease the transition between beginner and a seasoned player. \\
+	\newline 
+	The participants were overall satisfied with the current state of the game and have made suggestions toward the improvement of the user interface. Their suggestion will be taken into consideration however there are no plans to implement any changes to the user interface at the present time.
+	\section{Traceability to Requirements}
+	\section{Traceability to Modules}
+	
 		
 \end{document}
