@@ -30,40 +30,54 @@
 	\section{Revision History}
 	\begin{table}[h]
 	\caption{Revision History Table}
-	\begin{tabular}{|l|c|r|p{6cm}|}
+	\begin{tabular}{|l|l|p{3cm}|p{6cm}|}
   	\hline
   	Revision \# & Date & Team Member & Description of Change\\
   	\hline
   	0 & November 26 & Hui Chen & Started Test Report document\\
+  	\hline
+  	0 & November 28 & Hui Chen & Added Nonfunctional Quality Test and Summary\\
+  	\hline
+  	1 & November 28 & Sam Hamel & Added Matrix Coverage \& Traceability table\\
+  	\hline
+  	2 & November 28 & Nareshkumar Maheshkumar & Added Introduction and Automated Tests\\
+  	& & Sam Hamel & \\
+  	\hline
+  	3 & November 28 & Hui Chen & Added Method of Testing/Update format\\
   	\hline
 	\end{tabular}
 	\end{table}
 	\newpage
 	
 	\section{Introductions}
-	\subsection{Testing Methods}
+	\subsection{Objective}
+	The main functions that are being tested are Player moves, Player betting, management of chips, management of pot, card distribution and hand ranking; these are all tested using Junit. Also included in the test report is the results of manually testing the GUI and the results of a usability test, which was surmised through surveying five people. The testing produced no errors and the usability test result met the acceptable criteria stated in the requirements document.
+	\subsection{Method of Testing}
+	Testing will mostly be done through automated unit tests using JUnit, with some manual testing, and some whitebox testing in order to validate actual outputs with the expected outputs in order to verify quality, robustness, and functionality. \\
+	There will be many test cases including extreme and abnormal cases done through automated testing because the software should produce predictable and consistent results for most cases. Tests that cannot be tested using automated tests such as the user interface will be done through manual testing as automated tests is not feasible for the user interface. The manual tests will provide us with insight from the user on how it can be improved and also to test the interface to see if everything looks and feels the way it should. \\
+	 The software can/will be installed on any system that runs Java all tests performed to date are done in Windows. The tests were performed through the Eclipse IDE and the operation environment will be the same in terms of the operating systems, but it will not be run through Eclipse. All automated tests are completed with the use of JUnit, which performs unit tests for individual method(s) within modules. 
 	\subsection{Coverage Matrix}
-	\begin{table}[ht]
-	\caption{Coverage Matrix Table}
-	\begin{tabular}{||c|c|L|}
+	\begin{table}[H]
+	\caption{Coverage Matrix}
+	\begin{tabular}{|c|c|L|}
 	\hline
 	\multicolumn{3}{|l|}{Test 1: Game Start Speed}\\
 	\hline
 	Requirements & Results & Automation Coverage\\
 	\hline
-	3.4 1) & 2.5: pass & None\\
+	3.4 1) & 5.1: pass & None\\
 	\hline
-	3.4 2) & 2.8: pass & None\\
+	3.4 2) & 5.2: pass & None\\
 	\hline
-	3.4 3) & 2.1-2.4: pass & Pass\\
+	3.4 3) & 4: pass & Pass\\
 	\hline
-	3.4 4) & 2.1, 2.7: pass & pass\\
+	3.4 4) & 4.1-4.6, 4.12: pass & pass\\
 	\hline
-	3.4 5) & 2.1-2.4: pass & pass\\
+	3.4 5) & 4: pass & pass\\
 	\hline
-	3.4 7) & 2.1: pass & pass \\
+	3.4 7) & 4.1-4.6: pass & pass \\
 	\hline
-	3.4 8) & 2.6: pass & pass \\
+	3.4 8) & 4.11: pass & pass \\
 	\hline
 	\end{tabular}
 	\end{table}
@@ -139,7 +153,7 @@
 	Performance tests are to be performed using JUnit and a StopWatch library to measure the time required to execute certain actions. Each JUnit test will run 10 times and if the average is within acceptable range, then the test passes. It is important to note that the performance may vary depending on the user's hardware, so for consistency, the tests will be conducted with the same machine. Further analysis can be found in section 7.2.
 	
 	\begin{table}[ht]
-	\caption{Performance Tests Table}
+	\caption{Performance Test Results Table}
 	\begin{tabular}{|c|L|}
 	\hline
 	\multicolumn{2}{|l|}{Test 1: Game Start Speed}\\
@@ -173,10 +187,210 @@
 	
 	\subsection{Robustness Tests}
 	To test for robustness, JUnit will be used to manually trigger events in which an error is produced which should be caught and displayed to the user. The results of such tests can be found under section 5.
-	
-	\section{System Tests}
 	\section{Automated Unit Tests}	
+	Unless otherwise stated, all results here were generated using Automatic testing using junit. These tests included several inputs (both normal and boundary), as such only the types of inputs/outputs are stated here and only one specific input and specific output is shown as an example for each test.
+	
+\subsection{Normal Betting Tests - Player, Pot, Game, AIOpponent Module}
+\subsubsection{Validation Tests}			
+Input: player chooses bet option and chooses bet amount ( x = 200)
+Initial State: Game started, player's turn
+Output: Player.chips =2000, Player.bet = 200, Player.chips = 1800, Pot = 200
+
+\subsection{Verification Tests}
+Expected Output: 200; player starts with 1000 chips loses the amount of chips entered for the bet, x, which equals the amount in the pot
+All results are correct and expected outputs = actual outputs
+
+\subsection{Boundary betting Tests: Negatives - Player, Pot, Game, AIOpponent Module}
+
+\subsubsection{Validation Tests}
+Input: player chooses bet option and chooses bet amount (x < 0): x = -1
+Initial State: Game started, player's turn
+Output: Window saying no negative inputs, state stays the same
+
+\subsubsection{Verification Tests}
+Expected Output: Window saying no negative inputs, state stays the same
+All results are correct and expected outputs = actual outputs
+
+\subsection{Boundary betting Tests: Over bet - Player, Pot, Game, AIOpponent Module}
+
+\subsubsection{Validation Tests}
+Input: player chooses bet option and chooses bet amount ( x > Player.chips): x = 400, Player.chips = 100
+Initial State: Game started, player's turn
+Output: Message window stating they bet too much, state stays the same
+
+\subsubsection{Verification Tests}
+Expected Output: Message window stating they bet too much, state stays the same
+All results are correct and expected outputs = actual outputs
+
+\subsection{Boundary Test empty pot distribution}
+
+\subsubsection{Validation Tests}
+Input: Pot = 0, Player, Player1.Hand = null
+Initial State: Game in progress, Hand’s Evaluated
+Output: Error, Division by zero
+
+\subsubsection{Verification Tests}
+Expected Output: Error, Division by zero
+All results are correct and expected outputs = actual outputs
+
+\subsection{Boundary Test Empty Hand}
+
+\subsubsection{Validation Tests}
+Input: pot, Players
+Initial State: Game in progress, Hand’s Evaluated
+Output: Error, Null pointer exception
+
+\subsubsection{Verification Tests}
+Expected Output: Error, Null pointer exception
+All results are correct and expected outputs = actual outputs
+
+\subsection{Folding Tests Player - Player, Pot, Hand, Game, AIOpponent Modules}
+
+\subsubsection{Validation Tests}
+Input: Various combinations of betting/checking until player folds 
+Initial State: Game in progress, player’s turn,
+Player1.chips = 400, AIPlayer.chips = 400, Player1's bet = 200, AIPlayer's bet = 200,
+Player1 checks, AIPlayer folds
+Output: Player.chips = AIPlayer.chips + pot; Player/AIplayer lose chips each time they call/bet/raise; Player1.chips = 600, AIPlayer.chips = 200
+
+\subsubsection{Verification Tests}
+Expected Output: Player.chips = AIPlayer.chips + pot; Player/AIplayer lose chips each time they call/bet/raise; Player1.chips = 600, AIPlayer.chips = 200
+All results are correct and expected outputs = actual outputs
+
+\subsection{Round Evaluation - Player, Pot, Hand, Game, AIOpponent Modules}
+
+\subsubsection{Validation Tests}
+Input: Various combinations of betting/checking and card combinations/Hands
+Player1.chips = 400, AIPlayer.chips = 400 Player1.bet = 200, AIPlayer.bet = 200
+Player1.Hand = 10D,10C,10S,10H,2D AIPlayer.Hand = 9D,5C, 3S,8H,2D
+Initial State: Game in progress, Round evaluated;
+Output: Player with better hand wins, gains pot; Player1.chips = 600, AIPlayer.chips = 200
+
+\subsubsection{Verification Tests}
+Expected Output: Player with better hand wins, gains pot; Player1.chips = 600, AIPlayer.chips = 200
+
+All results are correct and expected outputs = actual outputs
+
+\subsection{Round Evaluation - Tie Player, Pot, Hand, Game, AIOpponent Modules}
+
+\subsubsection{Validation Tests}
+Input: Various combinations of betting/checking and card combinations where Hands are equal;
+Player1.chips = 400, AIPlayer.chips = 400 Player1.bet = 200, AIPlayer.bet = 200
+Player1.Hand = 10D,2C,3S, 5H,6D AIPlayer.Hand = 10S,5C, 3S,8H,2D
+Initial State: Game in progress, Round evaluated
+Output: Player’s split pot, each player gets half the pot if even pot, if odd one chip is left in pot; Player1.chips = 400, AIPlayer.chips = 400, Pot = 0
+
+\subsubsection{Verification Tests}
+Expected Output: Output: Player’s split pot, each player gets half the pot if even pot, if odd one chip is left in pot; Player1.chips = 400, AIPlayer.chips = 400, Pot = 0
+All results are correct and expected outputs = actual outputs
+
+\subsection{Player bet’s more chips than opponent has - Player, Pot, Hand, Game AIOpponent Modules}
+
+\subsubsection{Validation Test 1}
+Input: Player betting amount > Opponent.chips, Player.Hand < Opponent.Hand,
+Player1.Chips = 400, Player1.bet = 200, AIPlayer.chips = 100, AIPlayer.bet = 100
+Player1.Hand = 10D,2C,3S, 5H,6D AIPlayer.Hand = 11S,5C, 3S,8H,2D
+Initial state: Game in progress, Round evaluated
+Output: Opponent get’s twice the chips they bet, Player get’s rest;
+Player1.Chips = 300, AIPlayer.chips = 200, Pot = 0
+
+\subsubsection{Validation Test 2}
+Input: Player betting amount > Opponent.chips Player.Hand > Opponent.Hand
+Initial state: Game in progress, Round evaluated,
+Player1.Chips = 400, Player1.bet = 200, AIPlayer.chips = 100, AIPlayer.bet = 100
+Player1.Hand = 10D,2C,3S, 5H,6D AIPlayer.Hand = 9S,5C, 3S,8H,2D
+Output: Player.chips = Player.chips + pot, Player.chips = 500
+
+\subsubsection{Verification Tests}
+Validation 1 Expected Output: Player1.Chips = 300, AIPlayer.chips = 200, Pot = 0
+Validation 2 Expected Output: Player.chips = 500
+All results are correct and expected outputs = actual outputs
+
+\subsection{Game End - Game Module, Pot, Hand, Player, AIOpponent}
+
+\subsubsection{Validation tests}
+Input: Player bet’s all chips; Player.hand < Opponent.Hand
+Initial State: Game in progress, Round evaluated
+Output: Window saying opponent wins; Game ends
+
+\subsubsection{Verification tests}
+Expected Output: Window saying opponent wins; Game ends
+All results are correct and expected outputs = actual outputs
+
+\subsection{Deck/Card Distribution}
+
+\subsubsection{Validation tests 1}
+Input: N/A
+Initial State: Game in Progress new round started
+Output: Each player gets two cards, deck is shuffled; Player1.Hand = 11S,12D
+AIPlayer.Hand = 4D,5S
+
+\subsubsection{Validation tests 2}
+Input: N/A
+Initial State: Game in Progress both players bet
+Output: three unique cards come on community board; Player1.Hand = 11S,12D, 3D,3S,4H,
+AIPlayer.Hand = 4D,5S,3D,3S,4H
+
+\subsubsection{Validation tests 3}
+Input: N/A
+Initial State: Game in Progress both players bet/call/check 
+Output: one unique card comes on community board; Player1.Hand = 11S,12D, 3D,3S,4H,7S,
+AIPlayer.Hand = 4D,5S,3D,3S,4H,7S
+
+\subsubsection{Verification tests}
+4.12.1 Expected Output: All cards are unique, each player has two cards deck is shuffled at start of round; Player1.Hand = 11S,12D AIPlayer.Hand = 4D,5S
+4.12.2 Expected Output: Three unique community cards are placed on board;
+Player1.Hand = 11S,12D, 3D,3S,4H
+AIPlayer.Hand = 4D,5S,3D,3S,4H
+4.12.3 Each card given is unique
+Player1.Hand = 11S,12D, 3D,3S,4H,7S
+AIPlayer.Hand = 4D,5S,3D,3S,4H,7S
+
+All results are correct and expected outputs = actual outputs
+
+\subsection{Class Methods}
+
+Each Class’s methods were also automatically tested using Junit for expected values. All values met the expected criteria and the Junit tests came back error free.
+
+\section{Manual Tests}
+\subsection{Rules and App Info Tests - TexasHoldem Module and AboutInfo Module}
+
+\subsubsection{Validation tests 1}
+Input: User presses button for rules game menu
+Initial State: Game start, Game in progress or Game 
+Output: Rules popup window appears
+
+\subsubsection{Validation tests 2}
+Input: User presses button for App info 
+Initial State: Game start, Game in progress or Game 
+Output: App info popup window appears
+
+\subsubsection{Verification Tests}
+Expected Output: Rules and App Info popup windows show up when pressed on the game menu
+All results are correct and Expected Output = Actual Output
+
+\subsection{GUI Tests - TexasHoldem Module}
+
+\subsubsection{Validation Tests GUI Button Tests 1}
+Input: Buttons pressed
+Initial State: Game in progress
+Output: Buttons respond and perform functions
+ 
+\subsubsection{Validation Tests GUI Button Tests 2}
+Input: Buttons pressed
+Initial State: Game in Ended
+Output: Buttons do not respond
+
+\subsubsection{Validation Tests Window Close}
+Input: Close window is pressed/ program is quit
+Initial State(s): All states 
+Output: Window closes
+
+\subsubsection{Verification tests}
+All outputs are equal to the expected outputs
+
 	\section{Changes Due to Testing}
+	The tests reported here are only for revision 1 of the software, each previous version of the software after revision zero also had these same tests applied to them. The software was only deemed complete and up to the standards set out by the requirements document when all tests returned expected results. Therefore each test that produced results that were not deemed correct changed the software until it was fixed.
 	\section{Test Summary}
 	\subsection{Usability Tests}
 	Six participants were timed and observed while they perform tasks given by us within the program. We found that the results were well received, with minor complaints about the user interface. \\
@@ -190,8 +404,50 @@
 	The performance tests were conducted in order to determine whether the user can the program in a reasonable time frame and also to see if the program can output the required actions in reasonable time. Our tests have shown that the software passes in these aspects and we have ideas on how to optimize the performance further however there is no plan to implement the ideas at the present time as the current system have exceeded the expected results. 
 	\subsection{Robustness Tests}
 	The tests were conducted in JUnit where all possible and foreseeable errors were manually triggered and the results recorded. We found that we were able to catch and output all errors that can occur and no game actions were performed when errors occurred, therefore keeping the system error free. During manual testing, no errors were found that are not already included in our tests. 
-	\section{Traceability to Requirements}
-	\section{Traceability to Modules}
-	
+	\section{Traceability to Requirements/Modules}
+	\begin{table}[H]
+	\caption{Traceability Table}
+	\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+	\hline
+	\multicolumn{4}{|l|}{Test 1: Game Start Speed}\\
+	\hline
+	Module & Requirements & Testing Cases & Status\\
+	\hline
+	M9 & 3.4 1) & 5.1 & pass\\
+	\hline
+	M1 & 3.4 2) & 5.2 & pass\\
+	\hline
+	M3 & 3.4 3) & 2.1-2.4 & pass\\
+	\hline
+	M2,M3 & 3.4 4) & 4 & pass\\
+	\hline
+	M6,M7 & 3.4 5) & 4 & pass\\
+	\hline
+	M5,M3 & 3.4 6) & 4 & pass\\
+	\hline
+	M2 & 3.4 8) & 4.1-4.5 & pass\\
+	\hline
+	M1 & 3.4 8) & 4.11 & pass\\
+	\hline
+	n/a & 4.1 & 3.1 & pass\\
+	\hline
+	n/a & 4.2 & 3.2 & pass\\
+	\hline
+	n/a & 4.3 & n/a & n/a\\
+	\hline
+	n/a & 4.4 & 1.2 & pass\\
+	\hline
+	n/a & 4.5 & 1.2 & pass\\
+	\hline
+	n/a & 4.6 & n/a & n/a\\
+	\hline
+	n/a & 4.7 & n/a & n/a\\
+	\hline
+	n/a & 4.8 & n/a & n/a\\
+	\hline
+
+	\end{tabular}
+	\end{table}
+
 		
 \end{document}
