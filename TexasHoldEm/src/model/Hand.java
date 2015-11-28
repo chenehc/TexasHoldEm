@@ -114,7 +114,7 @@ public class Hand extends ArrayList<Card>{
                             }
                             if(count ==2){
                                 FullH = true;
-                                return played.get(0).getRank()*1000000 clone.get(pos).getRank();;
+                                return played.get(0).getRank()*1000000 + clone.get(pos).getRank();
                             }
                         }
                     }

@@ -18,7 +18,7 @@ public class Game{
 	private Hand p1hand;
     private Hand p2hand;
     private int cardCount;
-    private boolean gameEnd;
+    private boolean isGameEnd, isRoundEnd;
     private TexasHoldEm view;
     private Pot pot;
 	
@@ -30,7 +30,8 @@ public class Game{
 		deck = new Deck();
 		deck.Set();
 		deck.Shuffle();
-		this.gameEnd = false;
+		this.isGameEnd = false;
+		this.isRoundEnd = false;
 		pot = new Pot(player1, player2, this);
 		this.view = view;
 	}
@@ -44,10 +45,10 @@ public class Game{
 		deck = new Deck();
 		deck.Set();
 		deck.Shuffle();
-		this.gameEnd = false;
+		this.isGameEnd = false;
 		pot = new Pot(this.player1, player2, this);
 		this.view = view;
-		trackAI();
+		gameTracker();
 	}
 	
 	/**
@@ -57,14 +58,17 @@ public class Game{
 		this.currentPlayer = (this.currentPlayer + 1) % 2 ;
 	}
 	
-	public void trackAI(){
+	/**
+	 * Method keeps track of the AI as well as whether there is a winner
+	 */
+	public void gameTracker(){
 		Thread th = new Thread(){
 			@Override
 			public void run(){
 				while(true){
-					if (currentPlayer == 1){
-						AIplayer.getAction(pot);
-						switchPlayer();
+					//choose AI action when the game is not ended
+					if (!isRoundEnd && !isGameEnd){
+						if (currentPlayer == 1) AIplayer.getAction(pot);
 					}
 					try {
 						Thread.sleep(3000);
@@ -77,6 +81,9 @@ public class Game{
 		th.start();
 	}
 	
+	/**
+	 * Method contains methods to perform when a turn ends
+	 */
 	public void turnEnd(){
 		next_card();
 		view.createCommunityCard();
@@ -86,6 +93,7 @@ public class Game{
 	public TexasHoldEm getView(){
 		return view;
 	}
+	
 	/**
 	 * Method that returns the value of parameter pot
 	 * @return Pot
@@ -139,7 +147,8 @@ public class Game{
 		for(int i =0; i<3; i++){
 			next_card();
 		}
-		view.log("cards are dealt");
+		isRoundEnd = false;
+		view.log("Cards are dealt.");
 		view.updateChipLabels();
 	}
 
@@ -150,26 +159,25 @@ public class Game{
 		p1hand.add(deck.get(cardCount));
 		p2hand.add(deck.get(cardCount));
 		cardCount++;
-		view.log("Next community card shown");
-	}
-
-	/**
-	 * Method that returns the value of parameter gameEnd
-	 * @return gameEnd boolean
-	 */
-	public boolean isGameEnd(){
-		return gameEnd;
 	}
 	
 	/**
-	 * Method that ends the round and starts a new round
+	 * Method that starts a new round by reinitializing the state variables
 	 */
 	public void newRound(){
+		//when one player's chip falls below 0, end the game and display the winner
+		if (player1.getChips() <= 0 || player2.getChips() <= 0){
+			isGameEnd = true;
+			int winOption = (player1.getChips() <= 0) ? 4 : 5;
+			TexasHoldEm.displayMessage(winOption);
+			return;
+		}
 		deck.Shuffle();
 		view.reset();
-		gameEnd = false;
+		switchPlayer();
+		isRoundEnd = true;
 		pot.resetCheckCount();
-		view.log("new round");
+		view.log("New Round");
 		view.updateChipLabels();
 	}
 	
@@ -183,7 +191,7 @@ public class Game{
 			pot.distributePot(2);
 		else
 			pot.distributePot(3);
-		view.log("round evaluated");
+		view.log("Round Evaluated");
 		newRound();
 	}
 	

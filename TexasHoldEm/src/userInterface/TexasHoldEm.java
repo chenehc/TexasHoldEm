@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.text.DefaultCaret;
 
 import com.sun.glass.events.KeyEvent;
 
@@ -71,9 +72,14 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		background = new ImageIcon("src/Cards/b.gif");
 		
 		player1 = new Player();
-		player2 = new Player();
 		
+		//2 player game
+		player2 = new Player();
+		game = new Game(player1, player2, this);
+		
+		//AI game
 		game = new Game(player1, this);
+	
 		pot = game.getPot();
 		
 		addMenu();
@@ -161,14 +167,17 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 		callBtn = new JButton("Call/Check");
 		callBtn.addActionListener(this);
+		callBtn.setEnabled(false);
 		btnPanel.add(callBtn);
 		
 		foldBtn = new JButton("Fold");
 		foldBtn.addActionListener(this);
+		foldBtn.setEnabled(false);
 		btnPanel.add(foldBtn);
 		
 		betBtn = new JButton("Bet");
 		betBtn.addActionListener(this);
+		betBtn.setEnabled(false);
 		btnPanel.add(betBtn);
 		
 		betField = new JTextField("0");
@@ -219,6 +228,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 		scroll = new JScrollPane(console);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		DefaultCaret caret = (DefaultCaret) console.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		scroll.setBounds(10, 228, 234, 107);
 		
 		lblPlayer2Chips = new JLabel("Chips: ");
@@ -284,15 +295,23 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	}
 	
 	/**
-	 * This method is used to display errors that are relevant to the user
+	 * This method is used to display errors and messages that are relevant to the user
 	 * @param option int - The type of error
 	 */
-	public static void raiseError(int option){
+	public static void displayMessage(int option){
 		switch (option){
 		//0 represents raise error
 		case 0:	JOptionPane.showMessageDialog(board, "Invalid input, try again", "Raise Error", JOptionPane.ERROR_MESSAGE); break;
 		//1 represents
 		case 1: JOptionPane.showMessageDialog(board, "Deal First", "Error", JOptionPane.ERROR_MESSAGE); break;	
+		//2 represents negative value in bet field
+		case 2: JOptionPane.showMessageDialog(board, "Cannot enter negative value", "Error", JOptionPane.ERROR_MESSAGE); break;
+		//3 represents empty field
+		case 3: JOptionPane.showMessageDialog(board, "Bet amount cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE); break;
+		//4 represents that the dealer wins
+		case 4: JOptionPane.showMessageDialog(board, "Dealer Wins!", "Winner!", JOptionPane.INFORMATION_MESSAGE); break;
+		//5 represents that the player wins
+		case 5: JOptionPane.showMessageDialog(board, "You Win!", "Winner!", JOptionPane.INFORMATION_MESSAGE); break;
 		}
 	}
 	
@@ -301,13 +320,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 * @param s String - Text to be shown on console
 	 */
 	public void log(String s){
-		//TODO change after debugging
 		console.append(s + "\n");
-		//		System.out.println(s + "\n");
-		//		System.out.println("Player 1 Chips: " + player1.getChips()
-		//		+"\nPlayer 2 Chips: " + player2.getChips()
-		//		+"\nPot: " + pot.getPot()
-		//		+"\n");
 	}
 	
 	/**
@@ -323,10 +336,14 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 			communityCards[i] = null;
 		}
 		
+		communityCardCount = 0;
 		communityPanel.removeAll();
 		
 		dealt = false;
 		dealBtn.setEnabled(true);
+		callBtn.setEnabled(false);
+		foldBtn.setEnabled(false);
+		betBtn.setEnabled(false);
 	}
 	
 	/**
@@ -377,12 +394,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 			AboutFrame abtFrm = new AboutFrame('r');
 			abtFrm.setVisible(true);
 		}else if (e.getSource() == newGameItem){
-			player1 = new Player();
-			player2 = new Player();
-			game = new Game(player1, player2, this);
-			revalidate();
-			repaint();
-			//not tested yet
+			
+			//TODO to be implemented
 		}
 		else{
 			if (e.getSource() == dealBtn){
@@ -392,18 +405,26 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 				createDealerCards();
 				createCommunityCard();
 				createCommunityCard();
+				pot.ante();
 				dealt = true;
 				dealBtn.setEnabled(false);
+				callBtn.setEnabled(true);
+				foldBtn.setEnabled(true);
+				betBtn.setEnabled(true);
 			}
 			else if (!dealt) {
-				TexasHoldEm.raiseError(1);
+				TexasHoldEm.displayMessage(1);
 			}
 			else{
 				if (e.getSource() == callBtn){
 					pot.call();
 					communityPanel.updateUI();
 				}else if (e.getSource() == betBtn){
-					pot.raise(Integer.parseInt(betField.getText()));
+					try{
+						pot.raise(Integer.parseInt(betField.getText()));
+					}catch (Exception ex){
+						displayMessage(3);
+					}
 					communityPanel.updateUI();
 				}else if (e.getSource() == foldBtn){
 					pot.fold();

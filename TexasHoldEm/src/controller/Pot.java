@@ -17,14 +17,13 @@ public class Pot {
 		this.pot = 0;
 		this.bet = 0;
 		this.game = game;
-		anti();
-		
+		ante();
 	}
 	
 	/**
-	 * Method that is used and called at the start of a round to collect the initial pot 
+	 * Method that is used and called at the start of a round to collect the forced bet
 	 */
-	public void anti(){
+	public void ante(){
 		player1.loseChips(100);
 		player2.loseChips(100);
 		pot += 200;
@@ -34,31 +33,35 @@ public class Pot {
 	 * Method collects chips from the player if the other player made a raise previously
 	 */
 	public void call(){
-		if (hasBet) {
+		if (hasBet) { //call when the other play has made a bet
 			if (game.getCurrentPlayer() == 0){
 				player1.loseChips(getBet());
 				this.pot += getBet();
+				game.getView().log("Player " +  " calls");
 				game.switchPlayer();
-				game.turnEnd();
+//				game.turnEnd();
 			}
 			else {
 				player2.loseChips(getBet());
 				this.pot += getBet();
+				game.getView().log("Dealer " +  " calls");
 				game.switchPlayer();
-				game.turnEnd();
+//				game.turnEnd();
 			}
 		}
-		else if (!hasBet && checkCount == 1){
+		else if (!hasBet && checkCount == 1){ //check if previous player checks and end turn
 			game.turnEnd();
 			resetCheckCount();
 			game.switchPlayer();
 			game.getView().log("turn end");
-		}else {
+		}else { //check if there isn't a bet
 			checkCount++;
+			if (game.getCurrentPlayer() == 0 )
+				game.getView().log("Player " +  " checks");
+			else 
+				game.getView().log("Dealer " +  " checks");
 			game.switchPlayer();
-			game.getView().log("next player");
 		}
-		game.getView().log("Player " + game.getCurrentPlayer() +  " call/checks");
 		game.getView().updateChipLabels();
 	}
 	
@@ -68,27 +71,37 @@ public class Pot {
 	 */
 	public void raise(int amt){
 		resetCheckCount();
+		//TODO handle hasBet situation and also reset bet 
+		if (hasBet) 
+			amt += bet;
 		if (game.getCurrentPlayer() == 0){
-			if (amt > player1.getChips())
-				TexasHoldEm.raiseError(0);
-			else {
+			if (amt > player1.getChips()){ //not enough chips
+				TexasHoldEm.displayMessage(0);
+			}else if (amt <= 0 ){ //negative chips
+				TexasHoldEm.displayMessage(2);
+			}
+			else { 
 				this.pot += amt;
 				player1.loseChips(amt);
 				hasBet = true;
 				bet = amt;
-				game.getView().log("Player " + game.getCurrentPlayer() + " bets: " + amt + " chips.");
+				game.getView().log("Player " + " bets: " + amt + " chips.");
 				game.switchPlayer();
 			}
 		}
 		else {
-			if (amt > player2.getChips())
-				TexasHoldEm.raiseError(0);
+			if (amt > player2.getChips()){ //not enough chips
+				this.pot += player2.getChips();
+				hasBet = true;
+			}
+			else if (amt <= 0 ) //negative chips
+				TexasHoldEm.displayMessage(2);
 			else {
 				this.pot += amt;
 				hasBet = true;
 				bet = amt;
 				player2.loseChips(amt);
-				game.getView().log("Player " + game.getCurrentPlayer() + " bets: " + amt + " chips.");
+				game.getView().log("Dealer " + " bets: " + amt + " chips.");
 				game.switchPlayer();
 			}
 		}
@@ -108,15 +121,21 @@ public class Pot {
 	 */
 	public void fold(){
 		resetCheckCount();
-		if (game.getCurrentPlayer() == 0) 
+		if (game.getCurrentPlayer() == 0) {
+			game.getView().log("Player " + " folds.");
 			distributePot(2);
-		else 
+		}else { 
+			game.getView().log("Dealer " + " folds.");
 			distributePot(1);
-		game.getView().log("Player " + game.getCurrentPlayer() + " folds.");
+		}
+		
 		game.getView().updateChipLabels();
 		game.newRound();
 	}
 	
+	/**
+	 * Method used to set checkCount to 0
+	 */
 	public void resetCheckCount(){
 		checkCount = 0;
 	}
@@ -138,11 +157,11 @@ public class Pot {
 		//option 1: player 1 has better hand than player 2
 		case 1:	player1.gainChips(pot);
 				pot = 0;
-				break;
+				return;
 		//option 2: player 2 has better hand than player 2
 		case 2: player2.gainChips(pot);
 				pot = 0;
-				break;
+				return;
 		//option 3: both players have equal hand strength, divide the pot by 2
 		//if pot is even, distribute evenly, if uneven, add one to the next pot 
 		//and distribute evenly for (pot-1)/2
@@ -152,11 +171,8 @@ public class Pot {
 					pot = 0;
 				else
 					pot = 1;
+				return;
 		}
 		game.getView().updateChipLabels();
-	}
-	
-	public static void main(String args[]){
-		
 	}
 }
