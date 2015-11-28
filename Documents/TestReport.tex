@@ -1,6 +1,9 @@
 \documentclass[11pt]{article}
 
 \usepackage{array}
+\usepackage{float}
+
+
 \newcolumntype{L}{>{\centering\arraybackslash}m{6.5cm}}
 
 \begin{document}
@@ -25,15 +28,26 @@
 	\newpage
 	
 	\section{Revision History}
+	\begin{table}[h]
+	\caption{Revision History Table}
+	\begin{tabular}{|l|c|r|p{6cm}|}
+  	\hline
+  	Revision \# & Date & Team Member & Description of Change\\
+  	\hline
+  	0 & November 26 & Hui Chen & Started Test Report document\\
+  	\hline
+	\end{tabular}
+	\end{table}
+	\newpage
+	
 	\section{Introductions}
 	\subsection{Testing Methods}
-	\subsection{Table of Acronyms and Definitions}
 	\subsection{Coverage Matrix}
 
 	\section{Nonfunctional Quality Tests}	
 	\subsection{Usability Tests}
-	Usability Tests are performed by recruiting 3 complete beginners with no knowledge of the game as well as 3 people who are already familiar with the game. The participants were given a series of tasks to perform. The amount of time required for them to complete the task as well as comments to the task are recorded. Participants will not be named to protect their identity. Further discussion of the results can be found in section 8.1.
-	\begin{table} [h]
+	Usability Tests are performed by recruiting 3 complete beginners with no knowledge of the game as well as 3 people who are already familiar with the game. The participants were given a series of tasks to perform. The amount of time required for them to complete the task as well as comments to the task are recorded. Participants will not be named to protect their identity. Further discussion of the results can be found in section 7.1.
+	\begin{table}[H]
 	\caption{Usability Test Results Table}
 	\begin{tabular}{|c|c|L|}
 	\hline
@@ -99,11 +113,44 @@
 	\end{tabular}
 	\end{table}
 	\subsection{Performance Tests}
-	Performance tests are to be performed using JUnit and a StopWatch library to measure the time required to execute certain actions. Each JUnit test will run 10 times and if the average is within acceptable range, then the test passes.
+	Performance tests are to be performed using JUnit and a StopWatch library to measure the time required to execute certain actions. Each JUnit test will run 10 times and if the average is within acceptable range, then the test passes. It is important to note that the performance may vary depending on the user's hardware, so for consistency, the tests will be conducted with the same machine. Further analysis can be found in section 7.2.
 	
+	\begin{table}[ht]
+	\caption{Performance Tests Table}
+	\begin{tabular}{|c|L|}
+	\hline
+	\multicolumn{2}{|l|}{Test 1: Game Start Speed}\\
+	\hline
+	Test \# & Results (ms)\\
+	\hline
+	1 & 777\\
+	\hline
+	2 & 62\\
+	\hline
+	3 & 76\\
+	\hline
+	4 & 77\\
+	\hline
+	5 & 49\\
+	\hline
+	6 & 57\\
+	\hline
+	7 & 48\\
+	\hline
+	8 & 67\\
+	\hline
+	9 & 51\\
+	\hline
+	10 & 56\\	
+	\hline
+	avg: & 132.0\\
+	\hline
+	\end{tabular}
+	\end{table}
 	
 	\subsection{Robustness Tests}
-	\section{Regression Tests}
+	To test for robustness, JUnit will be used to manually trigger events in which an error is produced which should be caught and displayed to the user. The results of such tests can be found under section 5.
+	
 	\section{System Tests}
 	\section{Automated Unit Tests}	
 	\section{Changes Due to Testing}
@@ -116,6 +163,10 @@
 	The help and rule page was met with little difficulty, the participants were easily able to pull up either pages and find the basic rules they needed to play the game. Some of the participants have found that the game or the pages are too simple. While we agree that it may be simple, but the idea is to not overwhelm the player with an absurd amount of information to digest, especially not with the beginners. It is true that Texas HoldEm is a complex game, we feel that if a player is armed with the basic knowledge and continuously practice by playing the game, they can understand the game and slowly but eventually come up with strategies on their own. Of course, for more advanced tactics, they would have to do their research but this game is not about having the best and smartest opponent to face but more of something that can be used to ease the transition between beginner and a seasoned player. \\
 	\newline 
 	The participants were overall satisfied with the current state of the game and have made suggestions toward the improvement of the user interface. Their suggestion will be taken into consideration however there are no plans to implement any changes to the user interface at the present time.
+	\subsection{Performance Tests}
+	The performance tests were conducted in order to determine whether the user can the program in a reasonable time frame and also to see if the program can output the required actions in reasonable time. Our tests have shown that the software passes in these aspects and we have ideas on how to optimize the performance further however there is no plan to implement the ideas at the present time as the current system have exceeded the expected results. 
+	\subsection{Robustness Tests}
+	The tests were conducted in JUnit where all possible and foreseeable errors were manually triggered and the results recorded. We found that we were able to catch and output all errors that can occur and no game actions were performed when errors occurred, therefore keeping the system error free. During manual testing, no errors were found that are not already included in our tests. 
 	\section{Traceability to Requirements}
 	\section{Traceability to Modules}
 	
