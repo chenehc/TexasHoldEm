@@ -1,0 +1,163 @@
+%Used the template posted on Avenue by Dr. Farmer
+
+\documentclass{beamer}
+
+\mode<presentation>
+{
+%  \usetheme{Hannover}
+\usetheme[width=0.7in]{Hannover}
+
+\setbeamercovered{transparent}
+}
+
+\usepackage[english]{babel}
+
+\usepackage[latin1]{inputenc}
+
+\usepackage{times}
+\usepackage{multirow}
+\usepackage{totpages}
+\usepackage{hyperref}
+
+\pgfdeclareimage[height=0.7cm]{logo}{McMasterLogo}
+\title[\pgfuseimage{logo}]
+{Texas Hold 'Em}
+
+\author[Slide \thepage~of \pageref{TotPages}]
+{Hui Chen \newline Nareshkumar Maheshkumar \newline Sam Hamel}
+
+\institute[McMaster University]
+{
+  Computing and Software Department\\
+  Faculty of Engineering\\
+  McMaster University
+}
+
+\date[Dec 1, 2015] 
+{Final Presentation, Dec.\ 1, 2015}
+
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\usepackage{booktabs}
+
+\beamertemplatenavigationsymbolsempty 
+
+\newcommand{\colAwidth}{0.2\columnwidth}
+\newcommand{\colBwidth}{0.755\columnwidth}
+
+% have SRS and LP open during the presentation
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\titlepage
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\frametitle{Overview}
+\tableofcontents
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Purpose]{Purpose}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\frametitle{Purpose}
+
+\begin{normalsize}
+Design and develop a Texas Hold-Em game
+that a person can play for enjoyment and improvement of their skills by
+getting acquainted with the rules of the game through gameplay,
+and by facing a challenging computer opponent. 
+\end{normalsize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\section[Scope]{Scope}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frametitle{Scope}
+
+\begin{enumerate}
+\item The rules of the game
+\item Graphical User Interface
+\item The AI/bot
+\end{enumerate}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Demonstration]{Demonstration of the Application}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\frametitle{Application Demonstration}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Qualities]{Qualities}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\frametitle{Qualities}
+
+\begin{enumerate}
+\item User-friendly
+\item Portable (Windows, Mac and Unix)
+\item Performance/Speed
+\end{enumerate}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section[Conclusions]{Concluding Remarks}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\frametitle{Concluding Remarks}
+
+\begin{itemize}
+
+\item Application is directed towards complete beginners of the game
+\item Help and rules page to get the user acquainted to the game
+\item All the requirements are met
+
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
