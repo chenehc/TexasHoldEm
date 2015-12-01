@@ -183,6 +183,7 @@ public class Game{
 		switchPlayer();
 		isRoundEnd = true;
 		pot.resetCheckCount();
+		pot.resetBets();
 		view.log("New Round");
 		view.updateChipLabels();
 	}

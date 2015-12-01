@@ -71,12 +71,10 @@ public class Pot {
 	 * @param amt int - the amount of chips the player is raising
 	 */
 	public void raise(int amt){
-		resetCheckCount();
-		//TODO handle hasBet situation and also reset bet 
+		resetCheckCount(); 
 		if (hasBet) {
 			amt += bet;
 			game.getView().changeBetBtnLabel("Raise");
-			
 		}
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips()){ //not enough chips
@@ -150,6 +148,14 @@ public class Pot {
 	 */
 	public int getPot(){
 		return pot;
+	}
+	
+	/**
+	 * 
+	 */
+	public void resetBets(){
+		hasBet = false;
+		bet = 0;
 	}
 	
 	/**

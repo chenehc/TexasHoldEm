@@ -74,8 +74,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		player1 = new Player();
 		
 		//2 player game
-		player2 = new Player();
-		game = new Game(player1, player2, this);
+//		player2 = new Player();
+//		game = new Game(player1, player2, this);
 		
 		//AI game
 		game = new Game(player1, this);
@@ -366,6 +366,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	
 	public void changeBetBtnLabel(String t){
 		betBtn.setText(t);
+		betBtn.updateUI();
 	}
 	/**
 	 * Method that keeps track of how many community cards are currently on the board
@@ -409,6 +410,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 				createCommunityCard();
 				createCommunityCard();
 				pot.ante();
+				updateChipLabels();
 				dealt = true;
 				dealBtn.setEnabled(false);
 				callBtn.setEnabled(true);
