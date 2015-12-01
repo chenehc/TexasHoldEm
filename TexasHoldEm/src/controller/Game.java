@@ -22,31 +22,31 @@ public class Game{
     private TexasHoldEm view;
     private Pot pot;
 	
-    //constructor
-	public Game(Player player1, Player player2, TexasHoldEm view){
-		this.player1 = player1;
-		this.player2 = player2;
-		this.currentPlayer = 0;
-		deck = new Deck();
-		deck.Set();
-		deck.Shuffle();
-		this.isGameEnd = false;
-		this.isRoundEnd = false;
-		pot = new Pot(player1, player2, this);
-		this.view = view;
-	}
+//    //constructor
+//	public Game(Player player1, Player player2, TexasHoldEm view){
+//		this.player1 = player1;
+//		this.player2 = player2;
+//		this.currentPlayer = 0;
+//		deck = new Deck();
+//		deck.Set();
+//		deck.Shuffle();
+//		this.isGameEnd = false;
+//		this.isRoundEnd = false;
+//		pot = new Pot(player1, player2, this);
+//		this.view = view;
+//	}
 	
 	//constructor
 	public Game(Player player1, TexasHoldEm view){
 		this.player1 = player1;
-		this.AIplayer = new AIOpponent(this);
+		this.AIplayer = new AIOpponent();
 		this.player2 = this.AIplayer;
 		this.currentPlayer = 0;
 		deck = new Deck();
 		deck.Set();
 		deck.Shuffle();
 		this.isGameEnd = false;
-		pot = new Pot(this.player1, player2, this);
+		pot = new Pot(this.player1, AIplayer, this);
 		this.view = view;
 		gameTracker();
 	}
@@ -178,6 +178,7 @@ public class Game{
 			TexasHoldEm.displayMessage(winOption);
 			return;
 		}
+		AIplayer.first = true;
 		deck.Shuffle();
 		view.reset();
 		switchPlayer();

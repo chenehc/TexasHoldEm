@@ -4,12 +4,11 @@ import model.Hand;
 import model.Player;
 
 public class AIOpponent extends Player{
-	Game game;
+	public boolean first = true;
 	
 	//constructor
-	public AIOpponent(Game game){
+	public AIOpponent(){
 		super();
-		this.game = game;
 	}
 	
 	public int choose(){
@@ -74,6 +73,11 @@ public class AIOpponent extends Player{
 	
 	public void getAction(Pot pot){
 		int bet = pot.getBet() - 200;
+		if (first) {
+			pot.call();
+			first = false;
+			return;
+		}
 		if(this.getHand().size()>2){
 			if(bet > this.choose()){
 				pot.fold();
