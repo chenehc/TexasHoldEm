@@ -1,14 +1,22 @@
 package controller;
 
-import model.Hand;
+import java.util.Random;
+
 import model.Player;
 
 public class AIOpponent extends Player{
 	public boolean first = true;
+	private int currentBet;
+	private int bet;
+	private int countTilCall;
+	private Random rand = new Random();
 	
 	//constructor
 	public AIOpponent(){
 		super();
+		currentBet = 0;
+		bet = 0;
+		countTilCall = rand.nextInt(5)+ 1;
 	}
 	
 	public int choose(){
@@ -72,26 +80,38 @@ public class AIOpponent extends Player{
 	}
 	
 	public void getAction(Pot pot){
-		int bet = pot.getBet() - 200;
-		if (first) {
+		System.out.println(countTilCall);
+		if (countTilCall == 0) {
 			pot.call();
-			first = false;
 			return;
 		}
-		if(this.getHand().size()>2){
-			if(bet > this.choose()){
-				pot.fold();
-			}
-			else if(bet < this.choose()){
-				pot.raise(this.choose()-bet);
-			}
-			else{
-				pot.call();
-			}
-		}
-		else{
+		if (first) {
+			currentBet = pot.getBet();
+			bet = this.choose();
 			pot.call();
+			first = false;
 		}
-
+		else if(currentBet == pot.getBet()){
+			currentBet += this.choose();
+			pot.raise(this.choose());
+			this.countTilCall--;
+		}else{ 
+		if ((currentBet+pot.getBet()) >= 0.8*bet && (currentBet+pot.getBet()) <= 1.6*bet){
+			currentBet += pot.getBet();
+			pot.call();
+			this.countTilCall = 0;
+		}else{
+				if (currentBet - pot.getBet() > 2*bet){
+					this.currentBet = 0;
+					pot.fold();
+					this.countTilCall = rand.nextInt(10) + 1;
+				}
+				else{
+				pot.raise(bet);
+				currentBet += bet;
+				this.countTilCall--;
+			}
+		}
+		}
 	}
 }

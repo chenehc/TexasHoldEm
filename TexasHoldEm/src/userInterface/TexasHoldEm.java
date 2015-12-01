@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -78,7 +79,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 //		game = new Game(player1, player2, this);
 		
 		//AI game
-		game = new Game(player1, this);
+		AIplayer = new AIOpponent();
+		game = new Game(player1, AIplayer, this);
 	
 		pot = game.getPot();
 		
@@ -358,10 +360,31 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 	}
 	
+	public void showAll(){
+		for (int i = player1.getHand().size(); i <= 7 ; i++){
+			createCommunityCard();
+		}
+	}
+	
 	public void updateChipLabels(){
 		lblPlayer2Chips.setText("Chips: " + game.getChipsP2());
 		lblPot.setText("Pot: " + pot.getPot());
 		lblPlayer1Chips.setText("Chips " + game.getChipsP1());
+	}
+	
+	public void showDealerCard(){
+		dealerPanel.removeAll();
+		ImageIcon dealerFirstCardIcon = new ImageIcon(AIplayer.getHand().get(0).getFileName());
+		ImageIcon dealerSecondCardIcon = new ImageIcon(AIplayer.getHand().get(1).getFileName());
+		dealerCards[0] = new JLabel();
+		dealerCards[0].setIcon(dealerFirstCardIcon);
+		dealerCards[1] = new JLabel();
+		dealerCards[1].setIcon(dealerSecondCardIcon);
+		dealerCards[0].setBounds(5, 5, dealerFirstCardIcon.getIconWidth(), dealerFirstCardIcon.getIconHeight());
+		dealerCards[1].setBounds(dealerFirstCardIcon.getIconWidth() + 10, 5, dealerSecondCardIcon.getIconWidth(), dealerSecondCardIcon.getIconHeight());
+		dealerPanel.add(dealerCards[0]);
+		dealerPanel.add(dealerCards[1]);
+		dealerPanel.updateUI();
 	}
 	
 	public void changeBetBtnLabel(String t){
@@ -398,8 +421,16 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 			AboutFrame abtFrm = new AboutFrame('r');
 			abtFrm.setVisible(true);
 		}else if (e.getSource() == newGameItem){
-			
-			//TODO to be implemented
+			game.startNewGame();
+			log("New game");
+			updateChipLabels();
+			dealerPanel.removeAll();
+			playerPanel.removeAll();
+			communityPanel.updateUI();
+			dealerPanel.updateUI();
+			playerPanel.updateUI();
+		}else if (e.getSource() == exitItem){
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}
 		else{
 			if (e.getSource() == dealBtn){

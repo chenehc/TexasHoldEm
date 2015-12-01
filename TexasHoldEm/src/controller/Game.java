@@ -37,9 +37,9 @@ public class Game{
 //	}
 	
 	//constructor
-	public Game(Player player1, TexasHoldEm view){
+	public Game(Player player1, AIOpponent AIplayer, TexasHoldEm view){
 		this.player1 = player1;
-		this.AIplayer = new AIOpponent();
+		this.AIplayer = AIplayer;
 		this.player2 = this.AIplayer;
 		this.currentPlayer = 0;
 		deck = new Deck();
@@ -126,11 +126,17 @@ public class Game{
 		return player2.getChips();
 	}
 	
-//	public void newGame(){
-//		deck = new Deck[];
-//		deck.Shuffle();
-//		plaer1.
-//	}
+	public void startNewGame(){
+		deck = new Deck();
+		deck.Set();
+		deck.Shuffle();
+		player1.setChips(1000);
+		player2.setChips(1000);
+		this.isGameEnd = false;
+		gameTracker();
+		pot.reset();
+		view.reset();
+	}
 	
 	/**
 	 * Method that deals 3 cards to each player
@@ -183,8 +189,7 @@ public class Game{
 		view.reset();
 		switchPlayer();
 		isRoundEnd = true;
-		pot.resetCheckCount();
-		pot.resetBets();
+		pot.reset();
 		view.log("New Round");
 		view.updateChipLabels();
 	}
@@ -193,13 +198,15 @@ public class Game{
 	 * Method that evaluates the round if no player has folded  
 	 */
 	public void evaluateRound(){
+		view.log("Round Evaluated");
 		if(player1.getHand().getStrength() > player2.getHand().getStrength())
 			pot.distributePot(1);
 		else if(player1.getHand().getStrength() < player2.getHand().getStrength())
 			pot.distributePot(2);
 		else
 			pot.distributePot(3);
-		view.log("Round Evaluated");
+		
+		view.showDealerCard();
 		newRound();
 	}
 	

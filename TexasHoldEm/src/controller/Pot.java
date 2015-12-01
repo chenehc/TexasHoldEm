@@ -6,6 +6,11 @@ import userInterface.TexasHoldEm;
 public class Pot {
 	private int pot, bet;
 	private boolean hasBet = false;
+	private boolean allIn = false;
+	private boolean notEqual1 = false;
+	private boolean notEqual2 = false;
+	int sidepot;
+	int mainpot;
 	private Player player1;
 	private AIOpponent player2;
 	Game game;
@@ -20,6 +25,12 @@ public class Pot {
 		this.game = game;
 	}
 	
+	public void reset(){
+		resetBets();
+		resetCheckCount();
+		this.pot = 0;
+		allIn = false;
+	}
 	/**
 	 * Method that is used and called at the start of a round to collect the forced bet
 	 */
@@ -45,18 +56,42 @@ public class Pot {
 	public void call(){
 		if (hasBet) { //call when the other play has made a bet
 			if (game.getCurrentPlayer() == 0){
-				player1.loseChips(getBet());
-				this.pot += getBet();
-				game.getView().log("Player " +  " calls");
+				if (getBet() > player1.getChips()){
+					player1.loseChips(player1.getChips());
+					this.pot += player1.getChips();
+					allIn = true;
+					game.getView().log("Player all in.");
+				}else if (allIn && getBet() < player1.getChips()){
+					player1.loseChips(getBet());
+					this.pot += getBet();
+					game.getView().showAll();
+				}else {
+					player1.loseChips(getBet());
+					this.pot += getBet();
+					game.getView().log("Player calls");
+					game.turnEnd();
+				}
 				game.switchPlayer();
-//				game.turnEnd();
+				
 			}
 			else {
-				player2.loseChips(getBet());
-				this.pot += getBet();
-				game.getView().log("Dealer " +  " calls");
+				if(getBet() > player2.getChips()){
+					player2.loseChips(player2.getChips());
+					this.pot += player2.getChips();
+					allIn = true;
+					game.getView().log("Dealer all in");
+				}else if (allIn && getBet() < player2.getChips()){
+					player2.loseChips(getBet());
+					this.pot += getBet();
+					game.getView().showAll();
+				}else{
+					player2.loseChips(getBet());
+					this.pot += getBet();
+					game.getView().log("Dealer calls");
+					game.turnEnd();
+				}
 				game.switchPlayer();
-//				game.turnEnd();
+				
 			}
 		}
 		else if (!hasBet && checkCount == 1){ //check if previous player checks and end turn
@@ -98,9 +133,21 @@ public class Pot {
 			}else if (amt <= 0 ){ //negative chips
 				TexasHoldEm.displayMessage(2);
 			}
+			
+		//splitpot
+			else if(bet> player1.getChips() && amt == player1.getChips()){
+				this.notEqual1 = true;
+				sidepot = bet-player1.getChips();
+				mainpot =  player1.getChips()*2;
+				game.getView().log("Player goes all in with " + player1.getChips()+" chips");
+				player1.loseChips(player1.getChips());
+				allIn =true;
+				hasBet = true;
+							
+			}
 			else { 
 				this.pot += amt;
-				player1.loseChips(amt);
+				player1.loseChips(amt-bet);
 				hasBet = true;
 				game.getView().log("Player " + " raises: " + (amt - bet) + " chips.");
 				bet = amt;
@@ -108,9 +155,14 @@ public class Pot {
 			}
 		}
 		else {
-			if (amt > player2.getChips()){ //not enough chips
-				this.pot += player2.getChips();
+			if (bet > player2.getChips()){ //not enough chips
+				this.notEqual2 = true;
+				sidepot = bet-player2.getChips();
+				mainpot =  player2.getChips()*2;
+				game.getView().log("Dealer goes all in with " + player2.getChips()+" chips");
+				player1.loseChips(player2.getChips());
 				hasBet = true;
+				allIn =true;
 			}
 			else if (amt <= 0 ) //negative chips
 				TexasHoldEm.displayMessage(2);
@@ -119,7 +171,7 @@ public class Pot {
 				hasBet = true;
 				game.getView().log("Dealer " + " raises: " + (amt - bet) + " chips.");
 				bet = amt;
-				player2.loseChips(amt);
+				player2.loseChips(amt-bet);
 				game.switchPlayer();
 			}
 		}
@@ -181,27 +233,100 @@ public class Pot {
 	public void distributePot(int option){
 		switch(option){
 		//option 1: player 1 has better hand than player 2
-		case 1:	game.getView().log("Player 1 gains: " + pot);
-				player1.gainChips(pot);
-				pot = 0;
-				return;
-		//option 2: player 2 has better hand than player 2
-		case 2: game.getView().log("Player 2 gains: " + pot);
-				player2.gainChips(pot);
-				pot = 0;
-				return;
+		
+		case 1:	
+				if(notEqual2){
+					game.getView().log("Player 1 gains: " + mainpot);
+					player1.gainChips(mainpot);
+					game.getView().log("Player 1 gains: " + sidepot);
+					player2.gainChips(sidepot);
+					mainpot = 0;
+					sidepot = 0;
+					pot = 0;
+					return;
+					
+				}
+				else{
+					game.getView().log("Player 1 gains: " + pot);
+					player1.gainChips(pot);
+					pot = 0;
+					return;
+				}
+				
+		//option 2: player 2 has better hand than player 1
+		case 2: 
+				if(notEqual1){
+					game.getView().log("Player 2 gains: " + mainpot);
+					player2.gainChips(mainpot);
+					game.getView().log("Player 1 gains: " + sidepot);
+					player1.gainChips(sidepot);
+					mainpot = 0;
+					sidepot = 0;
+					pot = 0;
+					
+				}
+				else{
+					game.getView().log("Player 2 gains: " + pot);
+					player2.gainChips(pot);
+					pot = 0;
+					return;
+					
+				}
+				
 		//option 3: both players have equal hand strength, divide the pot by 2
 		//if pot is even, distribute evenly, if uneven, add one to the next pot 
 		//and distribute evenly for (pot-1)/2
-		case 3: game.getView().log("Player 1 gains: " + pot / 2);
-				player1.gainChips(pot / 2);
-				game.getView().log("Player 2 gains: " + pot / 2);
-				player2.gainChips(pot / 2);
-				if(pot % 2 == 0)
-					pot = 0;
-				else
-					pot = 1;
-				return;
+		case 3: 
+				
+				if(notEqual1){
+					game.getView().log("Player 1 gains: " + mainpot / 2 +sidepot);
+					player1.gainChips(mainpot / 2+sidepot);
+					game.getView().log("Player 2 gains: " + mainpot / 2);
+					player2.gainChips(mainpot / 2);
+					if(pot % 2 == 0){
+						pot = 0;
+						mainpot =0;
+						sidepot = 0;
+				}
+					else{
+						mainpot =0;
+						sidepot = 0;
+						pot = 1;
+						
+					}
+						
+					return;
+				}
+				else if(notEqual2){
+					game.getView().log("Player 1 gains: " + mainpot / 2 );
+					player1.gainChips(mainpot / 2+sidepot);
+					game.getView().log("Player 2 gains: " + mainpot / 2+sidepot);
+					player2.gainChips(mainpot / 2+sidepot);
+					if(pot % 2 == 0){
+						pot = 0;
+						mainpot =0;
+						sidepot = 0;
+					}
+						
+					else
+						pot = 1;
+						mainpot =0;
+						sidepot = 0;
+					return;
+				}
+				else{
+					game.getView().log("Player 1 gains: " + pot / 2);
+					player1.gainChips(pot / 2);
+					game.getView().log("Player 2 gains: " + pot / 2);
+					player2.gainChips(pot / 2);
+					if(pot % 2 == 0)
+						pot = 0;
+					else
+						pot = 1;
+					return;
+					
+				}
+			
 		}
 		game.getView().updateChipLabels();
 	}
