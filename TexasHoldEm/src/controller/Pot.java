@@ -63,6 +63,7 @@ public class Pot {
 			game.switchPlayer();
 		}
 		game.getView().updateChipLabels();
+		game.getView().changeBetBtnLabel("Bet");
 	}
 	
 	/**
@@ -72,8 +73,11 @@ public class Pot {
 	public void raise(int amt){
 		resetCheckCount();
 		//TODO handle hasBet situation and also reset bet 
-		if (hasBet) 
+		if (hasBet) {
 			amt += bet;
+			game.getView().changeBetBtnLabel("Raise");
+			
+		}
 		if (game.getCurrentPlayer() == 0){
 			if (amt > player1.getChips()){ //not enough chips
 				TexasHoldEm.displayMessage(0);
@@ -84,8 +88,8 @@ public class Pot {
 				this.pot += amt;
 				player1.loseChips(amt);
 				hasBet = true;
+				game.getView().log("Player " + " raises: " + (amt - bet) + " chips.");
 				bet = amt;
-				game.getView().log("Player " + " bets: " + amt + " chips.");
 				game.switchPlayer();
 			}
 		}
@@ -99,9 +103,9 @@ public class Pot {
 			else {
 				this.pot += amt;
 				hasBet = true;
+				game.getView().log("Dealer " + " raises: " + (amt - bet) + " chips.");
 				bet = amt;
 				player2.loseChips(amt);
-				game.getView().log("Dealer " + " bets: " + amt + " chips.");
 				game.switchPlayer();
 			}
 		}

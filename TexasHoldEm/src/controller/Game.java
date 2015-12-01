@@ -71,7 +71,7 @@ public class Game{
 						if (currentPlayer == 1) AIplayer.getAction(pot);
 					}
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -125,6 +125,12 @@ public class Game{
 	public int getChipsP2(){
 		return player2.getChips();
 	}
+	
+//	public void newGame(){
+//		deck = new Deck[];
+//		deck.Shuffle();
+//		plaer1.
+//	}
 	
 	/**
 	 * Method that deals 3 cards to each player

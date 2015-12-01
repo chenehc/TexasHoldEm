@@ -13,6 +13,7 @@ public class AIOpponent extends Player{
 	}
 	
 	public int choose(){
+		
 		if(getHand().getStrength() >=100000000){
 			return getChips();
 			
@@ -66,9 +67,6 @@ public class AIOpponent extends Player{
 				return getChips();
 			}
 			return (int)d;
-		}
-		if(getHand().size()>5&&getHand().getStrength()<15){
-			return 0;
 		}
 		return getHand().getStrength();
 		

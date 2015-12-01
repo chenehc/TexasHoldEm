@@ -364,6 +364,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		lblPlayer1Chips.setText("Chips " + game.getChipsP1());
 	}
 	
+	public void changeBetBtnLabel(String t){
+		betBtn.setText(t);
+	}
 	/**
 	 * Method that keeps track of how many community cards are currently on the board
 	 * When the card count reaches 5, end the round and evaluate both player's hands
