@@ -70,7 +70,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		setBackground(Color.GRAY);
 		setResizable(false);
 		
-		background = new ImageIcon("src/Cards/b.gif");
+		background = new ImageIcon("src/res/Cards/b.gif");
 		
 		player1 = new Player();
 		
@@ -102,8 +102,6 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		getContentPane().add(lblPlayer2Chips);
 		getContentPane().add(lblPlayer1Chips);
 		getContentPane().add(lblPot);
-		
-		log("");
 		trackCommunity();
 		
 	}
@@ -128,15 +126,16 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 		menu.addSeparator();
 		
-		saveItem = new JMenuItem("Save", KeyEvent.VK_S);
-		saveItem.addActionListener(this);
-		menu.add(saveItem);
+//		saveItem = new JMenuItem("Save", KeyEvent.VK_S);
+//		saveItem.addActionListener(this);
+//		menu.add(saveItem);
+//		
+//		loadItem = new JMenuItem("Load", KeyEvent.VK_L);
+//		loadItem.addActionListener(this);
+//		menu.add(loadItem);
 		
-		loadItem = new JMenuItem("Load", KeyEvent.VK_L);
-		loadItem.addActionListener(this);
-		menu.add(loadItem);
+//		menu.addSeparator();
 		
-		menu.addSeparator();
 		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
 		exitItem.addActionListener(this);
 		menu.add(exitItem);
@@ -222,6 +221,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 
 		communityCards = new JLabel[5];
 		
+		//console 
 		console = new JTextArea();
 		console.setEditable(false);
 		
@@ -234,6 +234,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		scroll.setBounds(10, 228, 234, 107);
 		
+		//chip and pot labels
 		lblPlayer2Chips = new JLabel("Chips: ");
 		lblPlayer2Chips.setBounds(15, 139, 116, 14);
 		
@@ -267,7 +268,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 */
 	private void createDealerCards() {
 		dealerPanel.removeAll();
-		String imagePath = "src/Cards/back.gif";
+		String imagePath = "src/res/Cards/back.gif";
 		ImageIcon dealerFirstCardIcon = new ImageIcon(imagePath);
 		ImageIcon dealerSecondCardIcon = new ImageIcon(imagePath);
 		dealerCards[0] = new JLabel();
@@ -304,7 +305,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		switch (option){
 		//0 represents raise error
 		case 0:	JOptionPane.showMessageDialog(board, "Invalid input, try again", "Raise Error", JOptionPane.ERROR_MESSAGE); break;
-		//1 represents
+		//1 represents incorrect button order
 		case 1: JOptionPane.showMessageDialog(board, "Deal First", "Error", JOptionPane.ERROR_MESSAGE); break;	
 		//2 represents negative value in bet field
 		case 2: JOptionPane.showMessageDialog(board, "Cannot enter negative value", "Error", JOptionPane.ERROR_MESSAGE); break;
@@ -360,18 +361,27 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		
 	}
 	
+	/**
+	 * Method creates every card in community and display it
+	 */
 	public void showAll(){
 		for (int i = player1.getHand().size(); i <= 7 ; i++){
 			createCommunityCard();
 		}
 	}
 	
+	/**
+	 * Method that updates the chip and pot labels
+	 */
 	public void updateChipLabels(){
 		lblPlayer2Chips.setText("Chips: " + game.getChipsP2());
 		lblPot.setText("Pot: " + pot.getPot());
 		lblPlayer1Chips.setText("Chips " + game.getChipsP1());
 	}
 	
+	/**
+	 * Method flips dealer's cards to reveal the dealer's hand
+	 */
 	public void showDealerCard(){
 		dealerPanel.removeAll();
 		ImageIcon dealerFirstCardIcon = new ImageIcon(AIplayer.getHand().get(0).getFileName());
@@ -387,6 +397,10 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		dealerPanel.updateUI();
 	}
 	
+	/**
+	 * Method updates the bet button label
+	 * @param t String - the text to set on the button
+	 */
 	public void changeBetBtnLabel(String t){
 		betBtn.setText(t);
 		betBtn.updateUI();
@@ -400,9 +414,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 			@Override
 			public void run(){
 				while(true){
-					if (communityCardCount == 5) game.evaluateRound();
+					if (communityCardCount == 5 && game.isTurnEnd()) game.evaluateRound();
 					try {
-						Thread.sleep(1500);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

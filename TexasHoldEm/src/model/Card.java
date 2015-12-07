@@ -42,6 +42,10 @@ public class Card implements Comparable<Card>{
         return rank+""+suit;
     }
     
+    /**
+     * Method converts rank of type int to String
+     * @return String
+     */
     public String rankToString(){
     	switch (this.rank){
     	case 2: return "Two";
@@ -60,7 +64,11 @@ public class Card implements Comparable<Card>{
     	}
 		return null;
     }
-
+    
+    /**
+     * Converting suit character to String
+     * @return String
+     */
     public String suitToString(){
     	switch (this.suit){
     	case 'C': return "Clubs";
@@ -71,8 +79,12 @@ public class Card implements Comparable<Card>{
 		return null;
     }
     
+    /**
+     * Method returns the file path for a specific card of rank and suit
+     * @return String
+     */
 	public String getFileName(){
-		return "src/Cards/" + rankToString() + " of " + suitToString() + ".gif";
+		return "src/res/Cards/" + rankToString() + " of " + suitToString() + ".gif";
 		
 	}
 

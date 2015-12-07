@@ -19,6 +19,10 @@ public class AIOpponent extends Player{
 		countTilCall = rand.nextInt(5)+ 1;
 	}
 	
+	/**
+	 * Method that determines the amount of chips to bet
+	 * @return int
+	 */
 	public int choose(){
 		
 		if(getHand().getStrength() >=100000000){
@@ -79,13 +83,17 @@ public class AIOpponent extends Player{
 		
 	}
 	
+	/**
+	 * Method chooses the action that the AI will take 
+	 * @param pot
+	 */
 	public void getAction(Pot pot){
-		System.out.println(countTilCall);
+//		System.out.println(countTilCall);
 		if (countTilCall == 0) {
 			pot.call();
 			return;
 		}
-		if (first) {
+		if (first) { //call on first turn
 			currentBet = pot.getBet();
 			bet = this.choose();
 			pot.call();

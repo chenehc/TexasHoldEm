@@ -18,11 +18,11 @@ public class Game{
 	private Hand p1hand;
     private Hand p2hand;
     private int cardCount;
-    private boolean isGameEnd, isRoundEnd;
+    private boolean GameEnd, RoundEnd, turnEnd;
     private TexasHoldEm view;
     private Pot pot;
 	
-//    //constructor
+//    //constructor for 2 player
 //	public Game(Player player1, Player player2, TexasHoldEm view){
 //		this.player1 = player1;
 //		this.player2 = player2;
@@ -30,13 +30,14 @@ public class Game{
 //		deck = new Deck();
 //		deck.Set();
 //		deck.Shuffle();
-//		this.isGameEnd = false;
-//		this.isRoundEnd = false;
+//		this.GameEnd = false;
+//		this.RoundEnd = false;
+//		this.turnEnd = false;
 //		pot = new Pot(player1, player2, this);
 //		this.view = view;
 //	}
 	
-	//constructor
+	//constructor for AI
 	public Game(Player player1, AIOpponent AIplayer, TexasHoldEm view){
 		this.player1 = player1;
 		this.AIplayer = AIplayer;
@@ -45,7 +46,9 @@ public class Game{
 		deck = new Deck();
 		deck.Set();
 		deck.Shuffle();
-		this.isGameEnd = false;
+		this.GameEnd = false;
+		this.turnEnd = false;
+		this.RoundEnd = false;
 		pot = new Pot(this.player1, AIplayer, this);
 		this.view = view;
 		gameTracker();
@@ -67,7 +70,7 @@ public class Game{
 			public void run(){
 				while(true){
 					//choose AI action when the game is not ended
-					if (!isRoundEnd && !isGameEnd){
+					if (!RoundEnd && !GameEnd){
 						if (currentPlayer == 1) AIplayer.getAction(pot);
 					}
 					try {
@@ -85,11 +88,23 @@ public class Game{
 	 * Method contains methods to perform when a turn ends
 	 */
 	public void turnEnd(){
+		turnEnd = true;
 		next_card();
 		view.createCommunityCard();
 		view.showCommunity();
 	}
 	
+	/**
+	 * Method returns the value of parameter turnEnd
+	 * @return turnEnd
+	 */
+	public boolean isTurnEnd(){
+		return turnEnd;
+	}
+	/**
+	 * Method returns the value of parameter view
+	 * @return view 
+	 */
 	public TexasHoldEm getView(){
 		return view;
 	}
@@ -126,13 +141,16 @@ public class Game{
 		return player2.getChips();
 	}
 	
+	/**
+	 * Method resets state variables to default values
+	 */
 	public void startNewGame(){
 		deck = new Deck();
 		deck.Set();
 		deck.Shuffle();
 		player1.setChips(1000);
 		player2.setChips(1000);
-		this.isGameEnd = false;
+		this.GameEnd = false;
 		gameTracker();
 		pot.reset();
 		view.reset();
@@ -159,7 +177,7 @@ public class Game{
 		for(int i =0; i<3; i++){
 			next_card();
 		}
-		isRoundEnd = false;
+		RoundEnd = false;
 		view.log("Cards are dealt.");
 		view.updateChipLabels();
 	}
@@ -179,7 +197,7 @@ public class Game{
 	public void newRound(){
 		//when one player's chip falls below 0, end the game and display the winner
 		if (player1.getChips() <= 0 || player2.getChips() <= 0){
-			isGameEnd = true;
+			GameEnd = true;
 			int winOption = (player1.getChips() <= 0) ? 4 : 5;
 			TexasHoldEm.displayMessage(winOption);
 			return;
@@ -188,7 +206,7 @@ public class Game{
 		deck.Shuffle();
 		view.reset();
 		switchPlayer();
-		isRoundEnd = true;
+		RoundEnd = true;
 		pot.reset();
 		view.log("New Round");
 		view.updateChipLabels();

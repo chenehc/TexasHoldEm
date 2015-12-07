@@ -7,10 +7,18 @@ import java.util.Collections;
 public class Hand extends ArrayList<Card>{
     int strength;
     
+    /**
+     * Method sets the strength of the hand 
+     * @param x int - hand strength
+     */
     public void setStrength(int x){
         this.strength = x;
     }
     
+    /**
+     * Method evaluates the hand and returns the strength of the hand
+     * @return int
+     */
     public int getStrength(){
         boolean flush = false;
         boolean straightFlu = true;
@@ -228,6 +236,10 @@ public class Hand extends ArrayList<Card>{
         return clone.get(0).getRank();
     }
     
+    /**
+     * Method displays the cards in hand and community
+     * @return String
+     */
     public String toString(){
         String hand = "";
         for(int i =0; i<this.size(); i++){
@@ -236,6 +248,10 @@ public class Hand extends ArrayList<Card>{
         return hand;
     }
     
+    /** 
+     * Method displays the cards in hand 
+     * @return String
+     */
     public String myhand(){
         String hand = "";
         for(int i =0; i<3; i++){

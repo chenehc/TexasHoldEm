@@ -25,6 +25,9 @@ public class Pot {
 		this.game = game;
 	}
 	
+	/**
+	 * Method resets the state variables to default values
+	 */
 	public void reset(){
 		resetBets();
 		resetCheckCount();
@@ -54,18 +57,18 @@ public class Pot {
 	 * Method collects chips from the player if the other player made a raise previously
 	 */
 	public void call(){
-		if (hasBet) { //call when the other play has made a bet
-			if (game.getCurrentPlayer() == 0){
-				if (getBet() > player1.getChips()){
+		if (hasBet) { 
+			if (game.getCurrentPlayer() == 0){ //player move 
+				if (getBet() > player1.getChips()){ //all in if bet is higher than the current chips at hand
 					player1.loseChips(player1.getChips());
 					this.pot += player1.getChips();
 					allIn = true;
 					game.getView().log("Player all in.");
-				}else if (allIn && getBet() < player1.getChips()){
+				}else if (allIn && getBet() < player1.getChips()){ //opponent all in and you can match
 					player1.loseChips(getBet());
 					this.pot += getBet();
 					game.getView().showAll();
-				}else {
+				}else { // call otherwise
 					player1.loseChips(getBet());
 					this.pot += getBet();
 					game.getView().log("Player calls");
@@ -74,17 +77,17 @@ public class Pot {
 				game.switchPlayer();
 				
 			}
-			else {
-				if(getBet() > player2.getChips()){
+			else { //AI move
+				if(getBet() > player2.getChips()){ //all in if get is higher than current chips
 					player2.loseChips(player2.getChips());
 					this.pot += player2.getChips();
 					allIn = true;
 					game.getView().log("Dealer all in");
-				}else if (allIn && getBet() < player2.getChips()){
+				}else if (allIn && getBet() < player2.getChips()){ //opponent all in and you have enough chips
 					player2.loseChips(getBet());
 					this.pot += getBet();
 					game.getView().showAll();
-				}else{
+				}else{ //call otherwise
 					player2.loseChips(getBet());
 					this.pot += getBet();
 					game.getView().log("Dealer calls");
@@ -113,6 +116,7 @@ public class Pot {
 			
 			game.switchPlayer();
 		}
+		//update UI 
 		game.getView().updateChipLabels();
 		game.getView().changeBetBtnLabel("Bet");
 	}
@@ -123,11 +127,11 @@ public class Pot {
 	 */
 	public void raise(int amt){
 		resetCheckCount(); 
-		if (hasBet) {
+		if (hasBet) { //if there is an existing bet, change to raise
 			amt += bet;
 			game.getView().changeBetBtnLabel("Raise");
 		}
-		if (game.getCurrentPlayer() == 0){
+		if (game.getCurrentPlayer() == 0){ //player move
 			if (amt > player1.getChips()){ //not enough chips
 				TexasHoldEm.displayMessage(0);
 			}else if (amt <= 0 ){ //negative chips
@@ -219,7 +223,7 @@ public class Pot {
 	}
 	
 	/**
-	 * 
+	 * Method that resets the values corresponding to bet and hasBet
 	 */
 	public void resetBets(){
 		hasBet = false;

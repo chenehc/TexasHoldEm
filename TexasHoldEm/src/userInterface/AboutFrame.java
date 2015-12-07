@@ -14,6 +14,7 @@ public class AboutFrame extends JFrame{
 	JTextArea textArea = new JTextArea();
 	JScrollPane scroll;
 	
+	//constructor
 	public AboutFrame(char c){
 		getContentPane().setLayout(new GridLayout(1,2));
 		setLocationRelativeTo(null);
@@ -33,6 +34,9 @@ public class AboutFrame extends JFrame{
 		else if (c == 'r') startOnRule();
 	}
 	
+	/**
+	 * Method sets text for help page based on parsed help file
+	 */
 	private void startOnHelp(){
 		try {
 			textArea.setText(ResourceParser.parseHelp());
@@ -41,6 +45,9 @@ public class AboutFrame extends JFrame{
 		}
 	}
 	
+	/**
+	 * Method sets text for rule page based on parsed rule file
+	 */
 	private void startOnRule(){
 		try {
 			textArea.setText(ResourceParser.parseRule());

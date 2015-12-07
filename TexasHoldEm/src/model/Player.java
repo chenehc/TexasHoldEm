@@ -27,6 +27,7 @@ public class Player {
 
 	/**
 	 * Method that sets chips
+	 * @param chips int - the amount of chips to set
 	 */
 	public void setChips(int chips){
 		this.chips = chips;
@@ -34,7 +35,7 @@ public class Player {
 
 	/**
 	 * When method is called, the value of chips increments by amount specified
-	 * @param chips
+	 * @param chips int - number of chips to add
 	 */
 	public void gainChips(int chips) {
 		this.chips += chips;
@@ -42,7 +43,7 @@ public class Player {
 
 	/**
 	 * When method is called, the value of chips decrements by amount specified 
-	 * @param chips 
+	 * @param chips int - the number of chips that are lost
 	 */
 	public void loseChips(int chips) {
 		this.chips -= chips;
@@ -58,7 +59,7 @@ public class Player {
 
 	/**
 	 * setter for hand
-	 * @param hand
+	 * @param hand 
 	 */
 	public void setHand(Hand hand) {
 		this.hand = hand;
