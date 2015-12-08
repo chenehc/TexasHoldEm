@@ -1,6 +1,10 @@
 \documentclass[12pt]{article}
 
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\usepackage{cancel}
 \iffalse
 
 \fi
@@ -22,6 +26,45 @@
 		Group E
 		\end{center}
 	\end{titlepage}
+	
+	\newpage
+	\section*{Revision History}
+	\begin{table}[h]
+	\begin{center}
+	\caption{Revision History Table}
+	\begin{tabular}{|| c c c c || }\\
+	\hline
+	Developer & Date & Change & Revision \\
+	\hline
+	Nareshkumar Maheshkumar & Dec 4 2015 & \begin{tabular}[c]{@{}c@{}}Revised 3.4, 4.8 and 5.8 \\ in the Requirements Document\end{tabular} & 13\\
+	\hline 
+	Hui Chen & Dec 2 2015 & \begin{tabular}[c]{@{}c@{}}Revised: Fixed the numbering\\ in 3.3 and 3.4 in the \\Requirements Document\end{tabular} & 12\\
+	\hline 
+	Sam Hamel & Dec 2 2015 & \begin{tabular}[c]{@{}c@{}}Revised: Number the Functional \\Requirements in the \\Requirements Document\end{tabular} & 11 \\
+	\hline
+	Hui Chen & Oct 10 2015 & Final Edit & 10\\
+	\hline
+	Nareshkumar Maheshkumar & Oct 9 2015 & Final Revision & 9 \\
+	\hline
+	Hui Chen & Oct 9 2015 & & 8 \\
+	\hline
+	Sam Hamel & Oct 9 2015 & & 7 \\
+	\hline
+	Hui Chen & Oct 7 2015 & & 6 \\
+	\hline
+	Sam Hamel & Oct 7 2015 & & 5 \\
+	\hline
+	Nareshkumar Maheshkumar & Oct 7 2015 &	& 4	\\
+	\hline
+	Sam Hamel & Oct 5\&9 & & 3 \\
+	\hline
+	Nareshkumar Maheshkumar & Oct 3\&9 2015 & &2 \\
+	\hline
+	Hui Chen & Sept 29 2015& Created requirements document	& 1 \\
+
+	\end{tabular}
+	\end{center}
+	\end{table}
 	
 	\newpage
 	\tableofcontents
@@ -87,7 +130,7 @@
 	There are many aspiring poker players in the world today who just wants to play a game 		of Texas Hold-Em, so in pursuit of this goal, they will need practice and experience. 	There are too many people who do not know the basics of the game and our product is meant for beginners and experienced players alike, providing experience 		without the need of monetary sacrifice. The game is built to enhance skills or to 			discover something new. The game is aimed to simplify the game as much as possible so 
 	a beginner will have no problem getting into the game and they can play for enjoyment and improve their skills by getting them acquainted with the rules through gameplay and by facing a challenging computer opponent. The goal is to help the players learn the game before entering their first professional Texas Hold-Em game, for example, at a casino. 
 	\subsubsection{Context of Work}
-		\begin{figure}[h]
+		\begin{figure}[H]
 		\includegraphics[scale=0.7]{ContexOfWork.jpg}
 		\caption{Work Context Diagram}
 		\label{fig1: Figure1}
@@ -96,36 +139,36 @@
 	N/A
 	\subsection{The Scope of the Product}
 	\subsubsection{Product Use Case}
-		\begin{figure}[h]				
+		\begin{figure}[H]				
 			\includegraphics[scale=0.5]{UseCase.jpg}		
 			\caption{Use Case Diagram}		
 			\label{fig2: Figure2}		
 			\end{figure}
 	\subsection{Functional Requirements}
 	The system shall:
+	\begin{enumerate}
+	\item have a help page that the user can click on to explains the rules of the game. The page should be accessible at anytime during the game, should have all the basic rules of the game, all the card hands ranked in order of strength, and extra tips and tricks.
+	\item Have a GUI that the user will use to start the game and play which includes:
 	\begin{itemize}
-	\item 1.) have a help page that the user can click on to explains the rules of the game. The page should be accessible at anytime during the game, should have all the basic rules of the game, all the card hands ranked in order of strength, and extra tips and tricks.
-	\item 2.)Have a GUI that the user will use to start the game and play which includes:
-	\begin{itemize}
-	\item a start menu with the option to view the help page, start a new game or resume a saved game
-	\item a game view which shows the user their hand with, and the board cards with graphical images of the cards. It will also show the amount of chips the player and computer have, allow the user to save after each round, and have a way to access the help page at any time via button or other means. 
+	\item a start menu with the option to view the help page, start a new game \textcolor{red}{and quit the game}
+	\item a game view which shows the user their hand with, and the board cards with graphical images of the cards. It will also show the amount of chips the player and computer have, \sout{allow the user to save after each round,} and have a way to access the help page at any time via button or other means. 
 	\end{itemize}
-	\item 3.) have a computer program that can play Texas Hold-Em against the user, this computer program shall be able to:
+	\item have a computer program that can play Texas Hold-Em against the user, this computer program shall be able to:
 	\begin{itemize}
-	\item	bet, raise, call, check and fold
+	\item bet, raise, call, check and fold
 	\item 	keep a count of the number of chips it has and the player has
 	\item 	evaluate and measure hand strength
 	\item	calculate the probability of winning a round based on the hand it’s given
 	\item 	make actions based on the probability of winning/losing
 	\end{itemize}
-	\item 4.) be able to start a game, distribute cards, and monitor chip counts
-	\item 5. pit the player against a computer opponent in a match of heads up no limit 					Texas Hold-Em
-	\item 6.) be able to distribute cards to the player, computer and board. The distribution of these cards should appear random and not follow any discernible pattern
-	\item 7.) be able to save the game, and end a game once either the player or the computer 			run out of chips
-	\item 8.) allow users to set the amount of chips to play with at the start of the game
-	\item 9.) monitor and adjust chip count after each round
-	\item 10.) end the game when either player or computer loses all their chips
-	\end{itemize}
+	\item be able to start a game, distribute cards, and monitor chip counts
+	\item pit the player against a computer opponent in a match of heads up no limit 					Texas Hold-Em
+	\item be able to distribute cards to the player, computer and board. The distribution of these cards should appear random and not follow any discernible pattern
+	\item be able to \sout{save the game, and} end a game once either the player or the computer run out of chips
+	\item \textcolor{red}{Set the default number of chips to 1000 for the player and computer} at the start of the game
+	\item monitor and adjust chip count after each round
+	\item end the game when either player or computer loses all their chips
+	\end{enumerate}
 	
 	\section{Non-Functional Requirements}
 	\subsection{Look and Feel Requirements}
@@ -215,7 +258,7 @@
 	\subsection{Legal Requirements}
 	\begin{itemize}
 	\item	The program shall deal with only virtual currency
-	\item 	The program will have a disclaimer stating that it does not advocate illegal 				gambling and should not be used as a tool to do so
+	\item 	\sout{The program will have a disclaimer stating that it does not advocate illegal 				gambling and should not be used as a tool to do so}
 	\end{itemize}
 	\section{Project Issues}
 	\subsection{Open Issue}
@@ -275,41 +318,9 @@
 	\subsection{Costs}
 	There are no monetary costs involved with this projects, but about 12 weeks of 				development time be required.
 	\subsection{User Documentation and Training}
-	User’s will be prompted for game rules when the game begins, if “Yes” is selected, a 		dialog box will open to provide the user with information from rules to guidelines to 		the game. Alternatively, there will be a “Help” option in the program which links to 		the same dialog box along with other details regarding the usage of the game. Users who 	are already familiar with their operating system should not require further training to 	understand the game. 
+	\textcolor{red}{There will be a “Game Rules” and "App Info" option in the program which will provide the user with information about the rules, key terminology and guidelines to play 		the game.} Users who 	are already familiar with their operating system should not require further training to	understand the game. 
 	\subsection{Waiting Room}
 	Currently there are no plans for future release of the product. In the case that a new 		release is planned, features such as online capabilities and allowing more players or 		computer opponents to play in a single game. 
 	\subsection{Ideas for Solutions}
 	Development of the game and GUI will be done in Eclipse.
-	\section{Revision History}
-	\begin{table}[h]
-	\begin{center}
-	\caption{Revision History Table}
-	\begin{tabular}{|| c c c c || }\\
-	\hline
-	Developer & Date & Change & Revision \\
-	\hline
-	Hui Chen & Oct 10 2015 & Final Edit & 10\\
-	\hline
-	Nareshkumar Maheshkumar & Oct 9 2015 & Final Revision & 9 \\
-	\hline
-	Hui Chen & Oct 9 2015 & & 8 \\
-	\hline
-	Sam Hamel & Oct 9 2015 & & 7 \\
-	\hline
-	Hui Chen & Oct 7 2015 & & 6 \\
-	\hline
-	Sam Hamel & Oct 7 2015 & & 5 \\
-	\hline
-	Nareshkumar Maheshkumar & Oct 7 2015 &	& 4	\\
-	\hline
-	Sam Hamel & Oct 5\&9 & & 3 \\
-	\hline
-	Nareshkumar Maheshkumar & Oct 3\&9 2015 & &2 \\
-	\hline
-	Hui Chen & Sept 29 2015& Created requirements document	& 1 \\
-
-	\end{tabular}
-	\end{center}
-	\end{table}
-	
 \end{document}
