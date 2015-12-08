@@ -1,10 +1,11 @@
 \documentclass[12pt]{article}
 
 \usepackage{array}
+\usepackage{cancel}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage{float}
 
-\iffalse
-
-\fi
 \newcolumntype{L}{>{\centering\arraybackslash}m{4.5cm}}
 \begin{document}
 	\begin{titlepage}
@@ -42,6 +43,8 @@
   	\hline
   	1 & November 28 & Hui chen & Made changes to section 2.3 Usability and Learnability Tests\\
   	\hline
+  	2 & December 8 & Hui Chen & Revised section 2.1, 2.2.2, 2.2.3\\
+  	\hline
 	\end{tabular}
 	\end{table}
 	\newpage
@@ -57,7 +60,7 @@
 	The program cannot be verified through exhaustive testing due to this being infeasible in the timeframe of completing the project. Verification of correctness through mathimatical forumalas or other means is also infeasible due to lack of experience of verification methods by the developers. Therefore there is no guaranteeing that the program will be error free. 
 	
 	\subsection{Acronyms, Abbrebiations, and Symbols}
-	\begin{table}[h]
+	\begin{table}[H]
 	\caption{Acronym/Abbreviation Table}
 	\begin{tabular}{|c|c|L|}
   	\hline
@@ -79,19 +82,19 @@ that the project is feasible}\\
 	
 	\section{Plan}
 	\subsection{Structural System}
-    \textbf{Recovery: } Recovery testing will be manually and dynamically tested; the game will be run and will be manually crashed at random times, and when re-opened, the system will be manually checked by developers to see if it behaved as the requirements documents specified for recovery scenarios. 
+    \sout{\textbf{Recovery: } Recovery testing will be manually and dynamically tested; the game will be run and will be manually crashed at random times, and when re-opened, the system will be manually checked by developers to see if it behaved as the requirements documents specified for recovery scenarios. }
 
-	\textbf{Test case 1: }save file doesn’t exist, program process is closed through system OS
-Expected results: When program is re-opened the program is in its initial state.
+	\sout{\textbf{Test case 1: }save file doesn’t exist, program process is closed through system OS
+\\Expected results: When program is re-opened the program is in its initial state.}
 
-	\textbf{Test case 2: }save file exists, program process is closed through system OS
-Expected results: When program is re-opened the program is in its saved state.
+	\sout{\textbf{Test case 2: }save file exists, program process is closed through system OS
+\\Expected results: When program is re-opened the program is in its saved state.}
 
-	\textbf{Test case 3: }save file doesn’t exist, Computer is shut down while program is running
-Expected results: When program is re-opened the program is in its initial state.
+	\sout{\textbf{Test case 3: }save file doesn’t exist, Computer is shut down while program is running
+\\Expected results: When program is re-opened the program is in its initial state.}
 
-	\textbf{Test case 4: } save file exists, Computer is shut down while program is running
-Expected results: When program is re-opened the program is in its saved state.
+	\sout{\textbf{Test case 4: } save file exists, Computer is shut down while program is running
+\\Expected results: When program is re-opened the program is in its saved state.}
 
 	\subsection{Functional}
 	\subsubsection{Features not to be Tested}
@@ -186,22 +189,22 @@ the player\\
 	\textbf{Expected Output:} The game should prompt the user with an error message and return to
 	a state before the message appeared.\\
 	
-	\noindent \textbf{Save and Load System} \\
+	\sout{\noindent \textbf{Save and Load System} \\
 	\\
 	\noindent \textbf{Test case 1:} Saving a game\\
 	\textbf{Input:} user requests save\\
 	\textbf{Initial State:} Game in progress\\
-	\textbf{Expected Output:} The game is saved onto a local file with the relevant information regarding chips, pot, game state, turn, etc. 
+	\textbf{Expected Output:} The game is saved onto a local file with the relevant information regarding chips, pot, game state, turn, etc. }
 	
-	\noindent \textbf{Test case 1:} Loading a game\\
+	\sout{\noindent \textbf{Test case 1:} Loading a game\\
 	\textbf{Input:} user requests load\\
 	\textbf{Initial State:} any state\\
-	\textbf{Expected Output:} The game is loaded with all relevant information required for the game to resume
+	\textbf{Expected Output:} The game is loaded with all relevant information required for the game to resume}
 	
-	\noindent \textbf{Test case 1:} Loading error\\
+	\sout{\noindent \textbf{Test case 1:} Loading error\\
 	\textbf{Input:} user requests load but no file is found\\
 	\textbf{Initial State:} any state \\
-	\textbf{Expected Output:} The game should display an error \\
+	\textbf{Expected Output:} The game should display an error \\}
 
 The GUI will be tested through manual testing. Individual elements such as buttons and images are tested for correctness, reliability and speed. Making sure that the GUI elements update promptly and accurately will help satisfy the speed and appearance requirements. The appearance requirement will be tested through a survey of players where they are asked to play the game and have a series of questions for the user regarding their experience with the interface recorded. The speed requirement can be tested through automatic unit testing, where the amount of time to execute commands is recorded. 
 
@@ -224,10 +227,12 @@ using various inputs including boundary conditions
 using various inputs including boundary conditions
         Each one of Game’s fields will be tested for correct outputs\\
 	\\
+	\textcolor{red}{\textbf{Pot:} \\
+	\indent \indent Each one of Pot's methods will be tested for correct outputs using various inputs including boundary conditions}\\
+	\\
     \textbf{Card:}\\
 	\indent \indent Each one of Card’s methods will be tested correct outputs 
-using various inputs including boundary conditions
-        Each one of Card’s fields will be tested for correct outputs
+using various inputs including boundary conditions. Each one of Card’s fields will be tested for correct outputs
 
 	\subsection{Functional System}
 	\subsubsection{Performance Requirements:}
@@ -286,10 +291,10 @@ Regression will be tested using automatic testing. With the use of Junit, any ch
 Error handling will be tested using manual and automatic tests. When an error occurs, the system should display some form of error prompt to alert the user, and have the error logged. The logged error will be tested automatically for accuracy and the prompt will be manually tested for accuracy and the follow up action should resolve the error. 
 
 \subsubsection*{Usability Tests:}
-Usability requirements will be tested through manual testing. A small sample (1-10 people) of non beginners ( people who are familiar with the rules of Texas Hold'em, and have played before), will play a round of the game to completion. They will be timed and later be asked to comment on their experience with the task.
+Usability requirements will be tested through manual testing. A small sample \textcolor{red}{(1-10 people)} of non beginners (people who are familiar with the rules of Texas Hold'em, and have played before), will play a round of the game to completion. \textcolor{red}{They will be timed and later be asked to comment on their experience with the task.}
 
 \subsubsection*{Learnability Tests:}
-Learnability will be tested through manual testing. A small sample (1-10 people), of beginners will be selected and they will be required to perform tasks such as going through the help page and then playing a game based on what they’ve learned from the help page. They will be timed and later be asked to comment on their experience with the task.
+Learnability will be tested through manual testing. A small sample \textcolor{red}{(1-10 people)}, of beginners \textcolor{red}{and experienced players} will be selected and they will be required to perform tasks such as going through the help page and then playing a game based on what they’ve learned from the help page. \textcolor{red}{They will be timed and later be asked to comment on their experience with the task.}
 
 \subsubsection*{Playability Tests:}
 Playability will be tested through dynamic, unit system testing. If the system tests prove to be adequate and conclusive, then the game will be playable. 
