@@ -2,7 +2,7 @@
 
 \usepackage{array}
 \usepackage{float}
-
+\usepackage{xcolor}
 
 \newcolumntype{L}{>{\centering\arraybackslash}m{6.5cm}}
 
@@ -44,6 +44,8 @@
   	& & Sam Hamel & \\
   	\hline
   	3 & November 28 & Hui Chen & Added Method of Testing/Update format\\
+  	\hline
+  	4 & December 8 & Hui Chen & Revised section 6 \\
   	\hline
 	\end{tabular}
 	\end{table}
@@ -390,7 +392,7 @@ Output: Window closes
 All outputs are equal to the expected outputs
 
 	\section{Changes Due to Testing}
-	The tests reported here are only for revision 1 of the software, each previous version of the software after revision zero also had these same tests applied to them. The software was only deemed complete and up to the standards set out by the requirements document when all tests returned expected results. Therefore each test that produced results that were not deemed correct changed the software until it was fixed.
+	The tests reported here are only for revision 1 of the software, each previous version of the software after revision zero also had these same tests applied to them. The software was only deemed complete and up to the standards set out by the requirements document when all tests returned expected results. Therefore each test that produced results that were not deemed correct changed the software until it was fixed. \textcolor{red}{Additional rules are added to better capture the overall core gameplay. The UI was slightly changed to display more effective information. New functions such as flipping the dealer's cards at the end of the round was added. }
 	\section{Test Summary}
 	\subsection{Usability Tests}
 	Six participants were timed and observed while they perform tasks given by us within the program. We found that the results were well received, with minor complaints about the user interface. \\
