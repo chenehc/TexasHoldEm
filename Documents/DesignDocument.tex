@@ -1,6 +1,8 @@
 \documentclass[11pt]{article}
 
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
 \newcommand{\head}[1]{\textnormal{\textbf{#1}}}
 \begin{document}
     \begin{titlepage}
@@ -17,32 +19,39 @@
     \end{titlepage}
     
     \newpage
+    \section*{Revision History}
+    \begin{table}[H]
+    \begin{center}
+    \caption{Revision History}
+    \begin{tabular}{|| c c c c ||}
+    Developer & Date & Change & Revision\\
+    \hline
+	Nareshkumar Maheshkumar & Dec 4 2015 & \begin{tabular}[c]{@{}c@{}}Revised 3.4, 4.8 and 5.8 \\ in the Requirements Document\end{tabular} & 4\\
+	\hline 
+	Hui Chen & Dec 2 2015 & \begin{tabular}[c]{@{}c@{}}Revised: Fixed the numbering\\ in 3.3 and 3.4 in the \\Requirements Document\end{tabular} & 3\\
+	\hline 
+	Sam Hamel & Dec 2 2015 & \begin{tabular}[c]{@{}c@{}}Revised: Number the Functional \\Requirements in the \\Requirements Document \end{tabular} & 2\\
+	\hline
+     Sam Hamel & Nov 6 2015 & Edit and Proofread Revision 1 & 1\\
+     \hline
+    Nareshkumar Maheshkumar & Nov 6 2015 & Design Document Revision 1 Finished & 1\\
+    \hline
+    Hui Chen & Nov 6 2015 & Update MIS Section & 1\\  
+    \hline
+    Nareshkumar Maheshkumar & Nov 4 2015 & Edit and Proofread Revision 0 & 0\\
+    \hline
+   Sam Hamel & Nov 4 2015 & Design Document Revision 0 Finished & 0\\
+   \hline
+   Hui Chen & Nov 2 2015 & Started Design Document & 0\\
+	\end{tabular}
+	\end{center}
+    \end{table}
+    \newpage
     
     \tableofcontents
     \listoffigures
     \listoftables
     
-    \newpage
-    \section{Revision History}
-    \begin{table}[h]
-    \caption{Revision History}
-    \begin{tabular}{p{4cm}p{2cm}p{2cm}p{4cm}}
-    Revision & Date & Team Member & Description of Change\\
-    \hline
-    0 & November 2 & Hui Chen & Started Design Document\\
-    \hline
-    0 & November 4 & Sam Hamel & Design Document Revision 0 Finished \\
-    \hline
-    0 & November 4 & Nareshkumar Maheshkumar & Edit and Proofread Revision 0\\
-    \hline
-    1 & November 6 & Hui Chen & Update MIS Section\\
-    \hline
-    1 & November 6 & Nareshkumar Maheshkumar & Design Document Revision 1 Finished\\
-    \hline
-     1 & November 6 & Sam Hamel & Edit and Proofread Revision 1\\
-    \hline
-    \end{tabular}
-    \end{table}
     \newpage
     \section{Module Guide For No Limit Texas HoldEm Program(NLTP)}
     \subsection{Introduction}
@@ -72,8 +81,10 @@
     \textbf{M4: Hand}\\
     \textbf{M5: Deck}\\
     \textbf{M6: Player}\\
-    \textbf{M7: AIOpponen}\\
+    \textbf{M7: AIOpponent}\\
     \textbf{M8: Card}\\
+    \textbf{M9: ResourceParser}\\
+    \textbf{M10: AboutFrame}\\
     \begin{table}[h]
     \caption{Module Hierarchy}
     \begin{tabular}{p{4cm}p{5cm}}
@@ -84,6 +95,7 @@
     Behaviour-Hiding  & TexasHoldEm Module \\
     Module & Pot Module\\
      & Game Module\\
+     & \textcolor{red}{ResourceParser Module}\\           	 & \textcolor{red}{AboutFrame Module}\\
     \hline
     Software Decision & Hand Module  \\
      & Deck Module\\
@@ -100,6 +112,11 @@
     \subsection{Hardware Hiding Module}
     Services: Includes programs that provide externally visible behavior of the system as specified in the software requirements specification (SRS) documents. This module serves as a communication layer between the hardware-hiding module and the software decision module. The programs in this module will need to change if there are changes in the SRS. \\
     Secrets: The contents of the required behaviors. \\
+    Implemented By: –\\
+    
+    \subsection{Behaviour-Hiding Module}
+    Services: Includes data structure and algorithms used in the system that do not provide direct interaction with the user. \\
+    Secrets: The design decision based on mathematical theorems, physical facts, or programming considerations. The secrets of this module are not described in the SRS. \\
     Implemented By: –\\
     \subsubsection{Texas Holdem Module}
     Services: Displays GUI\\
@@ -119,12 +136,18 @@
     Services: Manages the state of the game\\
     Secrets: How the game transitions between states \\
     Implemented by: NLTP\\
+    
+   \textcolor{red}{\subsubsection{ResourceParser Module}
+    \textcolor{red}{Services: Parses the rules and game info from text files}\\
+    \textcolor{red}{Secrets: The values of the parsed text stored as string variables}\\
+    \textcolor{red}{Implemented by: NLTP}\\}
+    
+    \textcolor{red}{\subsubsection{AboutFrame Module}
+    \textcolor{red}{Services: Sets text for Rules and App Info(Help) page}\\
+    \textcolor{red}{Secrets: GUI and implementation for menu contents(Rules and App info)}\\
+    \textcolor{red}{Implemented by: NLTP}\\}
 
-    \subsection{Behaviour-Hiding Module}
-    Services: Includes data structure and algorithms used in the system that do not provide direct interaction with the user. \\
-    Secrets: The design decision based on mathematical theorems, physical facts, or programming considerations. The secrets of this module are not described in the SRS. \\
-    Implemented By: –\\
-
+    \subsection{Software Decision Module}
     \subsubsection{Hand Module}
     Services: Keeps track players’ cards, and calculates hand ranking\\
 
@@ -158,12 +181,12 @@
 
     Implemented by: NLTP\\
 
-    \subsection{Software Decision Module}
+    
     
     \section{MIS of TexasHoldEm Module}
     
     \subsection{Exported Access Programs}
-    \begin{table}[h]
+    \begin{table}[H]
     \caption{Exported Access Programs for TexasHoldEm Module}
     \begin{tabular}{p{4cm}p{2cm}p{2cm}p{4cm}}
     Name & In & Out & Exceptions\\
@@ -290,6 +313,69 @@
  	\textbf{Input} - No input required\\
  	\textbf{Output} - boolean value corresponding to the value of their respective parameters
  	\newline 
+ 	
+ 	\section{MIS of ResourceParser Module}
+    
+    \subsection{Exported Access Programs}
+    \begin{table}[H]
+    \caption{Exported Access Programs for ResourceParser Module}
+    \begin{tabular}{p{4cm}p{2cm}p{2cm}p{4cm}}
+    Name & In & Out & Exceptions\\
+    \hline
+	readFile() & String & String & IOException*\\
+	\hline
+    parseHelp() & - & String & IOException\\
+    \hline
+    parseRule() & - & String & IOException\\
+    \hline
+    \end{tabular}
+    \end{table}
+    
+    \subsection{Interface Semantics}
+    \subsubsection{State Variables}
+    
+    \subsubsection{Environment Variables}
+	help:The parsed help textpage stored as a string 
+	\newline
+	rule: The parsed rule textpage stored as a string
+    \subsubsection{Assumption}
+    
+    \subsubsection{Access Program Semantics}
+    ResourceParser will read a textfile using BufferedReader() and parse the textfile. Using parseHelp(), it will store the parsed textfile of the help page into a string variable help. Using parseRule(), it will store the parsed textfile of the rules page into a string variable rule.  \\
+    \textbf{Input} - Text File\\
+    \textbf{Output} - Help and Rule textfiles are parsed and output is stored inside string variables  
+    \newline
+    \textcolor{red}{
+    \section{MIS of AboutFrame Module}
+    }
+    \subsection{Exported Access Programs}
+    \begin{table}[H]
+    \caption{Exported Access Programs for AboutFrame Module}
+    \begin{tabular}{p{4cm}p{2cm}p{2cm}p{4cm}}
+    Name & In & Out & Exceptions\\
+    \hline
+	startOnHelp() & - & - & -\\
+	\hline
+   startOnRule() & - & - & -\\
+    \hline
+    \end{tabular}
+   
+    \end{table}
+    
+    \subsection{Interface Semantics}
+    \subsubsection{State Variables}
+    
+    \subsubsection{Environment Variables}
+	
+    \subsubsection{Assumption}
+    
+    \subsubsection{Access Program Semantics}
+    AboutFrame will use ResourceParser() and use the text stored inside the variables, help and rule from ResourceParser(), and via startOnHelp() and startOnRule() from AboutFrame, display the parsed text in textboxes \\
+    \textbf{Input} - User selection\\
+    \textbf{Output} - Rules and Help text displayed in textboxes 
+    \newline
+ 	
+ 	
  	
  	\section{MIS of Deck Module}
      
