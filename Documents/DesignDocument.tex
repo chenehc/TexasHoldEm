@@ -26,6 +26,15 @@
     \begin{tabular}{|| c c c c ||}
     Developer & Date & Change & Revision\\
     \hline
+    Hui Chen & Dec 8 2015 & \begin{tabular}[c]{@{}c@{}}Revised section 5\\ in the Test Report Document\end{tabular} & 8\\
+  	\hline
+	Nareshkumar Maheshkumar & Dec 8 2015 & \begin{tabular}[c]{@{}c@{}}Revised 2,3,4.2.4, 4.2.5, 8, 9, 15 \\and 16 in the Design Document\end{tabular} & 7\\
+	\hline 	
+	Hui Chen & Dec 8 2015& \begin{tabular}[c]{@{}c@{}}Revised section 2.1, 2.2.2, 2.2.3\\ in the Test Plan Document\end{tabular} & 6\\	
+	\hline
+	Hui Chen & Dec 8 2015 & \begin{tabular}[c]{@{}c@{}}Revised Non-functional
+Requirements \\ in the Requirements Document\end{tabular} & 5\\    
+    \hline
 	Nareshkumar Maheshkumar & Dec 4 2015 & \begin{tabular}[c]{@{}c@{}}Revised 3.4, 4.8 and 5.8 \\ in the Requirements Document\end{tabular} & 4\\
 	\hline 
 	Hui Chen & Dec 2 2015 & \begin{tabular}[c]{@{}c@{}}Revised: Fixed the numbering\\ in 3.3 and 3.4 in the \\Requirements Document\end{tabular} & 3\\
@@ -107,7 +116,7 @@
     \end{table}
 	
 	\section{Connection Between Requirements and Design}
-    The design of the system is intended to satisfy the requirements specified in the SRS. The system is decomposed into modules, and the connection between requirements and modules is listed in Table 3.
+    The design of the system is intended to satisfy the requirements specified in the SRS. The system is decomposed into modules, and the connection between requirements and modules is listed in Table \textcolor{red}{13}.
 	\section{Module Decomposition}    
     \subsection{Hardware Hiding Module}
     Services: Includes programs that provide externally visible behavior of the system as specified in the software requirements specification (SRS) documents. This module serves as a communication layer between the hardware-hiding module and the software decision module. The programs in this module will need to change if there are changes in the SRS. \\
@@ -313,9 +322,9 @@
  	\textbf{Input} - No input required\\
  	\textbf{Output} - boolean value corresponding to the value of their respective parameters
  	\newline 
- 	
+ 	\textcolor{red}{
  	\section{MIS of ResourceParser Module}
-    
+    }
     \subsection{Exported Access Programs}
     \begin{table}[H]
     \caption{Exported Access Programs for ResourceParser Module}
@@ -519,22 +528,22 @@
     \textbf{Output} - Returns the Cards in hand\\
     evaluate():\\
  	
-    \section{Use Hierarchy}
+   \textcolor{red}{ \section{Use Hierarchy}}
     \begin{figure}[h]
 		\includegraphics[scale=0.7]{Uses.png}
 		\caption{Use Hierarchy Diagram}
 		\label{fig1: Figure1}
 		\end{figure}
 	\newpage
-    \section{Traceability Matrix}
+    \textcolor{red}{\section{Traceability Matrix}}
     \begin{table}[h]
     \caption{Traceability Matrix Between the Module And Requirements}
     \begin{tabular}{p{4cm}p{2cm}}
     Requirements & Modules\\
     \hline
-    R1 & N/A\\
+    R1 & M9,M10\\
     \hline
-    R2 & M1\\
+    R2 & M1,M9,M10\\
     \hline
     R3 & M2,M6,M7\\
     \hline
