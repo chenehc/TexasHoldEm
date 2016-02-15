@@ -69,8 +69,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 		setLocationRelativeTo(null);
 		setBackground(Color.GRAY);
 		setResizable(false);
-		
-		background = new ImageIcon("src/res/Cards/b.gif");
+//		
+//		background = new ImageIcon("b.gif");
 		
 		player1 = new Player();
 		
@@ -250,8 +250,8 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 */
 	private void createPlayerCards(){
 		playerPanel.removeAll();
-		ImageIcon playerFirstCardIcon = new ImageIcon(player1.getHand().get(0).getFileName());
-		ImageIcon playerSecondCardIcon = new ImageIcon(player1.getHand().get(1).getFileName());
+		ImageIcon playerFirstCardIcon = new ImageIcon(getClass().getResource(player1.getHand().get(0).getFileName()));
+		ImageIcon playerSecondCardIcon = new ImageIcon(getClass().getResource(player1.getHand().get(1).getFileName()));
 		playerCards[0] = new JLabel();
 		playerCards[0].setIcon(playerFirstCardIcon);
 		playerCards[1] = new JLabel();
@@ -268,9 +268,9 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	 */
 	private void createDealerCards() {
 		dealerPanel.removeAll();
-		String imagePath = "src/res/Cards/back.gif";
-		ImageIcon dealerFirstCardIcon = new ImageIcon(imagePath);
-		ImageIcon dealerSecondCardIcon = new ImageIcon(imagePath);
+		String imagePath = "back.gif";
+		ImageIcon dealerFirstCardIcon = new ImageIcon(getClass().getResource(imagePath));
+		ImageIcon dealerSecondCardIcon = new ImageIcon(getClass().getResource(imagePath));
 		dealerCards[0] = new JLabel();
 		dealerCards[0].setIcon(dealerFirstCardIcon);
 		dealerCards[1] = new JLabel();
@@ -288,7 +288,7 @@ public class TexasHoldEm extends JFrame implements ActionListener  {
 	public void createCommunityCard(){
 		communityCards[communityCardCount] = new JLabel();
 		communityCards[communityCardCount].setVisible(false);
-		ImageIcon communityCardIcon = new ImageIcon(player1.getHand().get(communityCardCount + 2).getFileName());
+		ImageIcon communityCardIcon = new ImageIcon(getClass().getResource(player1.getHand().get(communityCardCount + 2).getFileName()));
 		communityCards[communityCardCount].setIcon(communityCardIcon);
 		communityCards[communityCardCount].setBounds(communityWidth, 5, communityCardIcon.getIconWidth(), communityCardIcon.getIconHeight());
 		communityPanel.add(communityCards[communityCardCount]);

@@ -3,6 +3,8 @@ package helper;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class ResourceParser {
 	/**
@@ -12,7 +14,9 @@ public class ResourceParser {
 	 * @throws IOException
 	 */
 	private static String readFile(String filePath) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		InputStream in = ResourceParser.class.getResourceAsStream(filePath);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		
 		try {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
@@ -35,7 +39,7 @@ public class ResourceParser {
 	 */
 	public static String parseHelp() throws IOException{
 		String help = new String();
-		help = readFile("src/res/Help.txt");
+		help = readFile("Help.txt");
 		return help;
 	}
 	
@@ -46,7 +50,7 @@ public class ResourceParser {
 	 */
 	public static String parseRule() throws IOException{
 		String rule = new String();
-		rule = readFile("src/res/Rules.txt");
+		rule = readFile("Rules.txt");
 		return rule;
 	}
 
